@@ -30,6 +30,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TableLayout
+        android:id="@+id/gameTableLayout"
         android:layout_width="409dp"
         android:layout_height="673dp"
         android:layout_marginTop="16dp"
@@ -40,6 +41,7 @@
         app:layout_constraintTop_toBottomOf="@+id/pointTextView">
 
         <TableRow
+            android:id="@+id/tableRow0"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -78,6 +80,7 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/tableRow1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -116,6 +119,7 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/tableRow2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -153,7 +157,8 @@
 
         </TableRow>
 
-        <!--<TableRow
+        <TableRow
+            android:id="@+id/tableRow3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
@@ -188,8 +193,7 @@
                 android:onClick="onCardClick"
                 app:srcCompat="@drawable/gd1"
                 tools:ignore="SpeakableTextPresentCheck" />
-        </TableRow>-->
-
+        </TableRow>
     </TableLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

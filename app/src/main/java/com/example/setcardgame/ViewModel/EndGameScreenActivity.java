@@ -12,6 +12,7 @@ import com.example.setcardgame.R;
 public class EndGameScreenActivity extends AppCompatActivity {
     private String finalTime;
     private String finalScore;
+    private String finalDifficulty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +22,13 @@ public class EndGameScreenActivity extends AppCompatActivity {
         Intent egs = getIntent();
         finalTime = egs.getStringExtra("time");
         finalScore = egs.getStringExtra("score");
+        finalDifficulty = egs.getStringExtra("diff");
         TextView finalTimeTextView = (TextView)findViewById(R.id.finalTimeTextView);
         TextView finalScoreTextView = (TextView)findViewById(R.id.finalPointTextView);
+        TextView finalDifficultyTextView = (TextView)findViewById(R.id.difficultyTextView);
         finalTimeTextView.setText(finalTime);
         finalScoreTextView.setText(finalScore);
+        finalDifficultyTextView.setText(finalDifficulty);
     }
 
     public void newSingleplayerGame(View v){

@@ -3,15 +3,19 @@ package com.example.setcardgame.ViewModel;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.setcardgame.Model.Card;
 import com.example.setcardgame.Model.Color;
+import com.example.setcardgame.Model.Difficulty;
 import com.example.setcardgame.Model.Quantity;
 import com.example.setcardgame.Model.Shape;
 import com.example.setcardgame.R;
@@ -30,6 +34,7 @@ public class SingleplayerActivity extends AppCompatActivity {
     private ArrayList<Integer> selectedCardIds = new ArrayList<>();
     private TextView pointTextView;
     private TextView timerTextView;
+    private Difficulty difficulty = Difficulty.NORMAL;
 
     private Timer timer;
     private TimerTask timerTask;
@@ -42,6 +47,10 @@ public class SingleplayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singleplayer);
+        Intent sp = getIntent();
+        if (!sp.getStringExtra("diffMode").isEmpty()){
+            difficulty = Difficulty.valueOf(sp.getStringExtra("diffMode"));
+        }
         startGame();
         timer = new Timer();
         startTimer();
@@ -88,9 +97,18 @@ public class SingleplayerActivity extends AppCompatActivity {
         board.add((ImageView)findViewById(R.id.card6));
         board.add((ImageView)findViewById(R.id.card7));
         board.add((ImageView)findViewById(R.id.card8));
-        /*board.add((ImageView)findViewById(R.id.card9));
-        board.add((ImageView)findViewById(R.id.card10));
-        board.add((ImageView)findViewById(R.id.card11));*/
+
+        if (difficulty == Difficulty.NORMAL){
+            TableLayout tableLayout = (TableLayout) findViewById(R.id.gameTableLayout);
+            TableRow lastTableRow = (TableRow) findViewById(R.id.tableRow3);
+            tableLayout.removeView(lastTableRow);
+        }
+
+        if (difficulty == Difficulty.EASY){
+            board.add((ImageView)findViewById(R.id.card9));
+            board.add((ImageView)findViewById(R.id.card10));
+            board.add((ImageView)findViewById(R.id.card11));
+        }
 
         do {
             cards.clear();
@@ -141,11 +159,11 @@ public class SingleplayerActivity extends AppCompatActivity {
                                 || board.get(i).getId() == selectedCardIds.get(1)
                                 || board.get(i).getId() == selectedCardIds.get(2)){
                             board.get(i).setBackgroundResource(R.drawable.card_background_right);
-                            stopUserInteractions = true;
                         }
                     }
                     int point = Integer.parseInt((String) pointTextView.getText());
                     pointTextView.setText(String.valueOf(++point));
+                    stopUserInteractions = true;
                     removeCardsFromBoard();
 
                     if (isGameOver() || !hasSet(boardCards)) {
@@ -160,9 +178,9 @@ public class SingleplayerActivity extends AppCompatActivity {
                                 || board.get(i).getId() == selectedCardIds.get(1)
                                 || board.get(i).getId() == selectedCardIds.get(2)){
                             board.get(i).setBackgroundResource(R.drawable.card_background_wrong);
-                            stopUserInteractions = true;
                         }
                     }
+                    stopUserInteractions = true;
                 }
                 selectedCardIds.clear();
                 selectedCards.clear();
@@ -191,7 +209,6 @@ public class SingleplayerActivity extends AppCompatActivity {
                 stopUserInteractions = false;
             }
         }, 300);
-
     }
 
     public boolean dispatchTouchEvent(MotionEvent ev) {
@@ -288,6 +305,7 @@ public class SingleplayerActivity extends AppCompatActivity {
         Intent egs = new Intent(this, EndGameScreenActivity.class);
         egs.putExtra("time", timerTextView.getText());
         egs.putExtra("score", pointTextView.getText());
+        egs.putExtra("diff", difficulty.toString());
         startActivity(egs);
     }
 

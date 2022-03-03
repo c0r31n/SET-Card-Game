@@ -10,10 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SETCardGame">
         <activity
+            android:name=".ViewModel.DifficultyActivity"
+            android:label="Difficulty"
+            android:exported="false"
+            android:parentActivityName=".ViewModel.MainActivity" />
+        <activity
             android:name=".ViewModel.HowToPageActivity"
-            android:parentActivityName=".ViewModel.MainActivity"
+            android:exported="false"
             android:label="How To Play"
-            android:exported="false" />
+            android:parentActivityName=".ViewModel.MainActivity" />
         <activity
             android:name=".ViewModel.EndGameScreenActivity"
             android:exported="false"
