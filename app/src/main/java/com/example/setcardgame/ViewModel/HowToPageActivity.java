@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.setcardgame.R;
 
-public class HowToPage extends AppCompatActivity {
+public class HowToPageActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

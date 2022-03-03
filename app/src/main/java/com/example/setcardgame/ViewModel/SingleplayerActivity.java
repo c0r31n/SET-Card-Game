@@ -264,7 +264,7 @@ public class SingleplayerActivity extends AppCompatActivity {
     }
 
     private void endGame(){
-        Intent egs = new Intent(this, EndGameScreen.class);
+        Intent egs = new Intent(this, EndGameScreenActivity.class);
         egs.putExtra("time", timerTextView.getText());
         egs.putExtra("score", pointTextView.getText());
         startActivity(egs);

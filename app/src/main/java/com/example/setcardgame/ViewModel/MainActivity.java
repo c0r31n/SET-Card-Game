@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void switchToHowToPage(View v){
-        Intent htp = new Intent(this, HowToPage.class);
+        Intent htp = new Intent(this, HowToPageActivity.class);
         startActivity(htp);
     }
 }
