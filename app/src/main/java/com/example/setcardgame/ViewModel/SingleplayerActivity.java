@@ -12,6 +12,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.setcardgame.Model.Card;
 import com.example.setcardgame.Model.Color;
@@ -47,6 +48,7 @@ public class SingleplayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singleplayer);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         Intent sp = getIntent();
         if (!sp.getStringExtra("diffMode").isEmpty()){
             difficulty = Difficulty.valueOf(sp.getStringExtra("diffMode"));

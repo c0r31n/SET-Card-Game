@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.setcardgame.Model.Difficulty;
 import com.example.setcardgame.R;
 
 public class EndGameScreenActivity extends AppCompatActivity {
@@ -33,6 +34,7 @@ public class EndGameScreenActivity extends AppCompatActivity {
 
     public void newSingleplayerGame(View v){
         Intent sp = new Intent(this, SingleplayerActivity.class);
+        sp.putExtra("diffMode", finalDifficulty);
         startActivity(sp);
     }
 
