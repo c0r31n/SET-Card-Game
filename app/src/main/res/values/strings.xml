@@ -10,7 +10,10 @@
     <string name="contentDescriptionForCards">card</string>
     <string name="newGameBtn">New Game</string>
     <string name="backToMenuBtn">Menu</string>
-    <string name="howToText">Egy SET 3 kártyából áll, amiben minden jellemzőt külön megvizsgálva, azoknak vagy azonosnak vagy minden kártyán különbözőnek kell lennie. Ennek a szabálynak MINDEN tulajdonság esetében meg kell felelnie a kiválasztott három lapnak. Más szavakkal: a forma vagy azononos mindhárom kártyán, vagy mindegyiken más; a szín vagy azonos mindhárom kártyán, vagy mindegyiken különböző, és így tovább.</string>
+    <string name="howToText">Egy SET 3 kártyából áll, amiben minden tulajdonságot külön-külön megvizsgálva, vagy egyeznie vagy különböznie kell. Ennek a szabálynak MINDEN tulajdonság esetén meg kell felelnie a kiválasztott három lapnak. Más szavakkal: a forma vagy azononos mindhárom kártyán, vagy mindegyiken más; a szín vagy azonos mindhárom kártyán, vagy mindegyiken különböző; legvégül a darabszámnak vagy egyeznie kell mindegyiken vagy különböznie.</string>
     <string name="howToTitle">How To Play</string>
+    <string name="easyBtn">Easy</string>
+    <string name="normalBtn">Normal</string>
+    <string name="difficultyTextView">NORMAL</string>
 
 </resources>

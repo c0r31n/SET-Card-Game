@@ -23,9 +23,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(sb);
     }
 
-    public void switchToSingleplayer(View v){
-        Intent sp = new Intent(this, SingleplayerActivity.class);
-        startActivity(sp);
+    public void switchToDifficulty(View v){
+        Intent d = new Intent(this, DifficultyActivity.class);
+        startActivity(d);
     }
 
     public void switchToMultiplayer(View v){

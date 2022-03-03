@@ -12,7 +12,7 @@
         android:layout_height="50dp"
         android:backgroundTint="@color/dark_blue"
         android:gravity="center"
-        android:onClick="switchToSingleplayer"
+        android:onClick="switchToDifficulty"
         android:text="@string/singleplayerBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
