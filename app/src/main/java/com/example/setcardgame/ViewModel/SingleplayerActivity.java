@@ -3,6 +3,7 @@ package com.example.setcardgame.ViewModel;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,9 +31,12 @@ public class SingleplayerActivity extends AppCompatActivity {
     private TextView pointTextView;
     private TextView timerTextView;
 
-    Timer timer;
-    TimerTask timerTask;
-    Double time = 0.0;
+    private Timer timer;
+    private TimerTask timerTask;
+    private Double time = 0.0;
+
+    private Timer resetBackgroundTimer = new Timer();
+    private boolean stopUserInteractions = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +141,7 @@ public class SingleplayerActivity extends AppCompatActivity {
                                 || board.get(i).getId() == selectedCardIds.get(1)
                                 || board.get(i).getId() == selectedCardIds.get(2)){
                             board.get(i).setBackgroundResource(R.drawable.card_background_right);
+                            stopUserInteractions = true;
                         }
                     }
                     int point = Integer.parseInt((String) pointTextView.getText());
@@ -155,12 +160,13 @@ public class SingleplayerActivity extends AppCompatActivity {
                                 || board.get(i).getId() == selectedCardIds.get(1)
                                 || board.get(i).getId() == selectedCardIds.get(2)){
                             board.get(i).setBackgroundResource(R.drawable.card_background_wrong);
+                            stopUserInteractions = true;
                         }
                     }
                 }
                 selectedCardIds.clear();
                 selectedCards.clear();
-                resetCardBackgrounds(); //timer-t kipróbálni
+                resetCardBackgrounds();
             }
         }
         else{
@@ -176,8 +182,23 @@ public class SingleplayerActivity extends AppCompatActivity {
     }
 
     private void resetCardBackgrounds(){
-        for (int i=0; board.size()>i; i++){
-            board.get(i).setBackgroundResource(R.drawable.card_background_empty);
+        resetBackgroundTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                for (int i=0; board.size()>i; i++){
+                    board.get(i).setBackgroundResource(R.drawable.card_background_empty);
+                }
+                stopUserInteractions = false;
+            }
+        }, 300);
+
+    }
+
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (stopUserInteractions) {
+            return true;
+        } else {
+            return super.dispatchTouchEvent(ev);
         }
     }
 
@@ -264,7 +285,7 @@ public class SingleplayerActivity extends AppCompatActivity {
     }
 
     private void endGame(){
-        Intent egs = new Intent(this, EndGameScreen.class);
+        Intent egs = new Intent(this, EndGameScreenActivity.class);
         egs.putExtra("time", timerTextView.getText());
         egs.putExtra("score", pointTextView.getText());
         startActivity(egs);

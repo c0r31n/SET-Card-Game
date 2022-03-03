@@ -10,12 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SETCardGame">
         <activity
-            android:name=".ViewModel.HowToPage"
+            android:name=".ViewModel.HowToPageActivity"
             android:parentActivityName=".ViewModel.MainActivity"
             android:label="How To Play"
             android:exported="false" />
         <activity
-            android:name=".ViewModel.EndGameScreen"
+            android:name=".ViewModel.EndGameScreenActivity"
             android:exported="false"
             android:label="Score"
             android:parentActivityName=".ViewModel.MainActivity"

@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.setcardgame.R;
 
-public class EndGameScreen extends AppCompatActivity {
+public class EndGameScreenActivity extends AppCompatActivity {
     private String finalTime;
     private String finalScore;
 
