@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">SET</string>
+    <string name="exitBtn">Exit</string>
+    <string name="scoreboardBtn">Scoreboard</string>
+    <string name="singleplayerBtn">Singleplayer</string>
+    <string name="multiplayerBtn">Multiplayer</string>
+    <string name="timerTextView">0:00</string>
+    <string name="pointTextView">0</string>
+    <string name="scoreTextView">SCORE</string>
+    <string name="contentDescriptionForCards">card</string>
+    <string name="newGameBtn">New Game</string>
+    <string name="backToMenuBtn">Menu</string>
+    <string name="howToText">Egy SET 3 kártyából áll, amiben minden jellemzőt külön megvizsgálva, azoknak vagy azonosnak vagy minden kártyán különbözőnek kell lennie. Ennek a szabálynak MINDEN tulajdonság esetében meg kell felelnie a kiválasztott három lapnak. Más szavakkal: a forma vagy azononos mindhárom kártyán, vagy mindegyiken más; a szín vagy azonos mindhárom kártyán, vagy mindegyiken különböző, és így tovább.</string>
+    <string name="howToTitle">How To Play</string>
+
+</resources>
