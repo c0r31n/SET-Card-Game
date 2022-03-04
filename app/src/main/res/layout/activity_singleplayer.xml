@@ -11,29 +11,32 @@
         android:id="@+id/pointTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
         android:text="@string/pointTextView"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.965"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.01" />
 
     <TextView
         android:id="@+id/timerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
         android:text="@string/timerTextView"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.022"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.011" />
 
     <TableLayout
         android:id="@+id/gameTableLayout"
-        android:layout_width="409dp"
-        android:layout_height="673dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,8 +52,8 @@
 
             <ImageView
                 android:id="@+id/card0"
-                android:layout_width="100dp"
-                android:layout_height="144dp"
+                android:layout_width="90dp"
+                android:layout_height="120dp"
                 android:background="@drawable/card_background_empty"
                 android:contentDescription="@string/contentDescriptionForCards"
                 android:onClick="onCardClick"
@@ -59,8 +62,8 @@
 
             <ImageView
                 android:id="@+id/card1"
-                android:layout_width="100dp"
-                android:layout_height="144dp"
+                android:layout_width="90dp"
+                android:layout_height="120dp"
                 android:background="@drawable/card_background_empty"
                 android:contentDescription="@string/contentDescriptionForCards"
                 android:onClick="onCardClick"
@@ -69,8 +72,8 @@
 
             <ImageView
                 android:id="@+id/card2"
-                android:layout_width="100dp"
-                android:layout_height="144dp"
+                android:layout_width="90dp"
+                android:layout_height="120dp"
                 android:background="@drawable/card_background_empty"
                 android:contentDescription="@string/contentDescriptionForCards"
                 android:onClick="onCardClick"
@@ -88,8 +91,8 @@
 
             <ImageView
                 android:id="@+id/card3"
-                android:layout_width="100dp"
-                android:layout_height="144dp"
+                android:layout_width="90dp"
+                android:layout_height="120dp"
                 android:background="@drawable/card_background_empty"
                 android:contentDescription="@string/contentDescriptionForCards"
                 android:onClick="onCardClick"
@@ -98,8 +101,8 @@
 
             <ImageView
                 android:id="@+id/card4"
-                android:layout_width="100dp"
-                android:layout_height="144dp"
+                android:layout_width="90dp"
+                android:layout_height="120dp"
                 android:background="@drawable/card_background_empty"
                 android:contentDescription="@string/contentDescriptionForCards"
                 android:onClick="onCardClick"
@@ -108,8 +111,8 @@
 
             <ImageView
                 android:id="@+id/card5"
-                android:layout_width="100dp"
-                android:layout_height="144dp"
+                android:layout_width="90dp"
+                android:layout_height="120dp"
                 android:background="@drawable/card_background_empty"
                 android:contentDescription="@string/contentDescriptionForCards"
                 android:onClick="onCardClick"
@@ -127,8 +130,8 @@
 
             <ImageView
                 android:id="@+id/card6"
-                android:layout_width="100dp"
-                android:layout_height="144dp"
+                android:layout_width="90dp"
+                android:layout_height="120dp"
                 android:background="@drawable/card_background_empty"
                 android:contentDescription="@string/contentDescriptionForCards"
                 android:onClick="onCardClick"
@@ -137,8 +140,8 @@
 
             <ImageView
                 android:id="@+id/card7"
-                android:layout_width="100dp"
-                android:layout_height="144dp"
+                android:layout_width="90dp"
+                android:layout_height="120dp"
                 android:background="@drawable/card_background_empty"
                 android:contentDescription="@string/contentDescriptionForCards"
                 android:onClick="onCardClick"
@@ -147,8 +150,8 @@
 
             <ImageView
                 android:id="@+id/card8"
-                android:layout_width="100dp"
-                android:layout_height="144dp"
+                android:layout_width="90dp"
+                android:layout_height="120dp"
                 android:background="@drawable/card_background_empty"
                 android:contentDescription="@string/contentDescriptionForCards"
                 android:onClick="onCardClick"
@@ -160,14 +163,14 @@
         <TableRow
             android:id="@+id/tableRow3"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="110dp"
             android:layout_gravity="center"
             android:gravity="center">
 
             <ImageView
                 android:id="@+id/card9"
-                android:layout_width="100dp"
-                android:layout_height="144dp"
+                android:layout_width="90dp"
+                android:layout_height="120dp"
                 android:background="@drawable/card_background_empty"
                 android:contentDescription="@string/contentDescriptionForCards"
                 android:onClick="onCardClick"
@@ -176,8 +179,8 @@
 
             <ImageView
                 android:id="@+id/card10"
-                android:layout_width="100dp"
-                android:layout_height="144dp"
+                android:layout_width="90dp"
+                android:layout_height="120dp"
                 android:background="@drawable/card_background_empty"
                 android:contentDescription="@string/contentDescriptionForCards"
                 android:onClick="onCardClick"
@@ -186,8 +189,8 @@
 
             <ImageView
                 android:id="@+id/card11"
-                android:layout_width="100dp"
-                android:layout_height="144dp"
+                android:layout_width="90dp"
+                android:layout_height="120dp"
                 android:background="@drawable/card_background_empty"
                 android:contentDescription="@string/contentDescriptionForCards"
                 android:onClick="onCardClick"

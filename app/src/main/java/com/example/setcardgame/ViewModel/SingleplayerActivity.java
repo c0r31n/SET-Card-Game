@@ -1,6 +1,7 @@
 package com.example.setcardgame.ViewModel;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -202,15 +203,24 @@ public class SingleplayerActivity extends AppCompatActivity {
     }
 
     private void resetCardBackgrounds(){
-        resetBackgroundTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                for (int i=0; board.size()>i; i++){
-                    board.get(i).setBackgroundResource(R.drawable.card_background_empty);
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.P){
+            resetBackgroundTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    for (int i=0; board.size()>i; i++){
+                        board.get(i).setBackgroundResource(R.drawable.card_background_empty);
+                    }
+                    stopUserInteractions = false;
                 }
-                stopUserInteractions = false;
+            }, 300);
+        }
+        else{
+            for (int i=0; board.size()>i; i++){
+                board.get(i).setBackgroundResource(R.drawable.card_background_empty);
             }
-        }, 300);
+            stopUserInteractions = false;
+        }
+
     }
 
     public boolean dispatchTouchEvent(MotionEvent ev) {
