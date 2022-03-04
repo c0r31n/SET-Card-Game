@@ -3,6 +3,7 @@ package com.example.setcardgame.ViewModel;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -50,10 +51,17 @@ public class SingleplayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singleplayer);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        Log.d("magas", "height: "+height);
+
         Intent sp = getIntent();
         if (!sp.getStringExtra("diffMode").isEmpty()){
             difficulty = Difficulty.valueOf(sp.getStringExtra("diffMode"));
         }
+
         startGame();
         timer = new Timer();
         startTimer();
@@ -105,6 +113,7 @@ public class SingleplayerActivity extends AppCompatActivity {
             TableLayout tableLayout = (TableLayout) findViewById(R.id.gameTableLayout);
             TableRow lastTableRow = (TableRow) findViewById(R.id.tableRow3);
             tableLayout.removeView(lastTableRow);
+
         }
 
         if (difficulty == Difficulty.EASY){
