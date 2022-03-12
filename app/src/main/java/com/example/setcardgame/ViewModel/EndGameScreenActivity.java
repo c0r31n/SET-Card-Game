@@ -13,6 +13,7 @@ public class EndGameScreenActivity extends AppCompatActivity {
     private String finalTime;
     private String finalScore;
     private String finalDifficulty;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,7 @@ public class EndGameScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_end_game_screen);
 
         Intent egs = getIntent();
+        username = egs.getStringExtra("username");
         finalTime = egs.getStringExtra("time");
         finalScore = egs.getStringExtra("score");
         finalDifficulty = egs.getStringExtra("diff");

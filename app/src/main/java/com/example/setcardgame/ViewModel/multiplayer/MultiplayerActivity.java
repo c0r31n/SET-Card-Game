@@ -1,9 +1,8 @@
-package com.example.setcardgame.ViewModel;
+package com.example.setcardgame.ViewModel.multiplayer;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,13 +18,15 @@ import com.example.setcardgame.Model.Difficulty;
 import com.example.setcardgame.Model.Quantity;
 import com.example.setcardgame.Model.Shape;
 import com.example.setcardgame.R;
+import com.example.setcardgame.ViewModel.EndGameScreenActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SingleplayerActivity extends AppCompatActivity {
+public class MultiplayerActivity extends AppCompatActivity {
 
     private ArrayList<ImageView> board = new ArrayList<>();
     private ArrayList<Card> cards = new ArrayList<>();
@@ -35,7 +36,6 @@ public class SingleplayerActivity extends AppCompatActivity {
     private TextView pointTextView;
     private TextView timerTextView;
     private Difficulty difficulty = Difficulty.NORMAL;
-    private String username;
 
     private Timer timer;
     private TimerTask timerTask;
@@ -47,12 +47,7 @@ public class SingleplayerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_singleplayer);
-        Intent sp = getIntent();
-        username = sp.getStringExtra("username");
-        if (!sp.getStringExtra("diffMode").isEmpty()){
-            difficulty = Difficulty.valueOf(sp.getStringExtra("diffMode"));
-        }
+        setContentView(R.layout.activity_multiplayer);
         startGame();
         timer = new Timer();
         startTimer();
@@ -99,18 +94,6 @@ public class SingleplayerActivity extends AppCompatActivity {
         board.add((ImageView)findViewById(R.id.card6));
         board.add((ImageView)findViewById(R.id.card7));
         board.add((ImageView)findViewById(R.id.card8));
-
-        if (difficulty == Difficulty.NORMAL){
-            TableLayout tableLayout = (TableLayout) findViewById(R.id.gameTableLayout);
-            TableRow lastTableRow = (TableRow) findViewById(R.id.tableRow3);
-            tableLayout.removeView(lastTableRow);
-        }
-
-        if (difficulty == Difficulty.EASY){
-            board.add((ImageView)findViewById(R.id.card9));
-            board.add((ImageView)findViewById(R.id.card10));
-            board.add((ImageView)findViewById(R.id.card11));
-        }
 
         do {
             cards.clear();
@@ -308,7 +291,6 @@ public class SingleplayerActivity extends AppCompatActivity {
         egs.putExtra("time", timerTextView.getText());
         egs.putExtra("score", pointTextView.getText());
         egs.putExtra("diff", difficulty.toString());
-        egs.putExtra("username", username);
         startActivity(egs);
     }
 
