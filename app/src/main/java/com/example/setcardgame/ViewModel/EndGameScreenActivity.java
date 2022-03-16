@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,11 +63,13 @@ public class EndGameScreenActivity extends AppCompatActivity {
         scoreboardDataService.addScore(scoreboardModel, new ScoreboardDataService.ScoreAddedResponseListener() {
             @Override
             public void onError(String message) {
-//                Toast.makeText(EndGameScreenActivity.this, "Wasn't able to save score to DB.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EndGameScreenActivity.this, message, Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onResponse(JSONObject scoreboardModels) {}
+            public void onResponse(JSONObject scoreboardModel) {
+//                Log.d("score", scoreboardModel.toString());
+            }
         });
     }
 }

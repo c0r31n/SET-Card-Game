@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("username", username.toString());
             editor.commit();
         }
-        Log.d("username", sp.getString("username", "def"));
+//        Log.d("username", sp.getString("username", "def"));
+//        Toast.makeText(MainActivity.this, sp.getString("username", "def"), Toast.LENGTH_LONG).show();
     }
 
     public void switchToScoreboard(View v){

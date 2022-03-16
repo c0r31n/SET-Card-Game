@@ -79,8 +79,8 @@ public class ScoreboardDataService {
 
     public void addScore(ScoreboardModel scoreboardModel, ScoreAddedResponseListener scoreAddedResponseListener){
         String url = SCOREBOARD_URL + "add";
-        JSONObject postObj = new JSONObject();
 
+        JSONObject postObj = new JSONObject();
         try {
             postObj.put("playerId",scoreboardModel.getPlayerId());
             postObj.put("difficulty",scoreboardModel.getDifficulty().toString());
@@ -101,6 +101,7 @@ public class ScoreboardDataService {
             @Override
             public void onErrorResponse(VolleyError error) {
                 scoreAddedResponseListener.onError(error.getMessage());
+                Log.d("idk", error.getMessage());
             }
         }){
             @Override
