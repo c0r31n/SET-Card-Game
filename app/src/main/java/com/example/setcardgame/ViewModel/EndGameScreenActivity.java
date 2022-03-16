@@ -63,7 +63,7 @@ public class EndGameScreenActivity extends AppCompatActivity {
         scoreboardDataService.addScore(scoreboardModel, new ScoreboardDataService.ScoreAddedResponseListener() {
             @Override
             public void onError(String message) {
-                Toast.makeText(EndGameScreenActivity.this, message, Toast.LENGTH_SHORT).show();
+                Toast.makeText(EndGameScreenActivity.this, message, Toast.LENGTH_LONG).show();
             }
 
             @Override

@@ -2,14 +2,17 @@ package com.example.setcardgame.ViewModel;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -101,8 +104,9 @@ public class SingleplayerActivity extends AppCompatActivity {
         board.add((ImageView)findViewById(R.id.card7));
         board.add((ImageView)findViewById(R.id.card8));
 
+        TableLayout tableLayout = (TableLayout) findViewById(R.id.gameTableLayout);
+
         if (difficulty == Difficulty.NORMAL){
-            TableLayout tableLayout = (TableLayout) findViewById(R.id.gameTableLayout);
             TableRow lastTableRow = (TableRow) findViewById(R.id.tableRow3);
             tableLayout.removeView(lastTableRow);
         }
@@ -111,6 +115,17 @@ public class SingleplayerActivity extends AppCompatActivity {
             board.add((ImageView)findViewById(R.id.card9));
             board.add((ImageView)findViewById(R.id.card10));
             board.add((ImageView)findViewById(R.id.card11));
+
+            if (getScreeSizeInInches() < 5.3){
+                ImageView card = (ImageView)findViewById(R.id.card8);
+                ViewGroup.LayoutParams params =card.getLayoutParams();
+                params.height*=0.8;
+                params.width*=0.8;
+
+                for (ImageView cards : board){
+                    cards.setLayoutParams(params);
+                }
+            }
         }
 
         do {
@@ -322,6 +337,16 @@ public class SingleplayerActivity extends AppCompatActivity {
             }
         }
         return !hasVisible;
+    }
+
+    private double getScreeSizeInInches(){
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        double mWidthPixels = dm.widthPixels;
+        double mHeightPixels = dm.heightPixels;
+        double x = Math.pow(mWidthPixels/dm.xdpi,2);
+        double y = Math.pow(mHeightPixels/dm.ydpi,2);
+        return Math.sqrt(x+y);
     }
 
 }
