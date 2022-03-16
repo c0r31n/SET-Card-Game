@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.example.setcardgame.Model.Difficulty;
 import com.example.setcardgame.R;
 import com.example.setcardgame.ViewModel.multiplayer.SelectMultiplayerTypeActivity;
 import com.example.setcardgame.ViewModel.scoreboard.ScoreboardActivity;
@@ -25,12 +27,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         sp = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        if (sp.getString("username", "default").isEmpty()){
+        if (sp.getString("username", "default").equals("default")){
             SharedPreferences.Editor editor = sp.edit();
             UUID username = UUID.randomUUID();
             editor.putString("username", username.toString());
             editor.commit();
         }
+        Log.d("username", sp.getString("username", "def"));
     }
 
     public void switchToScoreboard(View v){

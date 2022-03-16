@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.setcardgame">
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -13,13 +14,11 @@
             android:name=".ViewModel.scoreboard.WorldScoresActivity"
             android:exported="false"
             android:label="World Scores"
-            android:parentActivityName=".ViewModel.scoreboard.ScoreboardActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ViewModel.scoreboard.MyScoresActivity"
             android:exported="false"
             android:label="My Scores"
-            android:parentActivityName=".ViewModel.scoreboard.ScoreboardActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".ViewModel.multiplayer.JoinGameActivity"

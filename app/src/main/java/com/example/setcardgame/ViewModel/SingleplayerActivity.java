@@ -51,7 +51,7 @@ public class SingleplayerActivity extends AppCompatActivity {
         Intent sp = getIntent();
         username = sp.getStringExtra("username");
         if (!sp.getStringExtra("diffMode").isEmpty()){
-            difficulty = Difficulty.valueOf(sp.getStringExtra("diffMode"));
+            difficulty = Difficulty.getDifficultyFromString(sp.getStringExtra("diffMode"));
         }
         startGame();
         timer = new Timer();
@@ -66,7 +66,10 @@ public class SingleplayerActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         time++;
-                        timerTextView.setText(getTimerText());
+                        int time = getTimer();
+                        int seconds = time%60;
+                        int minutes = time/60;
+                        timerTextView.setText(String.format("%d:%02d", minutes, seconds));
                     }
                 });
             }
@@ -74,12 +77,10 @@ public class SingleplayerActivity extends AppCompatActivity {
         timer.scheduleAtFixedRate(timerTask,0,1000);
     }
 
-    private String getTimerText() {
+    private int getTimer() {
         int rounded = (int) Math.round(time);
-        int seconds = ((rounded % 86400)%3600)%60;
-        int minutes = ((rounded % 86400)%3600)/60;
 
-        return String.format("%d:%02d", minutes, seconds);
+        return (rounded % 86400)%3600;
     }
 
 
@@ -305,7 +306,7 @@ public class SingleplayerActivity extends AppCompatActivity {
 
     private void endGame(){
         Intent egs = new Intent(this, EndGameScreenActivity.class);
-        egs.putExtra("time", timerTextView.getText());
+        egs.putExtra("time", ""+getTimer());
         egs.putExtra("score", pointTextView.getText());
         egs.putExtra("diff", difficulty.toString());
         egs.putExtra("username", username);
