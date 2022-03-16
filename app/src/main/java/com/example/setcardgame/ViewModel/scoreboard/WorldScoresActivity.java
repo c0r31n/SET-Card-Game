@@ -44,7 +44,6 @@ public class WorldScoresActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(List<ScoreboardModel> scoreboardModels) {
-//                Toast.makeText(WorldScoresActivity.this, scoreboardModels.toString(), Toast.LENGTH_SHORT).show();
                 ArrayAdapter arrayAdapter = new ArrayAdapter(WorldScoresActivity.this, android.R.layout.simple_list_item_1, scoreboardModels);
 
                 ListView scoresListView = findViewById(R.id.scoresListView);

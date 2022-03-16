@@ -47,6 +47,8 @@ public class EndGameScreenActivity extends AppCompatActivity {
 
     public void newSingleplayerGame(View v){
         Intent sp = new Intent(this, SingleplayerActivity.class);
+        sp.putExtra("diffMode", finalDifficulty);
+        sp.putExtra("username", username);
         startActivity(sp);
     }
 
@@ -60,7 +62,7 @@ public class EndGameScreenActivity extends AppCompatActivity {
         scoreboardDataService.addScore(scoreboardModel, new ScoreboardDataService.ScoreAddedResponseListener() {
             @Override
             public void onError(String message) {
-                Toast.makeText(EndGameScreenActivity.this, "Wasn't able to save score to DB.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(EndGameScreenActivity.this, "Wasn't able to save score to DB.", Toast.LENGTH_SHORT).show();
             }
 
             @Override
