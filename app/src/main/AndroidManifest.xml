@@ -16,7 +16,7 @@
             android:label="World Scores"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ViewModel.scoreboard.MyScoresActivity"
+            android:name=".ViewModel.scoreboard.PlayerScoresActivity"
             android:exported="false"
             android:label="My Scores"
             android:screenOrientation="portrait"/>
@@ -36,7 +36,6 @@
             android:name=".ViewModel.multiplayer.WaitingForGameActivity"
             android:exported="false"
             android:label="Searching For Game"
-            android:parentActivityName=".ViewModel.multiplayer.SelectMultiplayerTypeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.multiplayer.CreatePrivateGameActivity"

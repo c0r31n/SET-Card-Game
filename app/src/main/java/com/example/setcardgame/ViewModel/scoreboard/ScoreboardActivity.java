@@ -7,7 +7,6 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.setcardgame.R;
-import com.example.setcardgame.ViewModel.multiplayer.MultiplayerActivity;
 
 public class ScoreboardActivity extends AppCompatActivity {
 
@@ -22,7 +21,7 @@ public class ScoreboardActivity extends AppCompatActivity {
     }
 
     public void switchToMyScores(View v){
-        Intent ms = new Intent(this, MyScoresActivity.class);
+        Intent ms = new Intent(this, PlayerScoresActivity.class);
         ms.putExtra("username", username);
         startActivity(ms);
     }

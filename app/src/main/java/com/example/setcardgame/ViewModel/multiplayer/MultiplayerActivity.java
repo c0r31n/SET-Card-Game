@@ -1,13 +1,14 @@
 package com.example.setcardgame.ViewModel.multiplayer;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,16 +16,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.setcardgame.Model.Card;
 import com.example.setcardgame.Model.Color;
 import com.example.setcardgame.Model.Difficulty;
+import com.example.setcardgame.Model.Game;
 import com.example.setcardgame.Model.Quantity;
 import com.example.setcardgame.Model.Shape;
 import com.example.setcardgame.R;
 import com.example.setcardgame.ViewModel.EndGameScreenActivity;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import io.reactivex.disposables.Disposable;
+import ua.naiksoftware.stomp.Stomp;
+import ua.naiksoftware.stomp.StompClient;
 
 public class MultiplayerActivity extends AppCompatActivity {
 
@@ -33,13 +41,20 @@ public class MultiplayerActivity extends AppCompatActivity {
     private ArrayList<Card> boardCards = new ArrayList<>();
     private ArrayList<Card> selectedCards = new ArrayList<>();
     private ArrayList<Integer> selectedCardIds = new ArrayList<>();
-    private TextView pointTextView;
-    private TextView timerTextView;
+    private TextView opponentPointTextView;
+    private TextView ownPointTextView;
+    private Button setBtn;
+    private TableLayout tableLayout;
     private Difficulty difficulty = Difficulty.NORMAL;
+    private String username;
+    private int gameId;
 
-    private Timer timer;
-    private TimerTask timerTask;
-    private Double time = 0.0;
+    private StompClient client;
+    private Game game;
+    private Disposable disposableClient;
+    private final String url = "wss://test-set-card-game.herokuapp.com/";
+
+    private final String TAG = "alma";
 
     private Timer resetBackgroundTimer = new Timer();
     private boolean stopUserInteractions = false;
@@ -48,35 +63,36 @@ public class MultiplayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multiplayer);
+        Intent mp = getIntent();
+        username = mp.getStringExtra("username");
+        gameId = Integer.parseInt(mp.getStringExtra("gameId"));
         startGame();
-        timer = new Timer();
-        startTimer();
-    }
 
-    private void startTimer() {
-        timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        time++;
-                        timerTextView.setText(getTimerText());
-                    }
-                });
+        client = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url+"multiconnect");
+        client.connect();
+
+        JSONObject jsonGameId = new JSONObject();
+        try {
+            jsonGameId.put("gameId", Integer.toString(gameId));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        client.send("/start", jsonGameId.toString()).subscribe();
+
+        disposableClient = client.topic("/topic/game-progress/" + gameId).subscribe(topicMessage -> {
+            try{
+                JSONObject msg = new JSONObject(topicMessage.getPayload());
+                game = new Game(msg);
+            }catch (JSONException e) {
+                e.printStackTrace();
             }
-        };
-        timer.scheduleAtFixedRate(timerTask,0,1000);
+        }, throwable -> {
+            Log.d(TAG, "error");
+        });
+
+        client.withClientHeartbeat(15000);
     }
-
-    private String getTimerText() {
-        int rounded = (int) Math.round(time);
-        int seconds = ((rounded % 86400)%3600)%60;
-        int minutes = ((rounded % 86400)%3600)/60;
-
-        return String.format("%d:%02d", minutes, seconds);
-    }
-
 
     private void startGame() {
         board.clear();
@@ -117,10 +133,14 @@ public class MultiplayerActivity extends AppCompatActivity {
             }
         }while(!hasSet(boardCards));
 
-        pointTextView = findViewById(R.id.pointTextView);
-        timerTextView = findViewById(R.id.timerTextView);
-        pointTextView.setText("0");
-        timerTextView.setText("0:00");
+        opponentPointTextView = findViewById(R.id.opponentPointTextView);
+        opponentPointTextView.setText("0");
+        ownPointTextView = findViewById(R.id.ownPointTextView);
+        ownPointTextView.setText("0");
+        setBtn = findViewById(R.id.callSETBtn);
+
+        tableLayout = (TableLayout) findViewById(R.id.gameTableLayout);
+        tableLayout.setVisibility(View.INVISIBLE);
     }
 
     public void onCardClick(View view){
@@ -146,13 +166,12 @@ public class MultiplayerActivity extends AppCompatActivity {
                             board.get(i).setBackgroundResource(R.drawable.card_background_right);
                         }
                     }
-                    int point = Integer.parseInt((String) pointTextView.getText());
-                    pointTextView.setText(String.valueOf(++point));
+                    int point = Integer.parseInt((String) ownPointTextView.getText());
+                    ownPointTextView.setText(String.valueOf(++point));
                     stopUserInteractions = true;
                     removeCardsFromBoard();
 
                     if (isGameOver() || !hasSet(boardCards)) {
-                        timerTask.cancel();
                         endGame();
                     }
 
@@ -288,8 +307,8 @@ public class MultiplayerActivity extends AppCompatActivity {
 
     private void endGame(){
         Intent egs = new Intent(this, EndGameScreenActivity.class);
-        egs.putExtra("time", timerTextView.getText());
-        egs.putExtra("score", pointTextView.getText());
+        egs.putExtra("opponentScore", opponentPointTextView.getText());
+        egs.putExtra("ownScore", ownPointTextView.getText());
         egs.putExtra("diff", difficulty.toString());
         startActivity(egs);
     }
@@ -304,5 +323,4 @@ public class MultiplayerActivity extends AppCompatActivity {
         }
         return !hasVisible;
     }
-
 }

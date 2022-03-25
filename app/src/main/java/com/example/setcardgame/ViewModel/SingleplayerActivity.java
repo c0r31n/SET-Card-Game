@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -150,7 +148,7 @@ public class SingleplayerActivity extends AppCompatActivity {
             }
         }while(!hasSet(boardCards));
 
-        pointTextView = findViewById(R.id.pointTextView);
+        pointTextView = findViewById(R.id.opponentPointTextView);
         timerTextView = findViewById(R.id.timerTextView);
         pointTextView.setText("0");
         timerTextView.setText("0:00");

@@ -10,4 +10,15 @@ public enum Quantity {
     Quantity(String label) {
         this.label = label;
     }
+
+    public static Quantity getQuantityFromString(String QUANTITY){
+        if (QUANTITY.equals("ONE")){
+            return Quantity.ONE;
+        }
+        else if (QUANTITY.equals("TWO")){
+            return Quantity.TWO;
+        }
+
+        return Quantity.THREE;
+    }
 }

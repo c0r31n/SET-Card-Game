@@ -7,7 +7,7 @@
     tools:context=".ViewModel.multiplayer.MultiplayerActivity">
 
     <TextView
-        android:id="@+id/pointTextView"
+        android:id="@+id/opponentPointTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -18,12 +18,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/timerTextView"
+        android:id="@+id/ownPointTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="@string/timerTextView"
+        android:text="@string/pointTextView"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +36,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pointTextView"
+        app:layout_constraintTop_toBottomOf="@+id/opponentPointTextView"
         app:layout_constraintVertical_bias="0.0" />
 
     <TableLayout

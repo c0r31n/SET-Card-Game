@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 import com.example.setcardgame.Model.ScoreboardDataService;
 import com.example.setcardgame.Model.ScoreboardModel;
 import com.example.setcardgame.R;
-import com.example.setcardgame.ViewModel.scoreboard.MyScoresActivity;
 
 import org.json.JSONObject;
 

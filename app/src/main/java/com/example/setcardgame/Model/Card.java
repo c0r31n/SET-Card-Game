@@ -11,6 +11,12 @@ public class Card {
         this.quantity = quantity;
     }
 
+    public Card(String color, String shape, String quantity) {
+        this.color = Color.getColorFromString(color);
+        this.shape = Shape.getShapeFromString(shape);
+        this.quantity = Quantity.getQuantityFromString(quantity);
+    }
+
     public Color getColor() {
         return color;
     }
