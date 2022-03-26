@@ -7,11 +7,19 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
+<<<<<<< HEAD
             <value value="C:\Users\vrabe\.android\avd\S20_API_32_1.avd" />
+=======
+            <value value="C:\Users\vrabe\.android\avd\S20_API_32.avd" />
+>>>>>>> main
           </Key>
         </deviceKey>
       </Target>
     </targetSelectedWithDropDown>
+<<<<<<< HEAD
     <timeTargetWasSelectedWithDropDown value="2022-03-24T17:14:42.806672700Z" />
+=======
+    <timeTargetWasSelectedWithDropDown value="2022-03-04T12:23:16.433208400Z" />
+>>>>>>> main
   </component>
 </project>

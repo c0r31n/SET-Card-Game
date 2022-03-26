@@ -1,6 +1,7 @@
 package com.example.setcardgame.ViewModel;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.setcardgame.Model.Card;
 import com.example.setcardgame.Model.Color;
@@ -49,11 +51,19 @@ public class SingleplayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singleplayer);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int height = displayMetrics.heightPixels;
+        Log.d("magas", "height: "+height);
+
         Intent sp = getIntent();
         username = sp.getStringExtra("username");
         if (!sp.getStringExtra("diffMode").isEmpty()){
             difficulty = Difficulty.getDifficultyFromString(sp.getStringExtra("diffMode"));
         }
+
         startGame();
         timer = new Timer();
         startTimer();
@@ -107,6 +117,7 @@ public class SingleplayerActivity extends AppCompatActivity {
         if (difficulty == Difficulty.NORMAL){
             TableRow lastTableRow = (TableRow) findViewById(R.id.tableRow3);
             tableLayout.removeView(lastTableRow);
+
         }
 
         if (difficulty == Difficulty.EASY){
@@ -216,15 +227,24 @@ public class SingleplayerActivity extends AppCompatActivity {
     }
 
     private void resetCardBackgrounds(){
-        resetBackgroundTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                for (int i=0; board.size()>i; i++){
-                    board.get(i).setBackgroundResource(R.drawable.card_background_empty);
+        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.P){
+            resetBackgroundTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    for (int i=0; board.size()>i; i++){
+                        board.get(i).setBackgroundResource(R.drawable.card_background_empty);
+                    }
+                    stopUserInteractions = false;
                 }
-                stopUserInteractions = false;
+            }, 300);
+        }
+        else{
+            for (int i=0; board.size()>i; i++){
+                board.get(i).setBackgroundResource(R.drawable.card_background_empty);
             }
-        }, 300);
+            stopUserInteractions = false;
+        }
+
     }
 
     public boolean dispatchTouchEvent(MotionEvent ev) {
