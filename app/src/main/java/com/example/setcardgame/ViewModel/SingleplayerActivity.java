@@ -5,9 +5,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -38,6 +38,7 @@ public class SingleplayerActivity extends AppCompatActivity {
     private TextView pointTextView;
     private TextView timerTextView;
     private Difficulty difficulty = Difficulty.NORMAL;
+    private String username;
 
     private Timer timer;
     private TimerTask timerTask;
@@ -58,8 +59,9 @@ public class SingleplayerActivity extends AppCompatActivity {
         Log.d("magas", "height: "+height);
 
         Intent sp = getIntent();
+        username = sp.getStringExtra("username");
         if (!sp.getStringExtra("diffMode").isEmpty()){
-            difficulty = Difficulty.valueOf(sp.getStringExtra("diffMode"));
+            difficulty = Difficulty.getDifficultyFromString(sp.getStringExtra("diffMode"));
         }
 
         startGame();
@@ -75,7 +77,10 @@ public class SingleplayerActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         time++;
-                        timerTextView.setText(getTimerText());
+                        int time = getTimer();
+                        int seconds = time%60;
+                        int minutes = time/60;
+                        timerTextView.setText(String.format("%d:%02d", minutes, seconds));
                     }
                 });
             }
@@ -83,12 +88,10 @@ public class SingleplayerActivity extends AppCompatActivity {
         timer.scheduleAtFixedRate(timerTask,0,1000);
     }
 
-    private String getTimerText() {
+    private int getTimer() {
         int rounded = (int) Math.round(time);
-        int seconds = ((rounded % 86400)%3600)%60;
-        int minutes = ((rounded % 86400)%3600)/60;
 
-        return String.format("%d:%02d", minutes, seconds);
+        return (rounded % 86400)%3600;
     }
 
 
@@ -109,8 +112,9 @@ public class SingleplayerActivity extends AppCompatActivity {
         board.add((ImageView)findViewById(R.id.card7));
         board.add((ImageView)findViewById(R.id.card8));
 
+        TableLayout tableLayout = (TableLayout) findViewById(R.id.gameTableLayout);
+
         if (difficulty == Difficulty.NORMAL){
-            TableLayout tableLayout = (TableLayout) findViewById(R.id.gameTableLayout);
             TableRow lastTableRow = (TableRow) findViewById(R.id.tableRow3);
             tableLayout.removeView(lastTableRow);
 
@@ -120,6 +124,17 @@ public class SingleplayerActivity extends AppCompatActivity {
             board.add((ImageView)findViewById(R.id.card9));
             board.add((ImageView)findViewById(R.id.card10));
             board.add((ImageView)findViewById(R.id.card11));
+
+            if (getScreeSizeInInches() < 5.3){
+                ImageView card = (ImageView)findViewById(R.id.card8);
+                ViewGroup.LayoutParams params =card.getLayoutParams();
+                params.height*=0.8;
+                params.width*=0.8;
+
+                for (ImageView cards : board){
+                    cards.setLayoutParams(params);
+                }
+            }
         }
 
         do {
@@ -144,7 +159,7 @@ public class SingleplayerActivity extends AppCompatActivity {
             }
         }while(!hasSet(boardCards));
 
-        pointTextView = findViewById(R.id.pointTextView);
+        pointTextView = findViewById(R.id.opponentPointTextView);
         timerTextView = findViewById(R.id.timerTextView);
         pointTextView.setText("0");
         timerTextView.setText("0:00");
@@ -324,9 +339,10 @@ public class SingleplayerActivity extends AppCompatActivity {
 
     private void endGame(){
         Intent egs = new Intent(this, EndGameScreenActivity.class);
-        egs.putExtra("time", timerTextView.getText());
+        egs.putExtra("time", ""+getTimer());
         egs.putExtra("score", pointTextView.getText());
         egs.putExtra("diff", difficulty.toString());
+        egs.putExtra("username", username);
         startActivity(egs);
     }
 
@@ -339,6 +355,16 @@ public class SingleplayerActivity extends AppCompatActivity {
             }
         }
         return !hasVisible;
+    }
+
+    private double getScreeSizeInInches(){
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        double mWidthPixels = dm.widthPixels;
+        double mHeightPixels = dm.heightPixels;
+        double x = Math.pow(mWidthPixels/dm.xdpi,2);
+        double y = Math.pow(mHeightPixels/dm.ydpi,2);
+        return Math.sqrt(x+y);
     }
 
 }

@@ -14,6 +14,21 @@
     <string name="howToTitle">How To Play</string>
     <string name="easyBtn">Easy</string>
     <string name="normalBtn">Normal</string>
+    <string name="callSETBtn">SET</string>
     <string name="difficultyTextView">NORMAL</string>
+    <string name="randomGameBtn">Random Game</string>
+    <string name="privateGameBtn">Private Game</string>
+    <string name="connectionTextTV">CONNECTION CODE</string>
+    <string name="waitingTV">SEARCHING FOR GAME</string>
+    <string name="stopWaitingBtn">STOP SEARCHING</string>
+    <string name="deletePrivateGameBtn">DELETE GAME</string>
+    <string name="joinGameBtn">Join Game</string>
+    <string name="createGameBtn">Create Game</string>
+    <string name="joinWithCodeBtn">Join</string>
+    <string name="enterConnectionCodeText">ENTER CONNECTION CODE</string>
+    <string name="myScoresBtn">My Scores</string>
+    <string name="worldScoresBtn">World Scores</string>
+    <string name="backBtn">Back</string>
+
 
 </resources>

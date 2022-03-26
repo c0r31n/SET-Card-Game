@@ -12,10 +12,14 @@ import com.example.setcardgame.R;
 
 public class DifficultyActivity extends AppCompatActivity {
 
+    private String username;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_difficulty);
+        Intent egs = getIntent();
+        username = egs.getStringExtra("username");
     }
 
     public void switchToSingleplayer(View v){
@@ -26,6 +30,7 @@ public class DifficultyActivity extends AppCompatActivity {
         else {
             sp.putExtra("diffMode", Difficulty.NORMAL.toString());
         }
+        sp.putExtra("username", username);
         startActivity(sp);
     }
 }

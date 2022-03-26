@@ -8,7 +8,7 @@
 
     <Button
         android:id="@+id/singleplayerBtn"
-        android:layout_width="160dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
         android:backgroundTint="@color/dark_blue"
         android:gravity="center"
@@ -16,41 +16,46 @@
         android:text="@string/singleplayerBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.186" />
-
-    <Button
-        android:id="@+id/multiplayerBtn"
-        android:layout_width="160dp"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/dark_blue"
-        android:gravity="center"
-        android:onClick="switchToMultiplayer"
-        android:text="@string/multiplayerBtn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.326" />
+        app:layout_constraintVertical_bias="0.176" />
 
     <Button
         android:id="@+id/scoreboardBtn"
-        android:layout_width="160dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
+        android:layout_marginTop="50dp"
         android:backgroundTint="@color/dark_blue"
         android:gravity="center"
         android:onClick="switchToScoreboard"
         android:text="@string/scoreboardBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.468" />
+        app:layout_constraintTop_toBottomOf="@+id/multiplayerBtn"
+        app:layout_constraintVertical_bias="0.054" />
+
+    <Button
+        android:id="@+id/multiplayerBtn"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="47dp"
+        android:backgroundTint="@color/dark_blue"
+        android:gravity="center"
+        android:onClick="switchToMultiplayer"
+        android:text="@string/multiplayerBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/singleplayerBtn"
+        app:layout_constraintVertical_bias="0.047" />
 
     <Button
         android:id="@+id/howToBtn"
-        android:layout_width="160dp"
+        android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginTop="55dp"
         android:backgroundTint="@color/dark_blue"
@@ -59,8 +64,9 @@
         android:text="@string/howToTitle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.576" />
+        app:layout_constraintTop_toBottomOf="@+id/scoreboardBtn"
+        app:layout_constraintVertical_bias="0.061" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

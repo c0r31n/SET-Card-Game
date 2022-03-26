@@ -10,4 +10,15 @@ public enum Shape {
     Shape(String label) {
         this.label = label;
     }
+
+    public static Shape getShapeFromString(String SHAPE){
+        if (SHAPE.equals("DIAMOND")){
+            return Shape.DIAMOND;
+        }
+        else if (SHAPE.equals("WAVY")){
+            return Shape.WAVY;
+        }
+
+        return Shape.OVAL;
+    }
 }
