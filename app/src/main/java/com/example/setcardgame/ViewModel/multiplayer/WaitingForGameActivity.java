@@ -37,26 +37,18 @@ public class WaitingForGameActivity extends AppCompatActivity {
         client = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url+"multiconnect");
         client.connect();
 
-        JSONObject jsonPlayer = new JSONObject();
-        try {
-            jsonPlayer.put("username", username);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        client.send("/app/connect/random", jsonPlayer.toString()).subscribe();
-
         disposable = client.topic("/topic/waiting").subscribe(topicMessage -> { //stop search után nem jön info
             try{
                 JSONObject msg = new JSONObject(topicMessage.getPayload());
                 if(username.equals(msg.getString("player1"))){
                     game = new Game(msg);
                     Log.d(TAG, game.getGameId()+"");
-                    if (!msg.getString("player2").equals("null")){                    //második kliens nem iratkozik fel?
+                    if (!msg.getString("player2").equals("null")){
                         switchToMultiplayer();
                     }
                 }
 
-                Log.d(TAG, "player1: " + msg.getString("player1"));
+                Log.d(TAG, "player1: " + msg.getString("player1"));               //második kliens nem iratkozik fel?
                 Log.d(TAG, "player2: " + msg.getString("player2"));
                 Log.d(TAG, "username: " + username);
                 if (username.equals(msg.getString("player2")) && !msg.getString("player1").equals("null")){
@@ -70,6 +62,14 @@ public class WaitingForGameActivity extends AppCompatActivity {
         }, throwable -> {
             Log.d(TAG, "error");
         });
+
+        JSONObject jsonPlayer = new JSONObject();
+        try {
+            jsonPlayer.put("username", username);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        client.send("/app/connect/random", jsonPlayer.toString()).subscribe();
 
         client.withClientHeartbeat(15000);
     }

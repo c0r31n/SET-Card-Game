@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -54,7 +55,7 @@ public class MultiplayerActivity extends AppCompatActivity {
     private Disposable disposableClient;
     private final String url = "wss://test-set-card-game.herokuapp.com/";
 
-    private final String TAG = "alma";
+    private final String TAG = "start";
 
     private Timer resetBackgroundTimer = new Timer();
     private boolean stopUserInteractions = false;
@@ -78,18 +79,20 @@ public class MultiplayerActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        client.send("/start", jsonGameId.toString()).subscribe();
-
         disposableClient = client.topic("/topic/game-progress/" + gameId).subscribe(topicMessage -> {
             try{
                 JSONObject msg = new JSONObject(topicMessage.getPayload());
                 game = new Game(msg);
+                Log.d(TAG, ""+game.getGameId());
+                Toast.makeText(MultiplayerActivity.this, "data", Toast.LENGTH_SHORT).show();
             }catch (JSONException e) {
                 e.printStackTrace();
             }
         }, throwable -> {
             Log.d(TAG, "error");
         });
+
+        client.send("/start", jsonGameId.toString()).subscribe();
 
         client.withClientHeartbeat(15000);
     }
