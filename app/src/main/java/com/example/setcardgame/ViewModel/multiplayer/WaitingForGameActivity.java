@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.setcardgame.Model.Game;
+import com.example.setcardgame.Model.WebsocketClient;
 import com.example.setcardgame.R;
 
 import org.json.JSONException;
@@ -19,9 +21,9 @@ import ua.naiksoftware.stomp.StompClient;
 
 public class WaitingForGameActivity extends AppCompatActivity {
 
-    private StompClient client;
+//    private StompClient client;
     private Game game;
-    private Disposable disposable;
+//    private Disposable disposable;
     private String username;
     private final String url = "wss://test-set-card-game.herokuapp.com/";
 
@@ -34,10 +36,44 @@ public class WaitingForGameActivity extends AppCompatActivity {
         Intent wfg = getIntent();
         username = wfg.getStringExtra("username");
 
-        client = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url+"multiconnect");
-        client.connect();
+//        client = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url+"multiconnect");
+//        client.connect();
+//
+//        disposable = client.topic("/topic/waiting").subscribe(topicMessage -> {
+//            try{
+//                JSONObject msg = new JSONObject(topicMessage.getPayload());
+//                if(username.equals(msg.getString("player1"))){
+//                    game = new Game(msg);
+//                    Log.d(TAG, game.getGameId()+"");
+//                    if (!msg.getString("player2").equals("null")){
+//                        switchToMultiplayer();
+//                    }
+//                }
+//                if (username.equals(msg.getString("player2")) && !msg.getString("player1").equals("null")){
+//                    game = new Game(msg);
+//                    switchToMultiplayer();
+//                }
+//
+//            }catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }, throwable -> {
+//            Log.d(TAG, "error");
+//        });
+//
+//        JSONObject jsonPlayer = new JSONObject();
+//        try {
+//            jsonPlayer.put("username", username);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        client.send("/app/connect/random", jsonPlayer.toString()).subscribe();
+//
+//        client.withClientHeartbeat(15000);
 
-        disposable = client.topic("/topic/waiting").subscribe(topicMessage -> { //stop search után nem jön info
+
+        WebsocketClient.createWebsocket(url+"multiconnect");
+        Disposable topic = WebsocketClient.mStompClient.topic("/topic/waiting").subscribe(topicMessage -> {
             try{
                 JSONObject msg = new JSONObject(topicMessage.getPayload());
                 if(username.equals(msg.getString("player1"))){
@@ -47,21 +83,17 @@ public class WaitingForGameActivity extends AppCompatActivity {
                         switchToMultiplayer();
                     }
                 }
-
-                Log.d(TAG, "player1: " + msg.getString("player1"));               //második kliens nem iratkozik fel?
-                Log.d(TAG, "player2: " + msg.getString("player2"));
-                Log.d(TAG, "username: " + username);
                 if (username.equals(msg.getString("player2")) && !msg.getString("player1").equals("null")){
                     game = new Game(msg);
                     switchToMultiplayer();
                 }
-
             }catch (JSONException e) {
                 e.printStackTrace();
             }
         }, throwable -> {
             Log.d(TAG, "error");
         });
+        WebsocketClient.compositeDisposable.add(topic);
 
         JSONObject jsonPlayer = new JSONObject();
         try {
@@ -69,14 +101,14 @@ public class WaitingForGameActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        client.send("/app/connect/random", jsonPlayer.toString()).subscribe();
 
-        client.withClientHeartbeat(15000);
+        WebsocketClient.mStompClient.send("/app/connect/random", jsonPlayer.toString()).subscribe();
+
     }
 
     public void switchToMultiplayer(){
-        disposable.dispose();
-        client.disconnect();
+//        disposable.dispose();
+//        client.disconnect();
         Intent mp = new Intent(this, MultiplayerActivity.class);
         mp.putExtra("username", username);
         mp.putExtra("gameId", Integer.toString(game.getGameId()));
@@ -91,15 +123,20 @@ public class WaitingForGameActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            client.send("/app/game/destroy", destroyGame.toString()).subscribe();
+//            client.send("/app/game/destroy", destroyGame.toString()).subscribe();
+
+            WebsocketClient.mStompClient.send("/app/game/destroy", destroyGame.toString()).subscribe();
 
             Log.d(TAG, "Game destroyed");
 
         }
-        disposable.dispose();
-        client.disconnect();
+//        disposable.dispose();
+//        client.disconnect();
+
+        WebsocketClient.disconnectWebsocket();
+
         game = null;
-        client = null;
+//        client = null;
 
         Intent mp = new Intent(this, SelectMultiplayerTypeActivity.class);
         mp.putExtra("username", username);

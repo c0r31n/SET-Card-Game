@@ -20,9 +20,11 @@ import com.example.setcardgame.Model.Difficulty;
 import com.example.setcardgame.Model.Game;
 import com.example.setcardgame.Model.Quantity;
 import com.example.setcardgame.Model.Shape;
+import com.example.setcardgame.Model.WebsocketClient;
 import com.example.setcardgame.R;
 import com.example.setcardgame.ViewModel.EndGameScreenActivity;
 
+import org.java_websocket.client.WebSocketClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,6 +34,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.reactivex.disposables.Disposable;
+import okhttp3.WebSocket;
 import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.StompClient;
 
@@ -69,32 +72,60 @@ public class MultiplayerActivity extends AppCompatActivity {
         gameId = Integer.parseInt(mp.getStringExtra("gameId"));
         startGame();
 
-        client = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url+"multiconnect");
-        client.connect();
+//        client = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url+"multiconnect");
+//        client.connect();
 
         JSONObject jsonGameId = new JSONObject();
         try {
-            jsonGameId.put("gameId", Integer.toString(gameId));
+            jsonGameId.put("gameId", gameId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        disposableClient = client.topic("/topic/game-progress/" + gameId).subscribe(topicMessage -> {
+//        disposableClient = client.topic("/topic/game-progress/" + gameId).subscribe(topicMessage -> {
+//            try{
+//                JSONObject msg = new JSONObject(topicMessage.getPayload());
+//                game = new Game(msg);
+//                Log.d(TAG, ""+game.getGameId());
+//                Toast.makeText(MultiplayerActivity.this, "data", Toast.LENGTH_SHORT).show();
+//                if (tableLayout.getVisibility()==View.INVISIBLE){
+//                    tableLayout.setVisibility(View.VISIBLE);
+//                }
+//            }catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }, throwable -> {
+//            Log.d(TAG, "error");
+//        });
+//
+//        client.send("/start", jsonGameId.toString()).subscribe();
+//
+//        client.withClientHeartbeat(15000);
+
+
+
+        Disposable topic = WebsocketClient.mStompClient.topic("/topic/game-progress/" + gameId).subscribe(topicMessage -> {
             try{
                 JSONObject msg = new JSONObject(topicMessage.getPayload());
                 game = new Game(msg);
-                Log.d(TAG, ""+game.getGameId());
-                Toast.makeText(MultiplayerActivity.this, "data", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "ez itt: "+game.getGameId());
+                runOnUiThread (new Thread(new Runnable() {
+                    public void run() {
+                        if (tableLayout.getVisibility()==View.INVISIBLE){
+                            tableLayout.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }));
+
             }catch (JSONException e) {
                 e.printStackTrace();
             }
         }, throwable -> {
-            Log.d(TAG, "error");
+            Log.d(TAG, "ez meg error");
         });
+        WebsocketClient.compositeDisposable.add(topic);
 
-        client.send("/start", jsonGameId.toString()).subscribe();
-
-        client.withClientHeartbeat(15000);
+        WebsocketClient.mStompClient.send("/app/start", jsonGameId.toString()).subscribe();
     }
 
     private void startGame() {
