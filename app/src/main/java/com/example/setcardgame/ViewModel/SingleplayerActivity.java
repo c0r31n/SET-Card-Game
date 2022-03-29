@@ -16,11 +16,12 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.example.setcardgame.Model.Card;
-import com.example.setcardgame.Model.Color;
+import com.example.setcardgame.Model.Username;
+import com.example.setcardgame.Model.card.Card;
+import com.example.setcardgame.Model.card.Color;
 import com.example.setcardgame.Model.Difficulty;
-import com.example.setcardgame.Model.Quantity;
-import com.example.setcardgame.Model.Shape;
+import com.example.setcardgame.Model.card.Quantity;
+import com.example.setcardgame.Model.card.Shape;
 import com.example.setcardgame.R;
 
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ public class SingleplayerActivity extends AppCompatActivity {
     private TextView pointTextView;
     private TextView timerTextView;
     private Difficulty difficulty = Difficulty.NORMAL;
-    private String username;
 
     private Timer timer;
     private TimerTask timerTask;
@@ -59,7 +59,6 @@ public class SingleplayerActivity extends AppCompatActivity {
         Log.d("magas", "height: "+height);
 
         Intent sp = getIntent();
-        username = sp.getStringExtra("username");
         if (!sp.getStringExtra("diffMode").isEmpty()){
             difficulty = Difficulty.getDifficultyFromString(sp.getStringExtra("diffMode"));
         }
@@ -342,7 +341,6 @@ public class SingleplayerActivity extends AppCompatActivity {
         egs.putExtra("time", ""+getTimer());
         egs.putExtra("score", pointTextView.getText());
         egs.putExtra("diff", difficulty.toString());
-        egs.putExtra("username", username);
         startActivity(egs);
     }
 

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.setcardgame.Model.ScoreboardDataService;
 import com.example.setcardgame.Model.ScoreboardModel;
+import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.R;
 
 import org.json.JSONObject;
@@ -20,7 +21,7 @@ public class EndGameScreenActivity extends AppCompatActivity {
     private int seconds;
     private String finalScore;
     private String finalDifficulty;
-    private String username;
+    private String username = Username.getUsername();
     private ScoreboardDataService scoreboardDataService = new ScoreboardDataService(EndGameScreenActivity.this);
 
     @Override
@@ -29,7 +30,6 @@ public class EndGameScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_end_game_screen);
 
         Intent egs = getIntent();
-        username = egs.getStringExtra("username");
         finalTime = Integer.parseInt(egs.getStringExtra("time"));
         finalScore = egs.getStringExtra("score");
         finalDifficulty = egs.getStringExtra("diff");
@@ -47,7 +47,6 @@ public class EndGameScreenActivity extends AppCompatActivity {
     public void newSingleplayerGame(View v){
         Intent sp = new Intent(this, SingleplayerActivity.class);
         sp.putExtra("diffMode", finalDifficulty);
-        sp.putExtra("username", username);
         startActivity(sp);
     }
 

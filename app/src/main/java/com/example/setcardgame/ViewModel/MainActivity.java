@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.setcardgame.Model.Difficulty;
+import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.R;
 import com.example.setcardgame.ViewModel.multiplayer.SelectMultiplayerTypeActivity;
 import com.example.setcardgame.ViewModel.scoreboard.ScoreboardActivity;
@@ -41,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
             editor.putString("username", username.toString());
             editor.commit();
         }
-//        Log.d("username", sp.getString("username", "def"));
-//        Toast.makeText(MainActivity.this, sp.getString("username", "def"), Toast.LENGTH_LONG).show();
+        Username.setUsername(sp.getString("username", "def"));
 
         wakeUp();
     }
@@ -70,19 +70,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void switchToScoreboard(View v){
         Intent sb = new Intent(this, ScoreboardActivity.class);
-        sb.putExtra("username", sp.getString("username", "default"));
         startActivity(sb);
     }
 
     public void switchToDifficulty(View v){
         Intent d = new Intent(this, DifficultyActivity.class);
-        d.putExtra("username", sp.getString("username", "default"));
         startActivity(d);
     }
 
     public void switchToMultiplayer(View v){
         Intent mp = new Intent(this, SelectMultiplayerTypeActivity.class);
-        mp.putExtra("username", sp.getString("username", "default"));
         startActivity(mp);
     }
 

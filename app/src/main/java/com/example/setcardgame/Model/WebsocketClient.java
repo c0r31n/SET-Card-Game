@@ -11,6 +11,7 @@ import ua.naiksoftware.stomp.StompClient;
 public class WebsocketClient {
     public static StompClient mStompClient;
     public static CompositeDisposable compositeDisposable;
+    public static final String URL = "wss://test-set-card-game.herokuapp.com/";
     private static String TAG = "websocket";
 
     public static void createWebsocket(String WEBSOCKET_CONNECT_URL) {

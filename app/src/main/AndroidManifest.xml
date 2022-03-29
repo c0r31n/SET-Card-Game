@@ -41,7 +41,6 @@
             android:name=".ViewModel.multiplayer.CreatePrivateGameActivity"
             android:exported="false"
             android:label="Create Private Game"
-            android:parentActivityName=".ViewModel.multiplayer.PrivateGameActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.multiplayer.SelectMultiplayerTypeActivity"

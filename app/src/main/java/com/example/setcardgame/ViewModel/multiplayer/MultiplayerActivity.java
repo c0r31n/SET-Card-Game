@@ -1,6 +1,5 @@
 package com.example.setcardgame.ViewModel.multiplayer;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,21 +9,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.setcardgame.Model.Card;
-import com.example.setcardgame.Model.Color;
+import com.example.setcardgame.Model.Username;
+import com.example.setcardgame.Model.card.Card;
+import com.example.setcardgame.Model.card.Color;
 import com.example.setcardgame.Model.Difficulty;
 import com.example.setcardgame.Model.Game;
-import com.example.setcardgame.Model.Quantity;
-import com.example.setcardgame.Model.Shape;
+import com.example.setcardgame.Model.card.Quantity;
+import com.example.setcardgame.Model.card.Shape;
 import com.example.setcardgame.Model.WebsocketClient;
 import com.example.setcardgame.R;
 import com.example.setcardgame.ViewModel.EndGameScreenActivity;
 
-import org.java_websocket.client.WebSocketClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,8 +32,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import io.reactivex.disposables.Disposable;
-import okhttp3.WebSocket;
-import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.StompClient;
 
 public class MultiplayerActivity extends AppCompatActivity {
@@ -50,13 +46,10 @@ public class MultiplayerActivity extends AppCompatActivity {
     private Button setBtn;
     private TableLayout tableLayout;
     private Difficulty difficulty = Difficulty.NORMAL;
-    private String username;
+    private String username = Username.getUsername();
     private int gameId;
 
-    private StompClient client;
     private Game game;
-    private Disposable disposableClient;
-    private final String url = "wss://test-set-card-game.herokuapp.com/";
 
     private final String TAG = "start";
 
@@ -68,12 +61,8 @@ public class MultiplayerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multiplayer);
         Intent mp = getIntent();
-        username = mp.getStringExtra("username");
         gameId = Integer.parseInt(mp.getStringExtra("gameId"));
         startGame();
-
-//        client = Stomp.over(Stomp.ConnectionProvider.OKHTTP, url+"multiconnect");
-//        client.connect();
 
         JSONObject jsonGameId = new JSONObject();
         try {
@@ -81,28 +70,6 @@ public class MultiplayerActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-//        disposableClient = client.topic("/topic/game-progress/" + gameId).subscribe(topicMessage -> {
-//            try{
-//                JSONObject msg = new JSONObject(topicMessage.getPayload());
-//                game = new Game(msg);
-//                Log.d(TAG, ""+game.getGameId());
-//                Toast.makeText(MultiplayerActivity.this, "data", Toast.LENGTH_SHORT).show();
-//                if (tableLayout.getVisibility()==View.INVISIBLE){
-//                    tableLayout.setVisibility(View.VISIBLE);
-//                }
-//            }catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }, throwable -> {
-//            Log.d(TAG, "error");
-//        });
-//
-//        client.send("/start", jsonGameId.toString()).subscribe();
-//
-//        client.withClientHeartbeat(15000);
-
-
 
         Disposable topic = WebsocketClient.mStompClient.topic("/topic/game-progress/" + gameId).subscribe(topicMessage -> {
             try{
