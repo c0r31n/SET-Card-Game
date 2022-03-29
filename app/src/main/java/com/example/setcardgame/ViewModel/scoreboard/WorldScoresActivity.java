@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.setcardgame.Model.ScoreboardDataService;
 import com.example.setcardgame.Model.ScoreboardModel;
+import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.R;
 
 import java.util.List;
@@ -24,21 +25,18 @@ import java.util.UUID;
 
 public class WorldScoresActivity extends AppCompatActivity {
 
-    private String username;
+    private String username = Username.getUsername();
     private ScoreboardDataService scoreboardDataService = new ScoreboardDataService(WorldScoresActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_world_scores);
-        Intent ws = getIntent();
-        username = ws.getStringExtra("username");
         getWorldScores();
     }
 
     public void switchToScoreboard(View v){
         Intent sb = new Intent(this, ScoreboardActivity.class);
-        sb.putExtra("username", username);
         startActivity(sb);
     }
 

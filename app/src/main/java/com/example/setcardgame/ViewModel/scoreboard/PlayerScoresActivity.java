@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.setcardgame.Model.ScoreboardDataService;
 import com.example.setcardgame.Model.ScoreboardModel;
+import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.R;
 import com.example.setcardgame.ViewModel.MainActivity;
 
@@ -19,22 +20,18 @@ import java.util.List;
 
 public class PlayerScoresActivity extends AppCompatActivity {
 
-    private String username;
+    private String username = Username.getUsername();
     private ScoreboardDataService scoreboardDataService = new ScoreboardDataService(PlayerScoresActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_scores);
-        Intent ms = getIntent();
-        username = ms.getStringExtra("username");
-        Log.d("name", username);
         getMyScores();
     }
 
     public void switchToScoreboard(View v){
         Intent sb = new Intent(this, ScoreboardActivity.class);
-        sb.putExtra("username", username);
         startActivity(sb);
     }
 

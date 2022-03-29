@@ -51,7 +51,7 @@ public class MultiplayerActivity extends AppCompatActivity {
 
     private Game game;
 
-    private final String TAG = "start";
+    private final String TAG = "multi";
 
     private Timer resetBackgroundTimer = new Timer();
     private boolean stopUserInteractions = false;
