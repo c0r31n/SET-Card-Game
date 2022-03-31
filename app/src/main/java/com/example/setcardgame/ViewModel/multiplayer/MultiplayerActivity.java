@@ -15,26 +15,19 @@ import androidx.core.content.ContextCompat;
 
 import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.Model.card.Card;
-import com.example.setcardgame.Model.card.Color;
 import com.example.setcardgame.Model.Difficulty;
 import com.example.setcardgame.Model.Game;
-import com.example.setcardgame.Model.card.Quantity;
-import com.example.setcardgame.Model.card.Shape;
 import com.example.setcardgame.Model.WebsocketClient;
 import com.example.setcardgame.R;
-import com.example.setcardgame.ViewModel.EndGameScreenActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.UUID;
 
 import io.reactivex.disposables.Disposable;
-import ua.naiksoftware.stomp.StompClient;
 
 public class MultiplayerActivity extends AppCompatActivity {
 
@@ -54,6 +47,8 @@ public class MultiplayerActivity extends AppCompatActivity {
     private final String TAG = "multi";
 
     private Timer resetBackgroundTimer = new Timer();
+    private Timer resetTimer;
+    private Timer punishTimer = new Timer();
     private boolean stopUserInteractions = false;
 
     @Override
@@ -113,17 +108,34 @@ public class MultiplayerActivity extends AppCompatActivity {
 
                                 //3 cards have been selected
                                 if (tempGame.getSelectedCardIndexes().size()==3 && tempGame.getBlockedBy() == null){
+                                    if (game.getBlockedBy().toString().equals(username)){
+                                        resetTimer.cancel();
+                                        resetTimer.purge();
+                                    }
+
                                     game.setSelectedCardIndexes(tempGame.getSelectedCardIndexes());
                                     setSelectedCardsBackgroundForOpponent(game.getSelectedCardIndexes());
 
                                     if (game.hasSamePoints(tempGame.getPoints())){
                                         //wrong combo
-                                        if (game.getBlockedBy().toString().equals(username)){
-                                            //punish for error, maybe for 5 sec they cannot press SET again
-                                            Log.d(TAG, "you didn't find the set");
-                                        }
                                         unCorrectSelectedCards(tempGame.getSelectedCardIndexes());
 
+                                        game.clearSelectedCardIndexes();
+                                        selectedCardIds.clear();
+                                        selectedCards.clear();
+                                        resetCardBackgrounds();
+                                        resetButtonAndCardClicks();
+
+                                        if (game.getBlockedBy().toString().equals(username)){
+                                            //punish for error, maybe for 5 sec they cannot press SET again
+                                            resetButtonAndCardClicksOnError();
+                                            punishPlayerError();
+                                            Log.d(TAG, "you didn't find the set");
+                                        }
+                                        else{
+                                            resetButtonAndCardClicks();
+                                        }
+                                        game.setBlockedBy(null);
                                     }
                                     else{
                                         //right combo, board changed
@@ -150,14 +162,31 @@ public class MultiplayerActivity extends AppCompatActivity {
                                             Log.d(TAG, "END");
                                             endGame();
                                         }
-                                    }
 
-                                    game.setBlockedBy(null);
+                                        resetButtonAndCardClicks();
+                                        game.setBlockedBy(null);
+                                        game.clearSelectedCardIndexes();
+                                        selectedCardIds.clear();
+                                        selectedCards.clear();
+                                        resetCardBackgrounds();
+                                    }
+                                }
+                                if(game.getBlockedBy()!=null && tempGame.getSelectedCardIndexes().size()!=3 && tempGame.getBlockedBy() == null){    //time ran out. button has been reset
+                                    Log.d(TAG, "entered");
                                     game.clearSelectedCardIndexes();
                                     selectedCardIds.clear();
                                     selectedCards.clear();
                                     resetCardBackgrounds();
-                                    resetButtonAndCardClicks();       //ha lesz buntetes akkor ez valtozni fog
+                                    if (game.getBlockedBy().toString().equals(username)){
+                                        resetButtonAndCardClicksOnError();
+                                        punishPlayerError();
+                                        Log.d(TAG, "punished");
+                                    }
+                                    else{
+                                        resetButtonAndCardClicks();
+                                        Log.d(TAG, "not punished");
+                                    }
+                                    game.setBlockedBy(null);
                                 }
                             }
                         }
@@ -223,12 +252,45 @@ public class MultiplayerActivity extends AppCompatActivity {
         WebsocketClient.mStompClient.send("/app/gameplay/button", buttonPressJson.toString()).subscribe();
 
         //start timer for 3 sec, if it the player does not select 3 cards reset everything and punish them with a 5 sec cooldown
+        selectTimeCountDown(buttonPressJson);
+    }
+
+    private void selectTimeCountDown(JSONObject buttonPressJson){
+        resetTimer = new Timer();
+        resetTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                WebsocketClient.mStompClient.send("/app/gameplay/button", buttonPressJson.toString()).subscribe();
+            }
+        }, 3000);
+    }
+
+    private void punishPlayerError(){
+        punishTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (game.getBlockedBy() == null){
+                            resetButtonAndCardClicks();
+                        }
+                    }
+                });
+            }
+        }, 5000);
     }
 
     private void resetButtonAndCardClicks(){
         switchBoardClicks(false);
         setBtn.setEnabled(true);
         setBtn.setBackgroundTintList(ContextCompat.getColorStateList(MultiplayerActivity.this, R.color.dark_blue));
+    }
+
+    private void resetButtonAndCardClicksOnError(){
+        switchBoardClicks(false);
+        setBtn.setEnabled(false);
+        setBtn.setBackgroundTintList(ContextCompat.getColorStateList(MultiplayerActivity.this, R.color.dark_red));
     }
 
     private void updatePointTextViews(){
