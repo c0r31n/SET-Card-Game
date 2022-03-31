@@ -15,7 +15,6 @@ public class Game {
     private int gameId;
     private UUID player1;
     private UUID player2;
-    private GameStatus status;
     private ArrayList<Card> board = new ArrayList<>();
     private UUID winner;
     private UUID blockedBy;
@@ -112,14 +111,6 @@ public class Game {
 
     public void setPlayer2(UUID player2) {
         this.player2 = player2;
-    }
-
-    public GameStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(GameStatus status) {
-        this.status = status;
     }
 
     public ArrayList<Card> getBoard() {
