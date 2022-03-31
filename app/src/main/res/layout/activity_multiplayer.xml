@@ -32,6 +32,8 @@
         android:id="@+id/callSETBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/dark_blue"
+        android:onClick="onSETBtnClick"
         android:text="@string/callSETBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

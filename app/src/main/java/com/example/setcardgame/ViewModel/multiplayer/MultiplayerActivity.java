@@ -11,6 +11,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.Model.card.Card;
@@ -30,15 +31,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
 
 import io.reactivex.disposables.Disposable;
 import ua.naiksoftware.stomp.StompClient;
 
 public class MultiplayerActivity extends AppCompatActivity {
 
-    private ArrayList<ImageView> board = new ArrayList<>();
-    private ArrayList<Card> cards = new ArrayList<>();
-    private ArrayList<Card> boardCards = new ArrayList<>();
+    private ArrayList<ImageView> boardIV = new ArrayList<>();
     private ArrayList<Card> selectedCards = new ArrayList<>();
     private ArrayList<Integer> selectedCardIds = new ArrayList<>();
     private TextView opponentPointTextView;
@@ -62,7 +62,7 @@ public class MultiplayerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_multiplayer);
         Intent mp = getIntent();
         gameId = Integer.parseInt(mp.getStringExtra("gameId"));
-        startGame();
+        setBtn = findViewById(R.id.callSETBtn);
 
         JSONObject jsonGameId = new JSONObject();
         try {
@@ -74,15 +74,95 @@ public class MultiplayerActivity extends AppCompatActivity {
         Disposable topic = WebsocketClient.mStompClient.topic("/topic/game-progress/" + gameId).subscribe(topicMessage -> {
             try{
                 JSONObject msg = new JSONObject(topicMessage.getPayload());
-                game = new Game(msg);
-                Log.d(TAG, "ez itt: "+game.getGameId());
-                runOnUiThread (new Thread(new Runnable() {
-                    public void run() {
-                        if (tableLayout.getVisibility()==View.INVISIBLE){
-                            tableLayout.setVisibility(View.VISIBLE);
+                Game tempGame = new Game(msg);
+                Log.d(TAG, msg.toString());
+                if (tempGame.getPlayer1() != null && tempGame.getPlayer2() != null){
+                    runOnUiThread (new Thread(new Runnable() {
+                        public void run() {
+                            //start game
+                            if (game == null){
+                                    game = new Game(msg);
+                                    startGame();
+                            }
+                            else{
+                                //SET button press
+                                if (tempGame.getBlockedBy() != null && tempGame.getBlockedBy().toString().equals(username) && tempGame.getSelectedCardIndexes().isEmpty()){
+//                                    Log.d(TAG, "my block");
+                                    try {
+                                        game.setBlockedByString(msg.getString("blockedBy"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                else if (tempGame.getBlockedBy() != null && !tempGame.getBlockedBy().toString().equals(username) && tempGame.getSelectedCardIndexes().isEmpty()){
+//                                    Log.d(TAG, "opponent's block");
+                                    try {
+                                        game.setBlockedByString(msg.getString("blockedBy"));
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    setBtn.setEnabled(false);
+                                    setBtn.setBackgroundTintList(ContextCompat.getColorStateList(MultiplayerActivity.this, R.color.dark_red));
+                                }
+
+                                //opponent is selecting cards
+                                if (tempGame.getBlockedBy() != null && !tempGame.getBlockedBy().toString().equals(username)){
+                                    game.setSelectedCardIndexes(tempGame.getSelectedCardIndexes());
+                                    setSelectedCardsBackgroundForOpponent(game.getSelectedCardIndexes());
+                                }
+
+                                //3 cards have been selected
+                                if (tempGame.getSelectedCardIndexes().size()==3 && tempGame.getBlockedBy() == null){
+                                    game.setSelectedCardIndexes(tempGame.getSelectedCardIndexes());
+                                    setSelectedCardsBackgroundForOpponent(game.getSelectedCardIndexes());
+
+                                    if (game.hasSamePoints(tempGame.getPoints())){
+                                        //wrong combo
+                                        if (game.getBlockedBy().toString().equals(username)){
+                                            //punish for error, maybe for 5 sec they cannot press SET again
+                                            Log.d(TAG, "you didn't find the set");
+                                        }
+                                        unCorrectSelectedCards(tempGame.getSelectedCardIndexes());
+
+                                    }
+                                    else{
+                                        //right combo, board changed
+                                        correctSelectedCards(tempGame.getSelectedCardIndexes());
+                                        game.setPoints(tempGame.getPoints());
+                                        updatePointTextViews();
+                                        game.setBoard(tempGame.getBoard());
+                                        game.setNullCardIndexes(tempGame.getNullCardIndexes());
+
+                                        for (int i = 0; game.getSelectedCardIndexes().size()>i;i++){
+                                            if (!game.getNullCardIndexes().isEmpty()){
+                                                boardIV.get(game.getSelectedCardIndexes().get(i)).setVisibility(View.INVISIBLE);
+                                            }
+                                            else{
+                                                ImageView img = boardIV.get(game.getSelectedCardIndexes().get(i));
+                                                int resImage = getResources().getIdentifier(game.getBoard().get(game.getSelectedCardIndexes().get(i)).toString(), "drawable", getPackageName());
+                                                img.setImageResource(resImage);
+                                                img.setContentDescription(game.getBoard().get(game.getSelectedCardIndexes().get(i)).toString());
+                                            }
+                                        }
+
+                                        if (tempGame.getWinner() != null){
+                                            game.setWinner(tempGame.getWinner());
+                                            Log.d(TAG, "END");
+                                            endGame();
+                                        }
+                                    }
+
+                                    game.setBlockedBy(null);
+                                    game.clearSelectedCardIndexes();
+                                    selectedCardIds.clear();
+                                    selectedCards.clear();
+                                    resetCardBackgrounds();
+                                    resetButtonAndCardClicks();       //ha lesz buntetes akkor ez valtozni fog
+                                }
+                            }
                         }
-                    }
-                }));
+                    }));
+                }
 
             }catch (JSONException e) {
                 e.printStackTrace();
@@ -91,48 +171,31 @@ public class MultiplayerActivity extends AppCompatActivity {
             Log.d(TAG, "ez meg error");
         });
         WebsocketClient.compositeDisposable.add(topic);
-
         WebsocketClient.mStompClient.send("/app/start", jsonGameId.toString()).subscribe();
     }
 
     private void startGame() {
-        board.clear();
-        boardCards.clear();
-        cards.clear();
+        boardIV.clear();
         selectedCards.clear();
         selectedCardIds.clear();
 
-        board.add((ImageView)findViewById(R.id.card0));
-        board.add((ImageView)findViewById(R.id.card1));
-        board.add((ImageView)findViewById(R.id.card2));
-        board.add((ImageView)findViewById(R.id.card3));
-        board.add((ImageView)findViewById(R.id.card4));
-        board.add((ImageView)findViewById(R.id.card5));
-        board.add((ImageView)findViewById(R.id.card6));
-        board.add((ImageView)findViewById(R.id.card7));
-        board.add((ImageView)findViewById(R.id.card8));
+        boardIV.add((ImageView)findViewById(R.id.card0));
+        boardIV.add((ImageView)findViewById(R.id.card1));
+        boardIV.add((ImageView)findViewById(R.id.card2));
+        boardIV.add((ImageView)findViewById(R.id.card3));
+        boardIV.add((ImageView)findViewById(R.id.card4));
+        boardIV.add((ImageView)findViewById(R.id.card5));
+        boardIV.add((ImageView)findViewById(R.id.card6));
+        boardIV.add((ImageView)findViewById(R.id.card7));
+        boardIV.add((ImageView)findViewById(R.id.card8));
 
-        do {
-            cards.clear();
-            for (Color color : Color.values()){
-                for (Shape shape : Shape.values()){
-                    for (Quantity quantity : Quantity.values()){
-                        cards.add(new Card(color, shape, quantity));
-                    }
-                }
-            }
-
-            Collections.shuffle(cards);
-
-            for (int i =0; board.size()>i; i++){
-                ImageView img = board.get(i);
-                int resImage = getResources().getIdentifier(cards.get(0).toString(), "drawable", getPackageName());
-                img.setImageResource(resImage);
-                img.setContentDescription(cards.get(0).toString());
-                boardCards.add(cards.get(0));
-                cards.remove(0);
-            }
-        }while(!hasSet(boardCards));
+        for (int i =0; boardIV.size()>i; i++){
+            ImageView img = boardIV.get(i);
+            img.setEnabled(false);
+            int resImage = getResources().getIdentifier(game.getBoard().get(i).toString(), "drawable", getPackageName());
+            img.setImageResource(resImage);
+            img.setContentDescription(game.getBoard().get(i).toString());
+        }
 
         opponentPointTextView = findViewById(R.id.opponentPointTextView);
         opponentPointTextView.setText("0");
@@ -141,75 +204,126 @@ public class MultiplayerActivity extends AppCompatActivity {
         setBtn = findViewById(R.id.callSETBtn);
 
         tableLayout = (TableLayout) findViewById(R.id.gameTableLayout);
-        tableLayout.setVisibility(View.INVISIBLE);
+        tableLayout.setVisibility(View.VISIBLE);
+    }
+
+    public void onSETBtnClick(View view){
+        setBtn.setEnabled(false);
+        setBtn.setBackgroundTintList(ContextCompat.getColorStateList(MultiplayerActivity.this, R.color.green));
+        switchBoardClicks(true);
+
+        JSONObject buttonPressJson = new JSONObject();
+        try {
+            buttonPressJson.put("gameId", gameId);
+            buttonPressJson.put("playerId", username);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        WebsocketClient.mStompClient.send("/app/gameplay/button", buttonPressJson.toString()).subscribe();
+
+        //start timer for 3 sec, if it the player does not select 3 cards reset everything and punish them with a 5 sec cooldown
+    }
+
+    private void resetButtonAndCardClicks(){
+        switchBoardClicks(false);
+        setBtn.setEnabled(true);
+        setBtn.setBackgroundTintList(ContextCompat.getColorStateList(MultiplayerActivity.this, R.color.dark_blue));
+    }
+
+    private void updatePointTextViews(){
+        if (game.getPlayer1().toString().equals(username)){
+            ownPointTextView.setText(game.getPoints().get(game.getPlayer1()).toString());
+            opponentPointTextView.setText(game.getPoints().get(game.getPlayer2()).toString());
+        }
+        else{
+            ownPointTextView.setText(game.getPoints().get(game.getPlayer2()).toString());
+            opponentPointTextView.setText(game.getPoints().get(game.getPlayer1()).toString());
+        }
     }
 
     public void onCardClick(View view){
-        if (!selectedCardIds.contains(view.getId())){
-            boolean found = false;
-            int counter = 0;
-            while (!found && board.size()>counter) {
-                if(board.get(counter).getId() == view.getId()){
-                    found = true;
-                    view.setBackgroundResource(R.drawable.card_background_selected);
-                    selectedCardIds.add(view.getId());
-                    selectedCards.add(boardCards.get(counter));
+        if(game.getBlockedBy().toString().equals(username) && selectedCardIds.size()<3){
+            if (!selectedCardIds.contains(view.getId())){
+                boolean found = false;
+                int counter = 0;
+                while (!found && boardIV.size()>counter) {
+                    if(boardIV.get(counter).getId() == view.getId()){
+                        found = true;
+                        view.setBackgroundResource(R.drawable.card_background_selected);
+                        selectedCardIds.add(view.getId());
+                        selectedCards.add(game.getBoard().get(counter));
+
+                        JSONObject gameplayJson = new JSONObject();
+                        try {
+                            gameplayJson.put("gameId", gameId);
+                            gameplayJson.put("playerId", username);
+                            gameplayJson.put("select", true);
+                            gameplayJson.put("selectedCardIndex", counter);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        WebsocketClient.mStompClient.send("/app/gameplay", gameplayJson.toString()).subscribe();
+                    }
+                    counter++;
                 }
-                counter++;
             }
+            else{
+                for (int i = 0; boardIV.size()>i;i++){
+                    if (boardIV.get(i).getId() == view.getId()){
+                        boardIV.get(i).setBackgroundResource(R.drawable.card_background_empty);
 
-            if (selectedCardIds.size()==3){
-                if(hasSet(selectedCards)){
-                    for (int i=0; board.size()>i; i++){
-                        if (board.get(i).getId() == selectedCardIds.get(0)
-                                || board.get(i).getId() == selectedCardIds.get(1)
-                                || board.get(i).getId() == selectedCardIds.get(2)){
-                            board.get(i).setBackgroundResource(R.drawable.card_background_right);
+                        JSONObject gameplayJson = new JSONObject();
+                        try {
+                            gameplayJson.put("gameId", gameId);
+                            gameplayJson.put("playerId", username);
+                            gameplayJson.put("select", false);
+                            gameplayJson.put("selectedCardIndex", i);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    }
-                    int point = Integer.parseInt((String) ownPointTextView.getText());
-                    ownPointTextView.setText(String.valueOf(++point));
-                    stopUserInteractions = true;
-                    removeCardsFromBoard();
 
-                    if (isGameOver() || !hasSet(boardCards)) {
-                        endGame();
+                        WebsocketClient.mStompClient.send("/app/gameplay", gameplayJson.toString()).subscribe();
                     }
-
                 }
-                else{
-                    for (int i=0; board.size()>i; i++){
-                        if (board.get(i).getId() == selectedCardIds.get(0)
-                                || board.get(i).getId() == selectedCardIds.get(1)
-                                || board.get(i).getId() == selectedCardIds.get(2)){
-                            board.get(i).setBackgroundResource(R.drawable.card_background_wrong);
-                        }
-                    }
-                    stopUserInteractions = true;
-                }
-                selectedCardIds.clear();
-                selectedCards.clear();
-                resetCardBackgrounds();
+                selectedCards.remove(selectedCardIds.indexOf(view.getId()));
+                selectedCardIds.remove(selectedCardIds.indexOf(view.getId()));
             }
         }
-        else{
-            for (int i = 0; board.size()>i;i++){
-                if (board.get(i).getId() == view.getId()){
-                    board.get(i).setBackgroundResource(R.drawable.card_background_empty);
-                }
-            }
-            selectedCards.remove(selectedCardIds.indexOf(view.getId()));
-            selectedCardIds.remove(selectedCardIds.indexOf(view.getId()));
-        }
+    }
 
+    private void correctSelectedCards(ArrayList<Integer> indexes){
+        for(int i =0; indexes.size()>i;i++){
+            boardIV.get(indexes.get(i)).setBackgroundResource(R.drawable.card_background_right);;
+        }
+        stopUserInteractions = true;
+    }
+
+    private void unCorrectSelectedCards(ArrayList<Integer> indexes){
+        for(int i =0; indexes.size()>i;i++){
+            boardIV.get(indexes.get(i)).setBackgroundResource(R.drawable.card_background_wrong);;
+        }
+        stopUserInteractions = true;
+    }
+
+    private void setSelectedCardsBackgroundForOpponent(ArrayList<Integer> indexes){
+        for (int i=0; boardIV.size()>i;i++){
+            boardIV.get(i).setBackgroundResource(R.drawable.card_background_empty);
+        }
+        for (int i=0; indexes.size()>i;i++){
+            boardIV.get(indexes.get(i)).setBackgroundResource(R.drawable.card_background_selected);
+            selectedCardIds.add(boardIV.get(indexes.get(i)).getId());
+            selectedCards.add(game.getBoard().get(indexes.get(i)));
+        }
     }
 
     private void resetCardBackgrounds(){
         resetBackgroundTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                for (int i=0; board.size()>i; i++){
-                    board.get(i).setBackgroundResource(R.drawable.card_background_empty);
+                for (int i=0; boardIV.size()>i; i++){
+                    boardIV.get(i).setBackgroundResource(R.drawable.card_background_empty);
                 }
                 stopUserInteractions = false;
             }
@@ -224,104 +338,23 @@ public class MultiplayerActivity extends AppCompatActivity {
         }
     }
 
-    private boolean hasSet(ArrayList<Card> cards){
-        if(cards.size()>=3){
-            ArrayList<Boolean> propertyChecks = new ArrayList<>();
-            for (int i=0; 3>i;i++) propertyChecks.add(false);
-
-            for (int i=0; cards.size()>i;i++){
-                for (int j=i+1; cards.size()>j;j++){
-                    for (int k=j+1; cards.size()>k;k++){
-                        for (int x=0; 3>x;x++) propertyChecks.set(x,false);
-                        if (cards.get(i).getColor()==cards.get(j).getColor() && cards.get(i).getColor()==cards.get(k).getColor()) propertyChecks.set(0, true);
-                        if (cards.get(i).getColor()!=cards.get(j).getColor() && cards.get(i).getColor() != cards.get(k).getColor() && cards.get(j).getColor()!=cards.get(k).getColor()) propertyChecks.set(0, true);
-                        if (cards.get(i).getShape()==cards.get(j).getShape() && cards.get(i).getShape()==cards.get(k).getShape()) propertyChecks.set(1, true);
-                        if (cards.get(i).getShape()!=cards.get(j).getShape() && cards.get(i).getShape() != cards.get(k).getShape() && cards.get(j).getShape()!=cards.get(k).getShape()) propertyChecks.set(1, true);
-                        if (cards.get(i).getQuantity()==cards.get(j).getQuantity() && cards.get(i).getQuantity()==cards.get(k).getQuantity()) propertyChecks.set(2, true);
-                        if (cards.get(i).getQuantity()!=cards.get(j).getQuantity() && cards.get(i).getQuantity() != cards.get(k).getQuantity() && cards.get(j).getQuantity()!=cards.get(k).getQuantity()) propertyChecks.set(2, true);
-
-                        if (!propertyChecks.contains(false)){
-                            ArrayList<Boolean> visibilityChecks = new ArrayList<>();
-                            for (int z=0; 3>z;z++) visibilityChecks.add(false);
-
-                            String cardDesc1 = cards.get(i).toString();
-                            String cardDesc2 = cards.get(j).toString();
-                            String cardDesc3 = cards.get(k).toString();
-
-                            for (int y=0; board.size()>y;y++){
-                                String boardDesc = (String)board.get(y).getContentDescription();
-
-                                if (boardDesc.equals(cardDesc1)){
-                                    if (board.get(y).getVisibility()==View.VISIBLE){
-                                        visibilityChecks.set(0,true);
-                                    }
-                                }
-                                if (boardDesc.equals(cardDesc2)){
-                                    if (board.get(y).getVisibility()==View.VISIBLE){
-                                        visibilityChecks.set(1,true);
-                                    }
-                                }
-                                if (boardDesc.equals(cardDesc3)){
-                                    if (board.get(y).getVisibility()==View.VISIBLE){
-                                        visibilityChecks.set(2,true);
-                                    }
-                                }
-                            }
-
-                            if (!visibilityChecks.contains(false)){
-                                Log.d("cheat", "card1: " + cardDesc1);
-                                Log.d("cheat", "card2: " + cardDesc2);
-                                Log.d("cheat", "card3: " + cardDesc3);
-                                Log.d("cheat", " ");
-                                propertyChecks.clear();
-                                visibilityChecks.clear();
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    private void removeCardsFromBoard(){
-        for (int i=0; board.size()>i; i++){
-            ImageView img = board.get(i);
-            if (img.getId() == selectedCardIds.get(0)
-                    || img.getId() == selectedCardIds.get(1)
-                    || img.getId() == selectedCardIds.get(2)){
-                if (cards.size()>0){
-                    int resImage = getResources().getIdentifier(cards.get(0).toString() , "drawable", getPackageName());
-                    img.setImageResource(resImage);
-                    img.setContentDescription(cards.get(0).toString());
-                    boardCards.set(i,cards.get(0));
-                    cards.remove(0);
-                }
-                else {
-                    img.setVisibility(View.INVISIBLE);
-                }
-
-            }
+    private void switchBoardClicks(boolean on){
+        for (int i =0; boardIV.size()>i; i++){
+            boardIV.get(i).setEnabled(on);
         }
     }
 
     private void endGame(){
-        Intent egs = new Intent(this, EndGameScreenActivity.class);
-        egs.putExtra("opponentScore", opponentPointTextView.getText());
-        egs.putExtra("ownScore", ownPointTextView.getText());
-        egs.putExtra("diff", difficulty.toString());
-        startActivity(egs);
+        Intent mpes = new Intent(this, MultiplayerEndScreenActivity.class); //kell egy multi end game screen
+        mpes.putExtra("opponentScore", opponentPointTextView.getText());
+        mpes.putExtra("ownScore", ownPointTextView.getText());
+        mpes.putExtra("winner", game.getWinner().toString());
+        startActivity(mpes);
     }
 
-    private boolean isGameOver(){
-        boolean hasVisible = false;
-
-        for (int i = 0; board.size()>i && !hasVisible;i++){
-            if (board.get(i).getVisibility()==View.VISIBLE){
-                hasVisible = true;
-            }
-        }
-        return !hasVisible;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        WebsocketClient.disconnectWebsocket();
     }
 }
