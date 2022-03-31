@@ -47,6 +47,7 @@ public class MultiplayerActivity extends AppCompatActivity {
     private Timer resetTimer;
     private final Timer punishTimer = new Timer();
     private boolean stopUserInteractions = false;
+    private int resetInt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +105,8 @@ public class MultiplayerActivity extends AppCompatActivity {
                                 //3 cards have been selected
                                 if (tempGame.getSelectedCardIndexes().size() == 3 && tempGame.getBlockedBy() == null) {
                                     if (game.getBlockedBy().toString().equals(username)) {
-                                        resetTimer.cancel();
-                                        resetTimer.purge();
+//                                        resetTimer.cancel();
+//                                        resetTimer.purge();
                                     }
 
                                     game.setSelectedCardIndexes(tempGame.getSelectedCardIndexes());
@@ -297,6 +298,12 @@ public class MultiplayerActivity extends AppCompatActivity {
     public void onCardClick(View view) {
         if (game.getBlockedBy().toString().equals(username) && selectedCardIds.size() < 3) {
             if (!selectedCardIds.contains(view.getId())) {
+                resetInt++;
+                if (resetInt==3){
+                    resetTimer.cancel();
+                    resetTimer.purge();
+                    resetInt=0;
+                }
                 boolean found = false;
                 int counter = 0;
                 while (!found && boardIV.size() > counter) {
@@ -321,6 +328,7 @@ public class MultiplayerActivity extends AppCompatActivity {
                     counter++;
                 }
             } else {
+                resetInt--;
                 for (int i = 0; boardIV.size() > i; i++) {
                     if (boardIV.get(i).getId() == view.getId()) {
                         boardIV.get(i).setBackgroundResource(R.drawable.card_background_empty);
