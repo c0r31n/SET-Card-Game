@@ -213,7 +213,7 @@ public class SingleplayerActivity extends AppCompatActivity {
     }
 
     private void resetCardBackgrounds() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             resetBackgroundTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
