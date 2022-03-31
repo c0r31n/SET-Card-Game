@@ -1,7 +1,5 @@
 package com.example.setcardgame.Model;
 
-import android.util.Log;
-
 import com.example.setcardgame.Model.card.Card;
 
 import org.json.JSONException;
@@ -28,22 +26,21 @@ public class Game {
     public Game(JSONObject game) {
         try {
             setGameIdString(game.getString("gameId"));
-            if (!game.getString("player1").equals("null")){
+            if (!game.getString("player1").equals("null")) {
                 this.player1 = UUID.fromString(game.getString("player1"));
             }
 
-            if (!game.getString("player2").equals("null")){
+            if (!game.getString("player2").equals("null")) {
                 this.player2 = UUID.fromString(game.getString("player2"));
             }
 
-            if (!game.getString("blockedBy").equals("null")){
+            if (!game.getString("blockedBy").equals("null")) {
                 this.blockedBy = UUID.fromString(game.getString("blockedBy"));
-            }
-            else{
+            } else {
                 this.blockedBy = null;
             }
 
-            if (!game.getString("winner").equals("null")){
+            if (!game.getString("winner").equals("null")) {
                 this.winner = UUID.fromString(game.getString("winner"));
             }
 
@@ -65,19 +62,19 @@ public class Game {
     }
 
     public void setNullCardIndexesString(String nullCardIndexesString) {
-        if (!nullCardIndexesString.equals("[]")){
+        if (!nullCardIndexesString.equals("[]")) {
             nullCardIndexes.clear();
             nullCardIndexesString = nullCardIndexesString.replace('[', ' ');
             nullCardIndexesString = nullCardIndexesString.replace(']', ' ');
             nullCardIndexesString = nullCardIndexesString.trim();
             String[] nullCardIndexesStrings = nullCardIndexesString.split(",");
-            for (int i=0; nullCardIndexesStrings.length>i; i++){
+            for (int i = 0; nullCardIndexesStrings.length > i; i++) {
                 nullCardIndexes.add(Integer.parseInt(nullCardIndexesStrings[i]));
             }
         }
     }
 
-    public void clearSelectedCardIndexes(){
+    public void clearSelectedCardIndexes() {
         selectedCardIndexes.clear();
     }
 
@@ -146,17 +143,16 @@ public class Game {
         boardString = boardString.replaceAll("quantity", "");
         String[] words = boardString.split(",");
 
-        for (int i=0; words.length>i;i++){
+        for (int i = 0; words.length > i; i++) {
             words[i] = words[i].trim();
         }
 
         int i = 0;
-        while (words.length>i){
-            if (!words[i].equals("null")){
-                Card newCard = new Card(words[i++],words[i++],words[i++]);
+        while (words.length > i) {
+            if (!words[i].equals("null")) {
+                Card newCard = new Card(words[i++], words[i++], words[i++]);
                 board.add(newCard);
-            }
-            else {
+            } else {
                 board.add(null);
             }
         }
@@ -178,12 +174,12 @@ public class Game {
         return blockedBy;
     }
 
-    public void setBlockedByString(String blockedBy) {
-        this.blockedBy = UUID.fromString(blockedBy);
-    }
-
     public void setBlockedBy(UUID blockedBy) {
         this.blockedBy = blockedBy;
+    }
+
+    public void setBlockedByString(String blockedBy) {
+        this.blockedBy = UUID.fromString(blockedBy);
     }
 
     public ArrayList<Integer> getSelectedCardIndexes() {
@@ -195,13 +191,13 @@ public class Game {
     }
 
     public void setSelectedCardIndexesString(String selectedCardIndexesString) {
-        if (!selectedCardIndexesString.equals("[]")){
+        if (!selectedCardIndexesString.equals("[]")) {
             selectedCardIndexes.clear();
             selectedCardIndexesString = selectedCardIndexesString.replace('[', ' ');
             selectedCardIndexesString = selectedCardIndexesString.replace(']', ' ');
             selectedCardIndexesString = selectedCardIndexesString.trim();
             String[] selectedCardIndexesStrings = selectedCardIndexesString.split(",");
-            for (int i=0; selectedCardIndexesStrings.length>i; i++){
+            for (int i = 0; selectedCardIndexesStrings.length > i; i++) {
                 selectedCardIndexes.add(Integer.parseInt(selectedCardIndexesStrings[i]));
             }
         }
@@ -211,7 +207,11 @@ public class Game {
         return points;
     }
 
-    public ArrayList<Integer> getPurePoints(){
+    public void setPoints(Map<UUID, Integer> points) {
+        this.points = points;
+    }
+
+    public ArrayList<Integer> getPurePoints() {
         ArrayList<Integer> pointsArray = new ArrayList<>();
         pointsArray.add(points.get(player1));
         pointsArray.add(points.get(player2));
@@ -219,23 +219,16 @@ public class Game {
         return pointsArray;
     }
 
-    public void setPoints(Map<UUID, Integer> points) {
-        this.points = points;
-    }
-
-    public boolean hasSamePoints(Map<UUID, Integer> otherPoints){
-        boolean same = true;
-        if (!points.get(player1).equals(otherPoints.get(player1))){
-            same = false;
-        }
-        if (!points.get(player2).equals(otherPoints.get(player2))){
+    public boolean hasSamePoints(Map<UUID, Integer> otherPoints) {
+        boolean same = points.get(player1).equals(otherPoints.get(player1));
+        if (!points.get(player2).equals(otherPoints.get(player2))) {
             same = false;
         }
         return same;
     }
 
     public void setPointsString(String pointsString) {
-        if (player1 != null && player2 != null){
+        if (player1 != null && player2 != null) {
 
             pointsString = pointsString.replace('"', ' ');
             pointsString = pointsString.replace('{', ' ');
@@ -243,12 +236,12 @@ public class Game {
             pointsString = pointsString.replace(':', ',');
             String[] pointWords = pointsString.split(",");
 
-            for (int i = 0; pointWords.length>i;i++){
+            for (int i = 0; pointWords.length > i; i++) {
                 pointWords[i] = pointWords[i].trim();
             }
 
             int i = 0;
-            while (pointWords.length>i){
+            while (pointWords.length > i) {
                 points.put(UUID.fromString(pointWords[i++]), Integer.parseInt(pointWords[i++]));
             }
         }

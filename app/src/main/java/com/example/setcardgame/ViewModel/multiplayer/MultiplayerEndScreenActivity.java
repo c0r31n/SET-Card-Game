@@ -1,21 +1,20 @@
 package com.example.setcardgame.ViewModel.multiplayer;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.R;
 import com.example.setcardgame.ViewModel.MainActivity;
-import com.example.setcardgame.ViewModel.SingleplayerActivity;
 
 public class MultiplayerEndScreenActivity extends AppCompatActivity {
 
-    private String username = Username.getUsername();
+    private final String username = Username.getUsername();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,24 +30,23 @@ public class MultiplayerEndScreenActivity extends AppCompatActivity {
         ownScoreTV.setText(ownScore);
         opponentScoreTV.setText(opponentScore);
 
-        if (winner.equals(username)){
-            score.setText("WON");
+        if (winner.equals(username)) {
+            score.setText(R.string.won);
             score.setTextColor(Color.parseColor("#008000"));
             ownScoreTV.setTextColor(Color.parseColor("#008000"));
-        }
-        else {
-            score.setText("LOST");
+        } else {
+            score.setText(R.string.lost);
             score.setTextColor(Color.parseColor("#C50202"));
             ownScoreTV.setTextColor(Color.parseColor("#C50202"));
         }
     }
 
-    public void switchToRandomGame(View v){
+    public void switchToRandomGame(View v) {
         Intent wfg = new Intent(this, WaitingForGameActivity.class);
         startActivity(wfg);
     }
 
-    public void backToMenu(View v){
+    public void backToMenu(View v) {
         Intent m = new Intent(this, MainActivity.class);
         startActivity(m);
     }

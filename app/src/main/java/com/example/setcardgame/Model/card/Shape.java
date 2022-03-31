@@ -11,11 +11,10 @@ public enum Shape {
         this.label = label;
     }
 
-    public static Shape getShapeFromString(String SHAPE){
-        if (SHAPE.equals("DIAMOND")){
+    public static Shape getShapeFromString(String SHAPE) {
+        if (SHAPE.equals("DIAMOND")) {
             return Shape.DIAMOND;
-        }
-        else if (SHAPE.equals("WAVY")){
+        } else if (SHAPE.equals("WAVY")) {
             return Shape.WAVY;
         }
 

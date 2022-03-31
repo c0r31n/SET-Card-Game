@@ -29,6 +29,8 @@
     <string name="myScoresBtn">My Scores</string>
     <string name="worldScoresBtn">World Scores</string>
     <string name="backBtn">Back</string>
+    <string name="won">WON</string>
+    <string name="lost">LOST</string>
 
 
 </resources>

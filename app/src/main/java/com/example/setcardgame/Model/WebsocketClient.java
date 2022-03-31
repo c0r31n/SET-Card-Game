@@ -1,6 +1,5 @@
 package com.example.setcardgame.Model;
 
-import android.app.Activity;
 import android.util.Log;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -9,10 +8,10 @@ import ua.naiksoftware.stomp.Stomp;
 import ua.naiksoftware.stomp.StompClient;
 
 public class WebsocketClient {
+    public static final String URL = "wss://test-set-card-game.herokuapp.com/";
     public static StompClient mStompClient;
     public static CompositeDisposable compositeDisposable;
-    public static final String URL = "wss://test-set-card-game.herokuapp.com/";
-    private static String TAG = "websocket";
+    private static final String TAG = "websocket";
 
     public static void createWebsocket(String WEBSOCKET_CONNECT_URL) {
         compositeDisposable = new CompositeDisposable();

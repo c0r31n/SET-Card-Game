@@ -13,11 +13,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.example.setcardgame.Model.Username;
-import com.example.setcardgame.Model.card.Card;
 import com.example.setcardgame.Model.Difficulty;
 import com.example.setcardgame.Model.Game;
+import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.Model.WebsocketClient;
+import com.example.setcardgame.Model.card.Card;
 import com.example.setcardgame.R;
 
 import org.json.JSONException;
@@ -31,24 +31,21 @@ import io.reactivex.disposables.Disposable;
 
 public class MultiplayerActivity extends AppCompatActivity {
 
-    private ArrayList<ImageView> boardIV = new ArrayList<>();
-    private ArrayList<Card> selectedCards = new ArrayList<>();
-    private ArrayList<Integer> selectedCardIds = new ArrayList<>();
+    private final String TAG = "multi";
+    private final ArrayList<ImageView> boardIV = new ArrayList<>();
+    private final ArrayList<Card> selectedCards = new ArrayList<>();
+    private final ArrayList<Integer> selectedCardIds = new ArrayList<>();
     private TextView opponentPointTextView;
     private TextView ownPointTextView;
     private Button setBtn;
     private TableLayout tableLayout;
-    private Difficulty difficulty = Difficulty.NORMAL;
-    private String username = Username.getUsername();
+    private final Difficulty difficulty = Difficulty.NORMAL;
+    private final String username = Username.getUsername();
     private int gameId;
-
     private Game game;
-
-    private final String TAG = "multi";
-
-    private Timer resetBackgroundTimer = new Timer();
+    private final Timer resetBackgroundTimer = new Timer();
     private Timer resetTimer;
-    private Timer punishTimer = new Timer();
+    private final Timer punishTimer = new Timer();
     private boolean stopUserInteractions = false;
 
     @Override
@@ -67,29 +64,27 @@ public class MultiplayerActivity extends AppCompatActivity {
         }
 
         Disposable topic = WebsocketClient.mStompClient.topic("/topic/game-progress/" + gameId).subscribe(topicMessage -> {
-            try{
+            try {
                 JSONObject msg = new JSONObject(topicMessage.getPayload());
                 Game tempGame = new Game(msg);
                 Log.d(TAG, msg.toString());
-                if (tempGame.getPlayer1() != null && tempGame.getPlayer2() != null){
-                    runOnUiThread (new Thread(new Runnable() {
+                if (tempGame.getPlayer1() != null && tempGame.getPlayer2() != null) {
+                    runOnUiThread(new Thread(new Runnable() {
                         public void run() {
                             //start game
-                            if (game == null){
-                                    game = new Game(msg);
-                                    startGame();
-                            }
-                            else{
+                            if (game == null) {
+                                game = new Game(msg);
+                                startGame();
+                            } else {
                                 //SET button press
-                                if (tempGame.getBlockedBy() != null && tempGame.getBlockedBy().toString().equals(username) && tempGame.getSelectedCardIndexes().isEmpty()){
+                                if (tempGame.getBlockedBy() != null && tempGame.getBlockedBy().toString().equals(username) && tempGame.getSelectedCardIndexes().isEmpty()) {
 //                                    Log.d(TAG, "my block");
                                     try {
                                         game.setBlockedByString(msg.getString("blockedBy"));
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
-                                }
-                                else if (tempGame.getBlockedBy() != null && !tempGame.getBlockedBy().toString().equals(username) && tempGame.getSelectedCardIndexes().isEmpty()){
+                                } else if (tempGame.getBlockedBy() != null && !tempGame.getBlockedBy().toString().equals(username) && tempGame.getSelectedCardIndexes().isEmpty()) {
 //                                    Log.d(TAG, "opponent's block");
                                     try {
                                         game.setBlockedByString(msg.getString("blockedBy"));
@@ -101,14 +96,14 @@ public class MultiplayerActivity extends AppCompatActivity {
                                 }
 
                                 //opponent is selecting cards
-                                if (tempGame.getBlockedBy() != null && !tempGame.getBlockedBy().toString().equals(username)){
+                                if (tempGame.getBlockedBy() != null && !tempGame.getBlockedBy().toString().equals(username)) {
                                     game.setSelectedCardIndexes(tempGame.getSelectedCardIndexes());
                                     setSelectedCardsBackgroundForOpponent(game.getSelectedCardIndexes());
                                 }
 
                                 //3 cards have been selected
-                                if (tempGame.getSelectedCardIndexes().size()==3 && tempGame.getBlockedBy() == null){
-                                    if (game.getBlockedBy().toString().equals(username)){
+                                if (tempGame.getSelectedCardIndexes().size() == 3 && tempGame.getBlockedBy() == null) {
+                                    if (game.getBlockedBy().toString().equals(username)) {
                                         resetTimer.cancel();
                                         resetTimer.purge();
                                     }
@@ -116,7 +111,7 @@ public class MultiplayerActivity extends AppCompatActivity {
                                     game.setSelectedCardIndexes(tempGame.getSelectedCardIndexes());
                                     setSelectedCardsBackgroundForOpponent(game.getSelectedCardIndexes());
 
-                                    if (game.hasSamePoints(tempGame.getPoints())){
+                                    if (game.hasSamePoints(tempGame.getPoints())) {
                                         //wrong combo
                                         unCorrectSelectedCards(tempGame.getSelectedCardIndexes());
 
@@ -126,18 +121,16 @@ public class MultiplayerActivity extends AppCompatActivity {
                                         resetCardBackgrounds();
                                         resetButtonAndCardClicks();
 
-                                        if (game.getBlockedBy().toString().equals(username)){
+                                        if (game.getBlockedBy().toString().equals(username)) {
                                             //punish for error, maybe for 5 sec they cannot press SET again
                                             resetButtonAndCardClicksOnError();
                                             punishPlayerError();
                                             Log.d(TAG, "you didn't find the set");
-                                        }
-                                        else{
+                                        } else {
                                             resetButtonAndCardClicks();
                                         }
                                         game.setBlockedBy(null);
-                                    }
-                                    else{
+                                    } else {
                                         //right combo, board changed
                                         correctSelectedCards(tempGame.getSelectedCardIndexes());
                                         game.setPoints(tempGame.getPoints());
@@ -145,11 +138,10 @@ public class MultiplayerActivity extends AppCompatActivity {
                                         game.setBoard(tempGame.getBoard());
                                         game.setNullCardIndexes(tempGame.getNullCardIndexes());
 
-                                        for (int i = 0; game.getSelectedCardIndexes().size()>i;i++){
-                                            if (!game.getNullCardIndexes().isEmpty()){
+                                        for (int i = 0; game.getSelectedCardIndexes().size() > i; i++) {
+                                            if (!game.getNullCardIndexes().isEmpty()) {
                                                 boardIV.get(game.getSelectedCardIndexes().get(i)).setVisibility(View.INVISIBLE);
-                                            }
-                                            else{
+                                            } else {
                                                 ImageView img = boardIV.get(game.getSelectedCardIndexes().get(i));
                                                 int resImage = getResources().getIdentifier(game.getBoard().get(game.getSelectedCardIndexes().get(i)).toString(), "drawable", getPackageName());
                                                 img.setImageResource(resImage);
@@ -157,7 +149,7 @@ public class MultiplayerActivity extends AppCompatActivity {
                                             }
                                         }
 
-                                        if (tempGame.getWinner() != null){
+                                        if (tempGame.getWinner() != null) {
                                             game.setWinner(tempGame.getWinner());
                                             Log.d(TAG, "END");
                                             endGame();
@@ -171,18 +163,17 @@ public class MultiplayerActivity extends AppCompatActivity {
                                         resetCardBackgrounds();
                                     }
                                 }
-                                if(game.getBlockedBy()!=null && tempGame.getSelectedCardIndexes().size()!=3 && tempGame.getBlockedBy() == null){    //time ran out. button has been reset
+                                if (game.getBlockedBy() != null && tempGame.getSelectedCardIndexes().size() != 3 && tempGame.getBlockedBy() == null) {    //time ran out. button has been reset
                                     Log.d(TAG, "entered");
                                     game.clearSelectedCardIndexes();
                                     selectedCardIds.clear();
                                     selectedCards.clear();
                                     resetCardBackgrounds();
-                                    if (game.getBlockedBy().toString().equals(username)){
+                                    if (game.getBlockedBy().toString().equals(username)) {
                                         resetButtonAndCardClicksOnError();
                                         punishPlayerError();
                                         Log.d(TAG, "punished");
-                                    }
-                                    else{
+                                    } else {
                                         resetButtonAndCardClicks();
                                         Log.d(TAG, "not punished");
                                     }
@@ -193,7 +184,7 @@ public class MultiplayerActivity extends AppCompatActivity {
                     }));
                 }
 
-            }catch (JSONException e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }, throwable -> {
@@ -208,17 +199,17 @@ public class MultiplayerActivity extends AppCompatActivity {
         selectedCards.clear();
         selectedCardIds.clear();
 
-        boardIV.add((ImageView)findViewById(R.id.card0));
-        boardIV.add((ImageView)findViewById(R.id.card1));
-        boardIV.add((ImageView)findViewById(R.id.card2));
-        boardIV.add((ImageView)findViewById(R.id.card3));
-        boardIV.add((ImageView)findViewById(R.id.card4));
-        boardIV.add((ImageView)findViewById(R.id.card5));
-        boardIV.add((ImageView)findViewById(R.id.card6));
-        boardIV.add((ImageView)findViewById(R.id.card7));
-        boardIV.add((ImageView)findViewById(R.id.card8));
+        boardIV.add((ImageView) findViewById(R.id.card0));
+        boardIV.add((ImageView) findViewById(R.id.card1));
+        boardIV.add((ImageView) findViewById(R.id.card2));
+        boardIV.add((ImageView) findViewById(R.id.card3));
+        boardIV.add((ImageView) findViewById(R.id.card4));
+        boardIV.add((ImageView) findViewById(R.id.card5));
+        boardIV.add((ImageView) findViewById(R.id.card6));
+        boardIV.add((ImageView) findViewById(R.id.card7));
+        boardIV.add((ImageView) findViewById(R.id.card8));
 
-        for (int i =0; boardIV.size()>i; i++){
+        for (int i = 0; boardIV.size() > i; i++) {
             ImageView img = boardIV.get(i);
             img.setEnabled(false);
             int resImage = getResources().getIdentifier(game.getBoard().get(i).toString(), "drawable", getPackageName());
@@ -236,7 +227,7 @@ public class MultiplayerActivity extends AppCompatActivity {
         tableLayout.setVisibility(View.VISIBLE);
     }
 
-    public void onSETBtnClick(View view){
+    public void onSETBtnClick(View view) {
         setBtn.setEnabled(false);
         setBtn.setBackgroundTintList(ContextCompat.getColorStateList(MultiplayerActivity.this, R.color.green));
         switchBoardClicks(true);
@@ -255,7 +246,7 @@ public class MultiplayerActivity extends AppCompatActivity {
         selectTimeCountDown(buttonPressJson);
     }
 
-    private void selectTimeCountDown(JSONObject buttonPressJson){
+    private void selectTimeCountDown(JSONObject buttonPressJson) {
         resetTimer = new Timer();
         resetTimer.schedule(new TimerTask() {
             @Override
@@ -265,14 +256,14 @@ public class MultiplayerActivity extends AppCompatActivity {
         }, 3000);
     }
 
-    private void punishPlayerError(){
+    private void punishPlayerError() {
         punishTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (game.getBlockedBy() == null){
+                        if (game.getBlockedBy() == null) {
                             resetButtonAndCardClicks();
                         }
                     }
@@ -281,36 +272,35 @@ public class MultiplayerActivity extends AppCompatActivity {
         }, 5000);
     }
 
-    private void resetButtonAndCardClicks(){
+    private void resetButtonAndCardClicks() {
         switchBoardClicks(false);
         setBtn.setEnabled(true);
         setBtn.setBackgroundTintList(ContextCompat.getColorStateList(MultiplayerActivity.this, R.color.dark_blue));
     }
 
-    private void resetButtonAndCardClicksOnError(){
+    private void resetButtonAndCardClicksOnError() {
         switchBoardClicks(false);
         setBtn.setEnabled(false);
         setBtn.setBackgroundTintList(ContextCompat.getColorStateList(MultiplayerActivity.this, R.color.dark_red));
     }
 
-    private void updatePointTextViews(){
-        if (game.getPlayer1().toString().equals(username)){
+    private void updatePointTextViews() {
+        if (game.getPlayer1().toString().equals(username)) {
             ownPointTextView.setText(game.getPoints().get(game.getPlayer1()).toString());
             opponentPointTextView.setText(game.getPoints().get(game.getPlayer2()).toString());
-        }
-        else{
+        } else {
             ownPointTextView.setText(game.getPoints().get(game.getPlayer2()).toString());
             opponentPointTextView.setText(game.getPoints().get(game.getPlayer1()).toString());
         }
     }
 
-    public void onCardClick(View view){
-        if(game.getBlockedBy().toString().equals(username) && selectedCardIds.size()<3){
-            if (!selectedCardIds.contains(view.getId())){
+    public void onCardClick(View view) {
+        if (game.getBlockedBy().toString().equals(username) && selectedCardIds.size() < 3) {
+            if (!selectedCardIds.contains(view.getId())) {
                 boolean found = false;
                 int counter = 0;
-                while (!found && boardIV.size()>counter) {
-                    if(boardIV.get(counter).getId() == view.getId()){
+                while (!found && boardIV.size() > counter) {
+                    if (boardIV.get(counter).getId() == view.getId()) {
                         found = true;
                         view.setBackgroundResource(R.drawable.card_background_selected);
                         selectedCardIds.add(view.getId());
@@ -330,10 +320,9 @@ public class MultiplayerActivity extends AppCompatActivity {
                     }
                     counter++;
                 }
-            }
-            else{
-                for (int i = 0; boardIV.size()>i;i++){
-                    if (boardIV.get(i).getId() == view.getId()){
+            } else {
+                for (int i = 0; boardIV.size() > i; i++) {
+                    if (boardIV.get(i).getId() == view.getId()) {
                         boardIV.get(i).setBackgroundResource(R.drawable.card_background_empty);
 
                         JSONObject gameplayJson = new JSONObject();
@@ -350,41 +339,41 @@ public class MultiplayerActivity extends AppCompatActivity {
                     }
                 }
                 selectedCards.remove(selectedCardIds.indexOf(view.getId()));
-                selectedCardIds.remove(selectedCardIds.indexOf(view.getId()));
+                selectedCardIds.remove((Integer) view.getId());
             }
         }
     }
 
-    private void correctSelectedCards(ArrayList<Integer> indexes){
-        for(int i =0; indexes.size()>i;i++){
-            boardIV.get(indexes.get(i)).setBackgroundResource(R.drawable.card_background_right);;
+    private void correctSelectedCards(ArrayList<Integer> indexes) {
+        for (int i = 0; indexes.size() > i; i++) {
+            boardIV.get(indexes.get(i)).setBackgroundResource(R.drawable.card_background_right);
         }
         stopUserInteractions = true;
     }
 
-    private void unCorrectSelectedCards(ArrayList<Integer> indexes){
-        for(int i =0; indexes.size()>i;i++){
-            boardIV.get(indexes.get(i)).setBackgroundResource(R.drawable.card_background_wrong);;
+    private void unCorrectSelectedCards(ArrayList<Integer> indexes) {
+        for (int i = 0; indexes.size() > i; i++) {
+            boardIV.get(indexes.get(i)).setBackgroundResource(R.drawable.card_background_wrong);
         }
         stopUserInteractions = true;
     }
 
-    private void setSelectedCardsBackgroundForOpponent(ArrayList<Integer> indexes){
-        for (int i=0; boardIV.size()>i;i++){
+    private void setSelectedCardsBackgroundForOpponent(ArrayList<Integer> indexes) {
+        for (int i = 0; boardIV.size() > i; i++) {
             boardIV.get(i).setBackgroundResource(R.drawable.card_background_empty);
         }
-        for (int i=0; indexes.size()>i;i++){
+        for (int i = 0; indexes.size() > i; i++) {
             boardIV.get(indexes.get(i)).setBackgroundResource(R.drawable.card_background_selected);
             selectedCardIds.add(boardIV.get(indexes.get(i)).getId());
             selectedCards.add(game.getBoard().get(indexes.get(i)));
         }
     }
 
-    private void resetCardBackgrounds(){
+    private void resetCardBackgrounds() {
         resetBackgroundTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                for (int i=0; boardIV.size()>i; i++){
+                for (int i = 0; boardIV.size() > i; i++) {
                     boardIV.get(i).setBackgroundResource(R.drawable.card_background_empty);
                 }
                 stopUserInteractions = false;
@@ -400,13 +389,13 @@ public class MultiplayerActivity extends AppCompatActivity {
         }
     }
 
-    private void switchBoardClicks(boolean on){
-        for (int i =0; boardIV.size()>i; i++){
+    private void switchBoardClicks(boolean on) {
+        for (int i = 0; boardIV.size() > i; i++) {
             boardIV.get(i).setEnabled(on);
         }
     }
 
-    private void endGame(){
+    private void endGame() {
         Intent mpes = new Intent(this, MultiplayerEndScreenActivity.class); //kell egy multi end game screen
         mpes.putExtra("opponentScore", opponentPointTextView.getText());
         mpes.putExtra("ownScore", ownPointTextView.getText());

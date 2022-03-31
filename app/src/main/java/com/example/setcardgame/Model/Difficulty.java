@@ -10,8 +10,8 @@ public enum Difficulty {
         this.label = label;
     }
 
-    public static Difficulty getDifficultyFromString(String label){
-        if (label.equals(EASY.toString())){
+    public static Difficulty getDifficultyFromString(String label) {
+        if (label.equals(EASY.toString())) {
             return EASY;
         }
 

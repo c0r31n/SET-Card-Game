@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -18,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.setcardgame.Model.Difficulty;
 import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.R;
 import com.example.setcardgame.ViewModel.multiplayer.SelectMultiplayerTypeActivity;
@@ -36,18 +33,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         sp = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-        if (sp.getString("username", "default").equals("default")){
+        if (sp.getString("username", "default").equals("default")) {
             SharedPreferences.Editor editor = sp.edit();
             UUID username = UUID.randomUUID();
             editor.putString("username", username.toString());
-            editor.commit();
+            editor.apply();
         }
         Username.setUsername(sp.getString("username", "def"));
 
         wakeUp();
     }
 
-    private void wakeUp(){
+    private void wakeUp() {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://test-set-card-game.herokuapp.com/wakeup/";
 
@@ -68,22 +65,22 @@ public class MainActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    public void switchToScoreboard(View v){
+    public void switchToScoreboard(View v) {
         Intent sb = new Intent(this, ScoreboardActivity.class);
         startActivity(sb);
     }
 
-    public void switchToDifficulty(View v){
+    public void switchToDifficulty(View v) {
         Intent d = new Intent(this, DifficultyActivity.class);
         startActivity(d);
     }
 
-    public void switchToMultiplayer(View v){
+    public void switchToMultiplayer(View v) {
         Intent mp = new Intent(this, SelectMultiplayerTypeActivity.class);
         startActivity(mp);
     }
 
-    public void switchToHowToPage(View v){
+    public void switchToHowToPage(View v) {
         Intent htp = new Intent(this, HowToPageActivity.class);
         startActivity(htp);
     }

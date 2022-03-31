@@ -15,7 +15,7 @@
             android:name=".ViewModel.multiplayer.MultiplayerEndScreenActivity"
             android:exported="false"
             android:label="Score"
-            android:screenOrientation="portrait"  />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.scoreboard.WorldScoresActivity"
             android:exported="false"

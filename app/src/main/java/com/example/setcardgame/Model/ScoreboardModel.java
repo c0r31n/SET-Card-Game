@@ -67,8 +67,8 @@ public class ScoreboardModel {
 
     @Override
     public String toString() {
-        int minutes = time/60;
-        int seconds = time%60;
+        int minutes = time / 60;
+        int seconds = time % 60;
         return difficulty + ", " + score + " points, " + String.format("%d:%02d", minutes, seconds);
     }
 }

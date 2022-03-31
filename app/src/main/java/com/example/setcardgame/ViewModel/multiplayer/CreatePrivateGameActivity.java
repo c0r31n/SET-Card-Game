@@ -1,13 +1,12 @@
 package com.example.setcardgame.ViewModel.multiplayer;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.setcardgame.Model.Game;
 import com.example.setcardgame.Model.Username;
@@ -25,7 +24,7 @@ public class CreatePrivateGameActivity extends AppCompatActivity {
     private Game game;
     private TextView connectionCodeTV;
 
-    private final String TAG = "alma";
+    private final String TAG = "privateGame";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,5 +94,25 @@ public class CreatePrivateGameActivity extends AppCompatActivity {
 
         Intent pg = new Intent(this, PrivateGameActivity.class);
         startActivity(pg);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (game != null){
+            JSONObject destroyGame = new JSONObject();
+            try {
+                destroyGame.put("gameId", game.getGameId());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            WebsocketClient.mStompClient.send("/app/game/destroy", destroyGame.toString()).subscribe();
+
+            Log.d(TAG, "Game destroyed");
+
+        }
+        WebsocketClient.disconnectWebsocket();
+        game = null;
     }
 }

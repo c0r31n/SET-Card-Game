@@ -1,11 +1,10 @@
 package com.example.setcardgame.ViewModel;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.setcardgame.Model.Difficulty;
 import com.example.setcardgame.R;
@@ -18,12 +17,11 @@ public class DifficultyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_difficulty);
     }
 
-    public void switchToSingleplayer(View v){
+    public void switchToSingleplayer(View v) {
         Intent sp = new Intent(this, SingleplayerActivity.class);
-        if (findViewById(v.getId())==findViewById(R.id.easyBtn)){
+        if (findViewById(v.getId()) == findViewById(R.id.easyBtn)) {
             sp.putExtra("diffMode", Difficulty.EASY.toString());
-        }
-        else {
+        } else {
             sp.putExtra("diffMode", Difficulty.NORMAL.toString());
         }
         startActivity(sp);

@@ -29,7 +29,7 @@ public class Card {
         return quantity;
     }
 
-    public String toString(){
+    public String toString() {
         return color.label + shape.label + quantity.label;
     }
 }
