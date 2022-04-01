@@ -105,8 +105,6 @@ public class MultiplayerActivity extends AppCompatActivity {
                                 //3 cards have been selected
                                 if (tempGame.getSelectedCardIndexes().size() == 3 && tempGame.getBlockedBy() == null) {
                                     if (game.getBlockedBy().toString().equals(username)) {
-//                                        resetTimer.cancel();
-//                                        resetTimer.purge();
                                     }
 
                                     game.setSelectedCardIndexes(tempGame.getSelectedCardIndexes());
@@ -123,7 +121,6 @@ public class MultiplayerActivity extends AppCompatActivity {
                                         resetButtonAndCardClicks();
 
                                         if (game.getBlockedBy().toString().equals(username)) {
-                                            //punish for error, maybe for 5 sec they cannot press SET again
                                             resetButtonAndCardClicksOnError();
                                             punishPlayerError();
                                             Log.d(TAG, "you didn't find the set");
@@ -243,7 +240,7 @@ public class MultiplayerActivity extends AppCompatActivity {
 
         WebsocketClient.mStompClient.send("/app/gameplay/button", buttonPressJson.toString()).subscribe();
 
-        //start timer for 3 sec, if it the player does not select 3 cards reset everything and punish them with a 5 sec cooldown
+        //start timer for 3 sec, if it the player does not select 3 cards reset everything and punish them
         selectTimeCountDown(buttonPressJson);
     }
 
@@ -404,7 +401,7 @@ public class MultiplayerActivity extends AppCompatActivity {
     }
 
     private void endGame() {
-        Intent mpes = new Intent(this, MultiplayerEndScreenActivity.class); //kell egy multi end game screen
+        Intent mpes = new Intent(this, MultiplayerEndScreenActivity.class);
         mpes.putExtra("opponentScore", opponentPointTextView.getText());
         mpes.putExtra("ownScore", ownPointTextView.getText());
         mpes.putExtra("winner", game.getWinner().toString());
