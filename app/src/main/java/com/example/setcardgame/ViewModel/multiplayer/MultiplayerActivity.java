@@ -13,7 +13,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.example.setcardgame.Model.Difficulty;
 import com.example.setcardgame.Model.Game;
 import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.Model.WebsocketClient;
@@ -39,7 +38,6 @@ public class MultiplayerActivity extends AppCompatActivity {
     private TextView ownPointTextView;
     private Button setBtn;
     private TableLayout tableLayout;
-    private final Difficulty difficulty = Difficulty.NORMAL;
     private final String username = Username.getUsername();
     private int gameId;
     private Game game;
