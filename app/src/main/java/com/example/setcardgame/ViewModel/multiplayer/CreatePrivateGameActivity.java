@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.setcardgame.Model.Game;
+import com.example.setcardgame.Model.MultiplayerGame;
 import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.Config.WebsocketClient;
 import com.example.setcardgame.R;
@@ -21,7 +21,7 @@ import io.reactivex.disposables.Disposable;
 public class CreatePrivateGameActivity extends AppCompatActivity {
 
     private String username = Username.getUsername();
-    private Game game;
+    private MultiplayerGame game;
     private TextView connectionCodeTV;
 
     private final String TAG = "privateGame";
@@ -37,7 +37,7 @@ public class CreatePrivateGameActivity extends AppCompatActivity {
             try{
                 JSONObject msg = new JSONObject(topicMessage.getPayload());
                 if(username.equals(msg.getString("player1"))){
-                    game = new Game(msg);
+                    game = new MultiplayerGame(msg);
                     Log.d(TAG, topicMessage.getPayload());
 
                     runOnUiThread (new Thread(new Runnable() {

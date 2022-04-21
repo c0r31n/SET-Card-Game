@@ -39,7 +39,7 @@
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:indeterminate="true"
-        android:indeterminateTint="@color/grey"
+        android:indeterminateTint="@color/dark_blue"
         android:indeterminateTintMode="src_atop"
         app:layout_constraintBottom_toTopOf="@+id/stopWaitingBtn"
         app:layout_constraintEnd_toEndOf="parent"

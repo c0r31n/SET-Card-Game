@@ -7,7 +7,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.setcardgame.Model.Game;
+import com.example.setcardgame.Model.MultiplayerGame;
 import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.Config.WebsocketClient;
 import com.example.setcardgame.R;
@@ -20,7 +20,7 @@ import io.reactivex.disposables.Disposable;
 public class WaitingForGameActivity extends AppCompatActivity {
 
     private final String TAG = "waiting";
-    private Game game;
+    private MultiplayerGame game;
     private final String username = Username.getUsername();
 
     @Override
@@ -33,14 +33,14 @@ public class WaitingForGameActivity extends AppCompatActivity {
             try {
                 JSONObject msg = new JSONObject(topicMessage.getPayload());
                 if (username.equals(msg.getString("player1"))) {
-                    game = new Game(msg);
+                    game = new MultiplayerGame(msg);
                     Log.d(TAG, game.getGameId() + "");
                     if (!msg.getString("player2").equals("null")) {
                         switchToMultiplayer();
                     }
                 }
                 if (username.equals(msg.getString("player2")) && !msg.getString("player1").equals("null")) {
-                    game = new Game(msg);
+                    game = new MultiplayerGame(msg);
                     switchToMultiplayer();
                 }
             } catch (JSONException e) {

@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.example.setcardgame.Model.Game;
+import com.example.setcardgame.Model.MultiplayerGame;
 import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.Config.WebsocketClient;
 import com.example.setcardgame.Model.card.Card;
@@ -40,7 +40,7 @@ public class MultiplayerActivity extends AppCompatActivity {
     private TableLayout tableLayout;
     private final String username = Username.getUsername();
     private int gameId;
-    private Game game;
+    private MultiplayerGame game;
     private final Timer resetBackgroundTimer = new Timer();
     private Timer resetTimer;
     private final Timer punishTimer = new Timer();
@@ -65,14 +65,14 @@ public class MultiplayerActivity extends AppCompatActivity {
         Disposable topic = WebsocketClient.mStompClient.topic("/topic/game-progress/" + gameId).subscribe(topicMessage -> {
             try {
                 JSONObject msg = new JSONObject(topicMessage.getPayload());
-                Game tempGame = new Game(msg);
+                MultiplayerGame tempGame = new MultiplayerGame(msg);
                 Log.d(TAG, msg.toString());
                 if (tempGame.getPlayer1() != null && tempGame.getPlayer2() != null) {
                     runOnUiThread(new Thread(new Runnable() {
                         public void run() {
                             //start game
                             if (game == null) {
-                                game = new Game(msg);
+                                game = new MultiplayerGame(msg);
                                 startGame();
                             } else {
                                 //SET button press

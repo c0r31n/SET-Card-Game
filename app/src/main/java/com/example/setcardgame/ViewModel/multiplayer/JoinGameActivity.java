@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.setcardgame.Model.Game;
+import com.example.setcardgame.Model.MultiplayerGame;
 import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.Config.WebsocketClient;
 import com.example.setcardgame.R;
@@ -23,7 +23,7 @@ public class JoinGameActivity extends AppCompatActivity {
     private final String TAG = "alma";
     private final String username = Username.getUsername();
     private EditText connectionCodeET;
-    private Game game;
+    private MultiplayerGame game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class JoinGameActivity extends AppCompatActivity {
             try {
                 JSONObject msg = new JSONObject(topicMessage.getPayload());
                 if (username.equals(msg.getString("player2")) && !msg.getString("player1").equals("null")) {
-                    game = new Game(msg);
+                    game = new MultiplayerGame(msg);
                     switchToMultiplayer();
                 }
             } catch (JSONException e) {

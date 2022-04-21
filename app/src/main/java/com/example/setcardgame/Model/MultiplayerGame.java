@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Game {
+public class MultiplayerGame {
 
     private int gameId;
     private UUID player1;
@@ -22,7 +22,7 @@ public class Game {
     private Map<UUID, Integer> points = new HashMap<>();
     private ArrayList<Integer> nullCardIndexes = new ArrayList<>();
 
-    public Game(JSONObject game) {
+    public MultiplayerGame(JSONObject game) {
         try {
             setGameIdString(game.getString("gameId"));
             if (!game.getString("player1").equals("null")) {
