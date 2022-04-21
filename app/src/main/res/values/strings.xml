@@ -31,4 +31,6 @@
     <string name="backBtn">Back</string>
     <string name="won">WON</string>
     <string name="lost">LOST</string>
+    <string name="meText">Me:</string>
+    <string name="opponentText">Opponent:</string>
 </resources>
