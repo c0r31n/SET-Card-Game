@@ -41,24 +41,24 @@ public class MainActivity extends AppCompatActivity {
         }
         Username.setUsername(sp.getString("username", "def"));
 
-        wakeUp();
+        checkServer();
     }
 
-    private void wakeUp() {
+    private void checkServer() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://test-set-card-game.herokuapp.com/wakeup/";
+        String url = "https://test-set-card-game.herokuapp.com/check/";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("wakeup", "woke");
+                        Log.d("check", "available");
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Log.d("wakeup", "not woke");
+                Log.d("check", "not available");
             }
         });
 

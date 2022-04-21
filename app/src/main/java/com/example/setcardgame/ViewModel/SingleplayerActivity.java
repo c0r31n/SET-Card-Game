@@ -105,7 +105,6 @@ public class SingleplayerActivity extends AppCompatActivity {
         if (difficulty == Difficulty.NORMAL) {
             TableRow lastTableRow = (TableRow) findViewById(R.id.tableRow3);
             tableLayout.removeView(lastTableRow);
-
         }
 
         if (difficulty == Difficulty.EASY) {
