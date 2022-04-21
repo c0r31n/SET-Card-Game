@@ -12,6 +12,7 @@ import com.example.setcardgame.Model.ScoreboardDataService;
 import com.example.setcardgame.Model.ScoreboardModel;
 import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.R;
+import com.example.setcardgame.ViewModel.scoreboard.ScoreboardActivity;
 
 import org.json.JSONObject;
 
@@ -53,6 +54,11 @@ public class EndGameScreenActivity extends AppCompatActivity {
     public void backToMenu(View v) {
         Intent m = new Intent(this, MainActivity.class);
         startActivity(m);
+    }
+
+    public void goToScoreBoard(View v) {
+        Intent sb = new Intent(this, ScoreboardActivity.class);
+        startActivity(sb);
     }
 
     public void addScoreToDB() {
