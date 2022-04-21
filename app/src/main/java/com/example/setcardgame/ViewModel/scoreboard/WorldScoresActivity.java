@@ -1,27 +1,20 @@
 package com.example.setcardgame.ViewModel.scoreboard;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.setcardgame.Model.ScoreboardDataService;
-import com.example.setcardgame.Model.ScoreboardModel;
+import com.example.setcardgame.Service.ScoreboardDataService;
+import com.example.setcardgame.Model.Scoreboard;
 import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.R;
 
 import java.util.List;
-import java.util.UUID;
 
 public class WorldScoresActivity extends AppCompatActivity {
 
@@ -48,7 +41,7 @@ public class WorldScoresActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(List<ScoreboardModel> scoreboardModels) {
+            public void onResponse(List<Scoreboard> scoreboardModels) {
                 ArrayAdapter arrayAdapter = new ArrayAdapter(WorldScoresActivity.this, android.R.layout.simple_list_item_1, scoreboardModels);
                 ListView scoresListView = findViewById(R.id.scoresListView);
                 scoresListView.setAdapter(arrayAdapter);

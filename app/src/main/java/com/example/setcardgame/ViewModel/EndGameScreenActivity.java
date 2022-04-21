@@ -8,8 +8,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.setcardgame.Model.ScoreboardDataService;
-import com.example.setcardgame.Model.ScoreboardModel;
+import com.example.setcardgame.Service.ScoreboardDataService;
+import com.example.setcardgame.Model.Scoreboard;
 import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.R;
 import com.example.setcardgame.ViewModel.scoreboard.ScoreboardActivity;
@@ -62,7 +62,7 @@ public class EndGameScreenActivity extends AppCompatActivity {
     }
 
     public void addScoreToDB() {
-        ScoreboardModel scoreboardModel = new ScoreboardModel(username, finalDifficulty, Integer.parseInt(finalScore), finalTime);
+        Scoreboard scoreboardModel = new Scoreboard(username, finalDifficulty, Integer.parseInt(finalScore), finalTime);
         scoreboardDataService.addScore(scoreboardModel, new ScoreboardDataService.ScoreAddedResponseListener() {
             @Override
             public void onError(String message) {

@@ -1,4 +1,4 @@
-package com.example.setcardgame.Model;
+package com.example.setcardgame.Config;
 
 import android.util.Log;
 

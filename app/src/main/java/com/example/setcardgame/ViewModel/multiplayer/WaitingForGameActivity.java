@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.setcardgame.Model.Game;
 import com.example.setcardgame.Model.Username;
-import com.example.setcardgame.Model.WebsocketClient;
+import com.example.setcardgame.Config.WebsocketClient;
 import com.example.setcardgame.R;
 
 import org.json.JSONException;

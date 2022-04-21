@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.setcardgame.Model.Game;
 import com.example.setcardgame.Model.Username;
-import com.example.setcardgame.Model.WebsocketClient;
+import com.example.setcardgame.Config.WebsocketClient;
 import com.example.setcardgame.Model.card.Card;
 import com.example.setcardgame.R;
 

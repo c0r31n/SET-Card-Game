@@ -2,7 +2,7 @@ package com.example.setcardgame.Model;
 
 import java.util.UUID;
 
-public class ScoreboardModel {
+public class Scoreboard {
 
     private int scoreId;
     private UUID playerId;
@@ -10,14 +10,14 @@ public class ScoreboardModel {
     private int score;
     private int time;
 
-    public ScoreboardModel(String playerId, String difficulty, int score, int time) {
+    public Scoreboard(String playerId, String difficulty, int score, int time) {
         this.playerId = UUID.fromString(playerId);
         this.difficulty = Difficulty.getDifficultyFromString(difficulty);
         this.score = score;
         this.time = time;
     }
 
-    public ScoreboardModel(int scoreId, String playerId, String difficulty, int score, int time) {
+    public Scoreboard(int scoreId, String playerId, String difficulty, int score, int time) {
         this.scoreId = scoreId;
         this.playerId = UUID.fromString(playerId);
         this.difficulty = Difficulty.getDifficultyFromString(difficulty);

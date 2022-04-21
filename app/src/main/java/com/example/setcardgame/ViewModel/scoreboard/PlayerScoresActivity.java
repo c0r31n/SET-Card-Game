@@ -4,17 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.setcardgame.Model.ScoreboardDataService;
-import com.example.setcardgame.Model.ScoreboardModel;
+import com.example.setcardgame.Service.ScoreboardDataService;
+import com.example.setcardgame.Model.Scoreboard;
 import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.R;
-import com.example.setcardgame.ViewModel.MainActivity;
 
 import java.util.List;
 
@@ -43,7 +41,7 @@ public class PlayerScoresActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onResponse(List<ScoreboardModel> scoreboardModels) {
+            public void onResponse(List<Scoreboard> scoreboardModels) {
                 ArrayAdapter arrayAdapter = new ArrayAdapter(PlayerScoresActivity.this, android.R.layout.simple_list_item_1, scoreboardModels);
 
                 ListView scoresListView = findViewById(R.id.scoresListView);
