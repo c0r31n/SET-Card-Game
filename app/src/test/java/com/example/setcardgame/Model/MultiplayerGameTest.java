@@ -2,17 +2,12 @@ package com.example.setcardgame.Model;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.UUID;
 
 public class MultiplayerGameTest {
     MultiplayerGame game = new MultiplayerGame();
-
-    @Before
-    public void setUp() throws Exception {
-    }
 
     @Test
     public void setNullCardIndexesStringWithEmptyArrayStringReturnsEmpty() {
