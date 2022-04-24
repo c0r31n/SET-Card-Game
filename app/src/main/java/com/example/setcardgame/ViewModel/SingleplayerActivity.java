@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.setcardgame.Model.Difficulty;
+import com.example.setcardgame.Model.SingleplayerGame;
 import com.example.setcardgame.Model.card.Card;
 import com.example.setcardgame.Model.card.Color;
 import com.example.setcardgame.Model.card.Quantity;
@@ -42,6 +42,7 @@ public class SingleplayerActivity extends AppCompatActivity {
     private TimerTask timerTask;
     private Double time = 0.0;
     private boolean stopUserInteractions = false;
+    private SingleplayerGame game = new SingleplayerGame();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +145,7 @@ public class SingleplayerActivity extends AppCompatActivity {
                 boardCards.add(cards.get(0));
                 cards.remove(0);
             }
-        } while (!hasSet(boardCards));
+        }while (!game.hasSet(boardCards, board));
 
         pointTextView = findViewById(R.id.opponentPointTextView);
         timerTextView = findViewById(R.id.timerTextView);
@@ -167,7 +168,7 @@ public class SingleplayerActivity extends AppCompatActivity {
             }
 
             if (selectedCardIds.size() == 3) {
-                if (hasSet(selectedCards)) {
+                if(game.hasSet(selectedCards, board)){
                     for (int i = 0; board.size() > i; i++) {
                         if (board.get(i).getId() == selectedCardIds.get(0)
                                 || board.get(i).getId() == selectedCardIds.get(1)
@@ -180,7 +181,7 @@ public class SingleplayerActivity extends AppCompatActivity {
                     stopUserInteractions = true;
                     removeCardsFromBoard();
 
-                    if (isGameOver() || !hasSet(boardCards)) {
+                    if(game.isGameOver(board) || !game.hasSet(boardCards, board)){
                         timerTask.cancel();
                         endGame();
                     }
@@ -239,73 +240,6 @@ public class SingleplayerActivity extends AppCompatActivity {
         }
     }
 
-    private boolean hasSet(ArrayList<Card> cards) {
-        if (cards.size() >= 3) {
-            ArrayList<Boolean> propertyChecks = new ArrayList<>();
-            for (int i = 0; 3 > i; i++) propertyChecks.add(false);
-
-            for (int i = 0; cards.size() > i; i++) {
-                for (int j = i + 1; cards.size() > j; j++) {
-                    for (int k = j + 1; cards.size() > k; k++) {
-                        for (int x = 0; 3 > x; x++) propertyChecks.set(x, false);
-                        if (cards.get(i).getColor() == cards.get(j).getColor() && cards.get(i).getColor() == cards.get(k).getColor())
-                            propertyChecks.set(0, true);
-                        if (cards.get(i).getColor() != cards.get(j).getColor() && cards.get(i).getColor() != cards.get(k).getColor() && cards.get(j).getColor() != cards.get(k).getColor())
-                            propertyChecks.set(0, true);
-                        if (cards.get(i).getShape() == cards.get(j).getShape() && cards.get(i).getShape() == cards.get(k).getShape())
-                            propertyChecks.set(1, true);
-                        if (cards.get(i).getShape() != cards.get(j).getShape() && cards.get(i).getShape() != cards.get(k).getShape() && cards.get(j).getShape() != cards.get(k).getShape())
-                            propertyChecks.set(1, true);
-                        if (cards.get(i).getQuantity() == cards.get(j).getQuantity() && cards.get(i).getQuantity() == cards.get(k).getQuantity())
-                            propertyChecks.set(2, true);
-                        if (cards.get(i).getQuantity() != cards.get(j).getQuantity() && cards.get(i).getQuantity() != cards.get(k).getQuantity() && cards.get(j).getQuantity() != cards.get(k).getQuantity())
-                            propertyChecks.set(2, true);
-
-                        if (!propertyChecks.contains(false)) {
-                            ArrayList<Boolean> visibilityChecks = new ArrayList<>();
-                            for (int z = 0; 3 > z; z++) visibilityChecks.add(false);
-
-                            String cardDesc1 = cards.get(i).toString();
-                            String cardDesc2 = cards.get(j).toString();
-                            String cardDesc3 = cards.get(k).toString();
-
-                            for (int y = 0; board.size() > y; y++) {
-                                String boardDesc = (String) board.get(y).getContentDescription();
-
-                                if (boardDesc.equals(cardDesc1)) {
-                                    if (board.get(y).getVisibility() == View.VISIBLE) {
-                                        visibilityChecks.set(0, true);
-                                    }
-                                }
-                                if (boardDesc.equals(cardDesc2)) {
-                                    if (board.get(y).getVisibility() == View.VISIBLE) {
-                                        visibilityChecks.set(1, true);
-                                    }
-                                }
-                                if (boardDesc.equals(cardDesc3)) {
-                                    if (board.get(y).getVisibility() == View.VISIBLE) {
-                                        visibilityChecks.set(2, true);
-                                    }
-                                }
-                            }
-
-                            if (!visibilityChecks.contains(false)) {
-                                Log.d("cheat", "card1: " + cardDesc1);
-                                Log.d("cheat", "card2: " + cardDesc2);
-                                Log.d("cheat", "card3: " + cardDesc3);
-                                Log.d("cheat", " ");
-                                propertyChecks.clear();
-                                visibilityChecks.clear();
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
     private void removeCardsFromBoard() {
         for (int i = 0; board.size() > i; i++) {
             ImageView img = board.get(i);
@@ -333,17 +267,6 @@ public class SingleplayerActivity extends AppCompatActivity {
         startActivity(egs);
     }
 
-    private boolean isGameOver() {
-        boolean hasVisible = false;
-
-        for (int i = 0; board.size() > i && !hasVisible; i++) {
-            if (board.get(i).getVisibility() == View.VISIBLE) {
-                hasVisible = true;
-            }
-        }
-        return !hasVisible;
-    }
-
     private double getScreeSizeInInches() {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -353,5 +276,4 @@ public class SingleplayerActivity extends AppCompatActivity {
         double y = Math.pow(mHeightPixels / dm.ydpi, 2);
         return Math.sqrt(x + y);
     }
-
 }

@@ -52,6 +52,9 @@ public class MultiplayerGame {
         }
     }
 
+    public MultiplayerGame() {
+    }
+
     public ArrayList<Integer> getNullCardIndexes() {
         return nullCardIndexes;
     }
