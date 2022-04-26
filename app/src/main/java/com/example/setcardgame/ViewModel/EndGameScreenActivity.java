@@ -9,7 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.setcardgame.Service.ScoreboardDataService;
-import com.example.setcardgame.Model.Scoreboard;
+import com.example.setcardgame.Model.scoreboard.Scoreboard;
 import com.example.setcardgame.Model.Username;
 import com.example.setcardgame.R;
 import com.example.setcardgame.ViewModel.scoreboard.ScoreboardActivity;

@@ -10,7 +10,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.setcardgame.Config.RequestQueueSingleton;
-import com.example.setcardgame.Model.Scoreboard;
+import com.example.setcardgame.Model.scoreboard.Scoreboard;
 
 import org.json.JSONArray;
 import org.json.JSONException;

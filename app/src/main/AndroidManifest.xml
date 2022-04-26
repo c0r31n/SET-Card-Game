@@ -12,19 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SETCardGame">
         <activity
-            android:name=".ViewModel.multiplayer.MultiplayerEndScreenActivity"
-            android:exported="false"
-            android:label="Score"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ViewModel.scoreboard.WorldScoresActivity"
-            android:exported="false"
+            android:parentActivityName=".ViewModel.scoreboard.ScoreboardActivity"
             android:label="World Scores"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.scoreboard.PlayerScoresActivity"
-            android:exported="false"
+            android:parentActivityName=".ViewModel.scoreboard.ScoreboardActivity"
             android:label="My Scores"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ViewModel.multiplayer.MultiplayerEndScreenActivity"
+            android:exported="false"
+            android:label="Score"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.multiplayer.JoinGameActivity"
