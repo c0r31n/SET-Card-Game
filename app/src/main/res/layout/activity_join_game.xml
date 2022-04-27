@@ -25,19 +25,18 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.47" />
+        app:layout_constraintVertical_bias="0.496" />
 
     <View
         android:id="@+id/view"
         android:layout_width="285dp"
-        android:layout_height="241dp"
+        android:layout_height="222dp"
         android:background="@drawable/radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.567" />
+        app:layout_constraintVertical_bias="0.559" />
 
     <Button
         android:id="@+id/joinBtn"
@@ -47,12 +46,12 @@
         android:gravity="center"
         android:onClick="joinGame"
         android:text="@string/joinWithCodeBtn"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.626" />
+        app:layout_constraintTop_toBottomOf="@+id/connectionCodeET"
+        app:layout_constraintVertical_bias="0.458" />
 
     <EditText
         android:id="@+id/connectionCodeET"
@@ -71,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.473" />
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintVertical_bias="0.085" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
