@@ -4,33 +4,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewModel.DifficultyActivity">
+    tools:context=".ViewModel.DifficultyActivity"
+    android:background="@drawable/set_background">
+
+    <TextView
+        android:id="@+id/difficultyTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/archivo_black"
+        android:gravity="center"
+        android:shadowColor="@color/white"
+        android:shadowDx="8"
+        android:shadowDy="8"
+        android:shadowRadius="2"
+        android:text="@string/difficulty"
+        android:textColor="@color/blue"
+        android:textSize="45sp"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.467" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="261dp"
+        android:layout_height="250dp"
+        android:background="@drawable/radius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.544" />
 
     <Button
         android:id="@+id/easyBtn"
-        android:layout_width="160dp"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/dark_blue"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/blue"
         android:gravity="center"
         android:onClick="switchToSingleplayer"
         android:text="@string/easyBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.249" />
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintVertical_bias="0.099" />
 
     <Button
         android:id="@+id/normalBtn"
-        android:layout_width="160dp"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/dark_blue"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/blue"
         android:gravity="center"
         android:onClick="switchToSingleplayer"
         android:text="@string/normalBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.397" />
+        app:layout_constraintTop_toBottomOf="@+id/easyBtn"
+        app:layout_constraintVertical_bias="0.119" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

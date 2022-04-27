@@ -4,31 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewModel.multiplayer.PrivateGameActivity">
+    tools:context=".ViewModel.multiplayer.PrivateGameActivity"
+    android:background="@drawable/set_background">
+
+    <TextView
+        android:id="@+id/privateGameTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/archivo_black"
+        android:gravity="center"
+        android:shadowColor="@color/white"
+        android:shadowDx="8"
+        android:shadowDy="8"
+        android:shadowRadius="2"
+        android:text="@string/privateGameText"
+        android:textColor="@color/blue"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="271dp"
+        android:layout_height="271dp"
+        android:background="@drawable/radius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.564" />
+
+    <Button
+        android:id="@+id/createGameBtn"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/blue"
+        android:onClick="switchToCreateGame"
+        android:text="@string/createGameBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.895" />
 
     <Button
         android:id="@+id/joinGameBtn"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/dark_blue"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/blue"
         android:onClick="switchToJoinGame"
         android:text="@string/joinGameBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintVertical_bias="0.107" />
 
-    <Button
-        android:id="@+id/createGameBtn"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/dark_blue"
-        android:onClick="switchToCreateGame"
-        android:text="@string/createGameBtn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.424" />
 </androidx.constraintlayout.widget.ConstraintLayout>

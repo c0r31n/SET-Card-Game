@@ -203,7 +203,7 @@ public class SingleplayerActivity extends AppCompatActivity {
         } else {
             for (int i = 0; board.size() > i; i++) {
                 if (board.get(i).getId() == view.getId()) {
-                    board.get(i).setBackgroundResource(R.drawable.card_background_empty);
+                    board.get(i).setBackgroundResource(R.color.trans);
                 }
             }
             selectedCards.remove(selectedCardIds.indexOf(view.getId()));
@@ -218,14 +218,14 @@ public class SingleplayerActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     for (int i = 0; board.size() > i; i++) {
-                        board.get(i).setBackgroundResource(R.drawable.card_background_empty);
+                        board.get(i).setBackgroundResource(R.color.trans);
                     }
                     stopUserInteractions = false;
                 }
             }, 300);
         } else {
             for (int i = 0; board.size() > i; i++) {
-                board.get(i).setBackgroundResource(R.drawable.card_background_empty);
+                board.get(i).setBackgroundResource(R.color.trans);
             }
             stopUserInteractions = false;
         }

@@ -271,7 +271,7 @@ public class MultiplayerActivity extends AppCompatActivity {
     private void resetButtonAndCardClicks() {
         switchBoardClicks(false);
         setBtn.setEnabled(true);
-        setBtn.setBackgroundTintList(ContextCompat.getColorStateList(MultiplayerActivity.this, R.color.dark_blue));
+        setBtn.setBackgroundTintList(ContextCompat.getColorStateList(MultiplayerActivity.this, R.color.blue));
     }
 
     private void resetButtonAndCardClicksOnError() {
@@ -326,7 +326,7 @@ public class MultiplayerActivity extends AppCompatActivity {
                 resetInt--;
                 for (int i = 0; boardIV.size() > i; i++) {
                     if (boardIV.get(i).getId() == view.getId()) {
-                        boardIV.get(i).setBackgroundResource(R.drawable.card_background_empty);
+                        boardIV.get(i).setBackgroundResource(R.color.trans);
 
                         JSONObject gameplayJson = new JSONObject();
                         try {
@@ -363,7 +363,7 @@ public class MultiplayerActivity extends AppCompatActivity {
 
     private void setSelectedCardsBackgroundForOpponent(ArrayList<Integer> indexes) {
         for (int i = 0; boardIV.size() > i; i++) {
-            boardIV.get(i).setBackgroundResource(R.drawable.card_background_empty);
+            boardIV.get(i).setBackgroundResource(R.color.trans);
         }
         for (int i = 0; indexes.size() > i; i++) {
             boardIV.get(indexes.get(i)).setBackgroundResource(R.drawable.card_background_selected);
@@ -377,7 +377,7 @@ public class MultiplayerActivity extends AppCompatActivity {
             @Override
             public void run() {
                 for (int i = 0; boardIV.size() > i; i++) {
-                    boardIV.get(i).setBackgroundResource(R.drawable.card_background_empty);
+                    boardIV.get(i).setBackgroundResource(R.color.trans);
                 }
                 stopUserInteractions = false;
             }

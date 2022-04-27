@@ -31,6 +31,7 @@
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/drawable/ps1.xml" value="0.34" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/drawable/ps2.xml" value="0.34" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/drawable/ps3.xml" value="0.34" />
+        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/drawable/radius.xml" value="0.2735" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/drawable/rd1.xml" value="0.34" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/drawable/rd2.xml" value="0.34" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/drawable/rd3.xml" value="0.34" />
@@ -42,28 +43,30 @@
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/drawable/rs3.xml" value="0.34" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/drawable/set_app_icon_foreground.xml" value="0.195" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/drawable/sgd1.xml" value="0.2985" />
-        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_create_private_game.xml" value="0.3175213675213675" />
-        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_difficulty.xml" value="0.2" />
+        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_create_private_game.xml" value="0.22" />
+        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_difficulty.xml" value="0.25" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_end_game_screen.xml" value="0.2" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_how_to_page.xml" value="0.2" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_join_game.xml" value="0.22" />
-        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_main.xml" value="0.25" />
-        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_multiplayer.xml" value="0.25" />
-        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_multiplayer_end_screen.xml" value="0.33" />
+        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_multiplayer.xml" value="0.2" />
+        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_multiplayer_end_screen.xml" value="0.25" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_my_scores.xml" value="0.22" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_new_player_score.xml" value="0.1574074074074074" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_new_player_scores.xml" value="0.3175213675213675" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_new_scores.xml" value="0.3175213675213675" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_new_world_scores.xml" value="0.3175213675213675" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_player_scores.xml" value="0.3175213675213675" />
-        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_private_game.xml" value="0.22" />
+        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_private_game.xml" value="0.2" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_scoreboard.xml" value="0.25" />
-        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_select_multiplayer_type.xml" value="0.22" />
-        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_singleplayer.xml" value="0.33" />
-        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_waiting_for_game.xml" value="0.2" />
+        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_scores.xml" value="0.3175213675213675" />
+        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_select_multiplayer_type.xml" value="0.25" />
+        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_singleplayer.xml" value="0.22" />
+        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_waiting_for_game.xml" value="0.25" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/activity_world_scores.xml" value="0.2" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/easy_fragment.xml" value="0.30470085470085473" />
-        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/item_score.xml" value="0.30470085470085473" />
+        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/fragment_score.xml" value="0.3175213675213675" />
+        <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/item_score.xml" value="0.41040462427745666" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/layout/list_items.xml" value="0.3175213675213675" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/mipmap-anydpi-v26/1SgD.xml" value="0.2985" />
         <entry key="..\:/Users/vrabe/OneDrive/Dokumentumok/Codes/Android/SETCardGame/app/src/main/res/mipmap-anydpi-v26/1SgD_round.xml" value="0.2985" />

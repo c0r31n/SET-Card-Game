@@ -8,11 +8,13 @@
     tools:context=".ViewModel.scoreboard.PlayerScoresActivity">
 
     <com.google.android.material.tabs.TabLayout
+        android:background="@color/blue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:tabTextColor="@color/white"
         app:tabMode="fixed"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@color/black"
+        app:tabIndicatorColor="@color/white"
         android:id="@+id/tabLayoutPlayer"></com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager

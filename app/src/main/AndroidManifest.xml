@@ -7,95 +7,95 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/appName"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SETCardGame">
         <activity
             android:name=".ViewModel.scoreboard.WorldScoresActivity"
             android:parentActivityName=".ViewModel.scoreboard.ScoreboardActivity"
-            android:label="World Scores"
+            android:label="@string/worldScoresText"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.scoreboard.PlayerScoresActivity"
             android:parentActivityName=".ViewModel.scoreboard.ScoreboardActivity"
-            android:label="My Scores"
+            android:label="@string/myScoreText"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.multiplayer.MultiplayerEndScreenActivity"
             android:exported="false"
-            android:label="Score"
+            android:label="@string/scoreTextView"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.multiplayer.JoinGameActivity"
             android:exported="false"
-            android:label="Join Game"
+            android:label="@string/joinGameText"
             android:parentActivityName=".ViewModel.multiplayer.PrivateGameActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.multiplayer.PrivateGameActivity"
             android:exported="false"
-            android:label="Private Game"
+            android:label="@string/privateGameText"
             android:parentActivityName=".ViewModel.multiplayer.SelectMultiplayerTypeActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.multiplayer.WaitingForGameActivity"
             android:exported="false"
-            android:label="Searching For Game"
+            android:label="@string/waitingText"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.multiplayer.CreatePrivateGameActivity"
             android:exported="false"
-            android:label="Create Private Game"
+            android:label="@string/createPrivateGameText"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.multiplayer.SelectMultiplayerTypeActivity"
             android:exported="false"
-            android:label="Choose Multiplayer Type"
+            android:label="@string/chooseMultiTypeText"
             android:parentActivityName=".ViewModel.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.DifficultyActivity"
             android:exported="false"
-            android:label="Difficulty"
+            android:label="@string/difficulty"
             android:parentActivityName=".ViewModel.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.HowToPageActivity"
             android:exported="false"
-            android:label="How To Play"
+            android:label="@string/howToTitle"
             android:parentActivityName=".ViewModel.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.EndGameScreenActivity"
             android:exported="false"
-            android:label="Score"
+            android:label="@string/scoreText"
             android:parentActivityName=".ViewModel.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.scoreboard.ScoreboardActivity"
             android:exported="false"
-            android:label="Scoreboard"
+            android:label="@string/scoreboardText"
             android:parentActivityName=".ViewModel.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.multiplayer.MultiplayerActivity"
             android:exported="false"
-            android:label="Multiplayer"
+            android:label="@string/multiplayerText"
             android:parentActivityName=".ViewModel.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.SingleplayerActivity"
             android:exported="false"
-            android:label="Singleplayer"
+            android:label="@string/singleplayerText"
             android:parentActivityName=".ViewModel.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ViewModel.MainActivity"
             android:exported="true"
-            android:label="SET Card Game"
+            android:label="@string/setCardGameText"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -103,6 +103,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

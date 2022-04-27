@@ -4,33 +4,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewModel.scoreboard.ScoreboardActivity">
+    tools:context=".ViewModel.scoreboard.ScoreboardActivity"
+    android:background="@drawable/set_background">
+
+    <TextView
+        android:id="@+id/scoreboardTV"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/archivo_black"
+        android:gravity="center"
+        android:shadowColor="@color/white"
+        android:shadowDx="8"
+        android:shadowDy="8"
+        android:shadowRadius="2"
+        android:text="@string/scoreboardText"
+        android:textColor="@color/blue"
+        android:textSize="42sp"
+        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.459" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="266dp"
+        android:layout_height="248dp"
+        android:background="@drawable/radius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.56" />
 
     <Button
         android:id="@+id/myScoreBtn"
         android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/dark_blue"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/blue"
         android:gravity="center"
         android:onClick="switchToMyScores"
-        android:text="@string/myScoresBtn"
+        android:text="@string/myScoreText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.232" />
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintVertical_bias="0.085" />
 
     <Button
         android:id="@+id/worldScoreBtn"
         android:layout_width="170dp"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/dark_blue"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/blue"
         android:gravity="center"
         android:onClick="switchToWorldScores"
-        android:text="@string/worldScoresBtn"
+        android:text="@string/worldScoresText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.421" />
+        app:layout_constraintTop_toBottomOf="@+id/myScoreBtn"
+        app:layout_constraintVertical_bias="0.135" />
 </androidx.constraintlayout.widget.ConstraintLayout>
