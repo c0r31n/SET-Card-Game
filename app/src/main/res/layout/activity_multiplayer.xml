@@ -9,8 +9,8 @@
 
     <View
         android:id="@+id/view"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="105dp"
+        android:layout_height="51dp"
         android:layout_marginStart="3dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/radius"
@@ -19,8 +19,8 @@
 
     <View
         android:id="@+id/view2"
-        android:layout_width="160dp"
-        android:layout_height="50dp"
+        android:layout_width="156dp"
+        android:layout_height="49dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="7dp"
         android:background="@drawable/radius"

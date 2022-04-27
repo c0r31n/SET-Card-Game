@@ -13,10 +13,10 @@
     <string name="contentDescriptionForCards">card</string>
     <string name="newGameBtn">New Game</string>
     <string name="backToMenuBtn">Menu</string>
-    <string name="howToText">Egy SET 3 kártyából áll, amiben minden tulajdonságot külön-külön megvizsgálva, vagy egyeznie vagy különböznie kell. Ennek a szabálynak MINDEN tulajdonság esetén meg kell felelnie a kiválasztott három lapnak. Más szavakkal: a forma vagy azononos mindhárom kártyán, vagy mindegyiken más; a szín vagy azonos mindhárom kártyán, vagy mindegyiken különböző; legvégül a darabszámnak vagy egyeznie kell mindegyiken vagy különböznie.</string>
+    <string name="howToText">A SET consists of three cards in which each property is examined separately, must match or differ. This rule must match the three cards selected for ALL properties. In other words, the shape is either identical on all three cards or different on each; the color is either the same on all three cards or different on each; finally, the number of pieces must either match all of them or be different.</string>
     <string name="howToTitle">How To Play</string>
-    <string name="easyBtn">Easy</string>
-    <string name="normalBtn">Normal</string>
+    <string name="easy">Easy</string>
+    <string name="normal">Normal</string>
     <string name="difficultyTextView">NORMAL</string>
     <string name="randomGameBtn">Random Game</string>
     <string name="privateGameText">Private Game</string>
@@ -40,4 +40,6 @@
     <string name="meText">Me:</string>
     <string name="opponentText">Opponent:</string>
     <string name="difficulty">Difficulty</string>
+    <string name="timeText">Time</string>
+    <string name="pointsText">Points</string>
 </resources>

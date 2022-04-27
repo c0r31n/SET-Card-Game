@@ -9,7 +9,7 @@
 
     <View
         android:id="@+id/view"
-        android:layout_width="252dp"
+        android:layout_width="250dp"
         android:layout_height="78dp"
         android:background="@drawable/radius"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,28 +21,59 @@
 
     <View
         android:id="@+id/view2"
-        android:layout_width="256dp"
-        android:layout_height="233dp"
+        android:layout_width="250dp"
+        android:layout_height="217dp"
         android:background="@drawable/radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view"
-        app:layout_constraintVertical_bias="0.546" />
+        app:layout_constraintVertical_bias="0.539" />
 
-    <Button
-        android:id="@+id/backToMenuBtn2"
-        android:layout_width="170dp"
-        android:layout_height="60dp"
-        android:backgroundTint="@color/blue"
-        android:onClick="backToMenu"
-        android:text="@string/backToMenuBtn"
-        app:layout_constraintBottom_toBottomOf="@+id/view2"
+    <TextView
+        android:id="@+id/opponentScoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="@color/blue"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toTopOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/multiTextView"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintVertical_bias="0.088" />
+
+    <TextView
+        android:id="@+id/multiTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" – "
+        android:textColor="@color/blue"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toTopOf="@+id/view2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newGameBtn2" />
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintVertical_bias="0.094" />
+
+    <TextView
+        android:id="@+id/ownScoreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="@color/blue"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toTopOf="@+id/view2"
+        app:layout_constraintEnd_toStartOf="@+id/multiTextView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view"
+        app:layout_constraintVertical_bias="0.088" />
+
+
 
     <Button
         android:id="@+id/newGameBtn2"
@@ -57,7 +88,21 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view2"
-        app:layout_constraintVertical_bias="0.141" />
+        app:layout_constraintVertical_bias="0.127" />
+
+    <Button
+        android:id="@+id/backToMenuBtn2"
+        android:layout_width="170dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/blue"
+        android:onClick="backToMenu"
+        android:text="@string/backToMenuBtn"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/newGameBtn2"
+        app:layout_constraintVertical_bias="0.52" />
 
     <TextView
         android:id="@+id/scoreForMultiTextView"
@@ -77,47 +122,6 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.554" />
+        app:layout_constraintVertical_bias="0.444" />
 
-    <TextView
-        android:id="@+id/multiTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=" – "
-        android:textColor="@color/blue"
-        android:textSize="35sp"
-        app:layout_constraintBottom_toTopOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoreForMultiTextView"
-        app:layout_constraintVertical_bias="0.416" />
-
-    <TextView
-        android:id="@+id/ownScoreTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textColor="@color/blue"
-        android:textSize="35sp"
-        app:layout_constraintBottom_toTopOf="@+id/view2"
-        app:layout_constraintEnd_toStartOf="@+id/multiTextView"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scoreForMultiTextView"
-        app:layout_constraintVertical_bias="0.413" />
-
-    <TextView
-        android:id="@+id/opponentScoreTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:textColor="@color/blue"
-        android:textSize="35sp"
-        app:layout_constraintBottom_toTopOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/multiTextView"
-        app:layout_constraintTop_toBottomOf="@+id/scoreForMultiTextView"
-        app:layout_constraintVertical_bias="0.413" />
 </androidx.constraintlayout.widget.ConstraintLayout>

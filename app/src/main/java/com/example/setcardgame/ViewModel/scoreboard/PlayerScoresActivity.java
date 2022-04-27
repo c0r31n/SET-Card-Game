@@ -61,8 +61,8 @@ public class PlayerScoresActivity extends AppCompatActivity {
                     }
                 }
 
-                adapter.addFragment(new ScoresFragment(easyScoreList), "Easy");
-                adapter.addFragment(new ScoresFragment(normalScoreList), "Normal");
+                adapter.addFragment(new ScoresFragment(easyScoreList), String.format("%s", getString(R.string.easy)));
+                adapter.addFragment(new ScoresFragment(normalScoreList), String.format("%s", getString(R.string.normal)));
 
                 viewPager.setAdapter(adapter);
                 tabLayout.setupWithViewPager(viewPager);

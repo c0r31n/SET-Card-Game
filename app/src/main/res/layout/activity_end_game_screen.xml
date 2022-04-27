@@ -59,10 +59,9 @@
         android:textSize="35sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view"
-        app:layout_constraintVertical_bias="0.064" />
+        app:layout_constraintVertical_bias="0.049" />
 
     <TextView
         android:id="@+id/finalPointTextView"
@@ -90,7 +89,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/difficultyTextView"
-        app:layout_constraintVertical_bias="0.054" />
+        app:layout_constraintVertical_bias="0.05" />
 
     <Button
         android:id="@+id/newGameBtn"

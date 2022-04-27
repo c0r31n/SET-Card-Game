@@ -33,16 +33,16 @@ public class RecycleViewScoreAdapter extends RecyclerView.Adapter<RecycleViewSco
     @Override
     public void onBindViewHolder(@NonNull RecycleViewScoreAdapter.ViewHolder holder, int position) {
         String placementContent = list.get(position).getPlacement() + ".";
-        String pointsContent = "Points: " + list.get(position).getScore();
+        String pointsContent = String.format("%s: %d", context.getString(R.string.pointsText),list.get(position).getScore());
 
         int time = list.get(position).getTime();
         int seconds = time % 60;
         int minutes = time / 60;
-        String timeContent = String.format("Time: %d:%02d", minutes, seconds);
+        String timeContent = String.format("%s: %d:%02d", context.getString(R.string.timeText) , minutes, seconds);
 
         String myScoreContent = "";
         if(list.get(position).isMyScore()){
-            myScoreContent = "(My Score)";
+            myScoreContent = String.format("(%s)", context.getString(R.string.myScoreText));
         }
 
         holder.setData(placementContent, pointsContent, timeContent, myScoreContent);

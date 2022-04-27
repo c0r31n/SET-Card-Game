@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appName">SET</string>
+    <string name="setCardGameText">SET Kártyajáték</string>
+    <string name="exitBtn">Kilépés</string>
+    <string name="scoreboardText">Eredmények</string>
+    <string name="singleplayerText">Egyjátékos</string>
+    <string name="multiplayerText">Többjátékos</string>
+    <string name="timerTextView">0:00</string>
+    <string name="pointTextView">0</string>
+    <string name="scoreTextView">EREDMÉNY</string>
+    <string name="scoreText">Eredmény</string>
+    <string name="myScoreText">Eredményeim</string>
+    <string name="contentDescriptionForCards">card</string>
+    <string name="newGameBtn">Új Játék</string>
+    <string name="backToMenuBtn">Menü</string>
+    <string name="howToText">Egy SET három kártyából áll, amiben minden tulajdonságot külön-külön megvizsgálva, vagy egyeznie vagy különböznie kell. Ennek a szabálynak MINDEN tulajdonság esetén meg kell felelnie a kiválasztott három lapnak. Más szavakkal: a forma vagy azononos mindhárom kártyán, vagy mindegyiken más; a szín vagy azonos mindhárom kártyán, vagy mindegyiken különböző; legvégül a darabszámnak vagy egyeznie kell mindegyiken vagy különböznie.</string>
+    <string name="howToTitle">Hogyan Kell Játszani</string>
+    <string name="easy">Könnyű</string>
+    <string name="normal">Normál</string>
+    <string name="difficultyTextView">NORMÁL</string>
+    <string name="randomGameBtn">Véletlenszerű Játék</string>
+    <string name="privateGameText">Privát Játék</string>
+    <string name="createPrivateGameText">Privát Játék Létrehozása</string>
+    <string name="chooseMultiTypeText">Többjátékos Típus Kiválasztása</string>
+    <string name="multiTypeText">Többjátékos Típus</string>
+    <string name="connectionTextTV">CSATLAKOZÁSI KÓD</string>
+    <string name="waitingTV">JÁTÉK KERESÉSE</string>
+    <string name="waitingText">Játék Keresése</string>
+    <string name="stopWaitingBtn">KERESÉS ABBAHAGYÁSA</string>
+    <string name="deletePrivateGameBtn">JÁTÉK TÖRLÉSE</string>
+    <string name="joinGameBtn">Csatlakozás Játékhoz</string>
+    <string name="createGameBtn">Játék létrehozása</string>
+    <string name="joinWithCodeBtn">Csatlakozás</string>
+    <string name="joinGameText">Csatlakozás Játékhoz</string>
+    <string name="enterConnectionCodeText">CSATLAKOZÁSI KÓD MEGADÁSA</string>
+    <string name="worldScoresText">Világ Eredmények</string>
+    <string name="backBtn">Vissza</string>
+    <string name="won">NYERT</string>
+    <string name="lost">VESZTETT</string>
+    <string name="meText">Saját:</string>
+    <string name="opponentText">Ellenfél:</string>
+    <string name="difficulty">Nehézség</string>
+    <string name="timeText">Idő</string>
+    <string name="pointsText">Pontok</string>
+</resources>

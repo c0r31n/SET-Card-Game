@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.setcardgame.Model.Difficulty;
 import com.example.setcardgame.Service.ScoreboardDataService;
 import com.example.setcardgame.Model.scoreboard.Scoreboard;
 import com.example.setcardgame.Model.Username;
@@ -39,9 +40,17 @@ public class EndGameScreenActivity extends AppCompatActivity {
         TextView finalTimeTextView = (TextView) findViewById(R.id.finalTimeTextView);
         TextView finalScoreTextView = (TextView) findViewById(R.id.finalPointTextView);
         TextView finalDifficultyTextView = (TextView) findViewById(R.id.difficultyTextView);
-        finalTimeTextView.setText(String.format("%d:%02d", minutes, seconds));
-        finalScoreTextView.setText(finalScore);
-        finalDifficultyTextView.setText(finalDifficulty);
+
+        finalTimeTextView.setText(String.format("%s: %d:%02d", getString(R.string.timeText), minutes, seconds));
+        finalScoreTextView.setText(String.format("%s: %s", getString(R.string.pointsText) ,finalScore));
+        if(finalDifficulty.equals(Difficulty.EASY.toString())){
+            finalDifficultyTextView.setText(String.format("%s", getString(R.string.easy)));
+        }
+        else {
+            finalDifficultyTextView.setText(String.format("%s", getString(R.string.normal)));
+        }
+
+
         addScoreToDB();
     }
 
