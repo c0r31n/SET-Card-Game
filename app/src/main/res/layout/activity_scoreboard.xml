@@ -30,14 +30,14 @@
     <View
         android:id="@+id/view"
         android:layout_width="266dp"
-        android:layout_height="248dp"
+        android:layout_height="236dp"
         android:background="@drawable/radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.56" />
+        app:layout_constraintVertical_bias="0.547" />
 
     <Button
         android:id="@+id/myScoreBtn"
@@ -67,5 +67,5 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myScoreBtn"
-        app:layout_constraintVertical_bias="0.135" />
+        app:layout_constraintVertical_bias="0.126" />
 </androidx.constraintlayout.widget.ConstraintLayout>
