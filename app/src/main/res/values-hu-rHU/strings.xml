@@ -11,6 +11,7 @@
     <string name="scoreTextView">EREDMÉNY</string>
     <string name="scoreText">Eredmény</string>
     <string name="myScoreText">Eredményeim</string>
+    <string name="ownText">Saját</string>
     <string name="contentDescriptionForCards">card</string>
     <string name="newGameBtn">Új Játék</string>
     <string name="backToMenuBtn">Menü</string>

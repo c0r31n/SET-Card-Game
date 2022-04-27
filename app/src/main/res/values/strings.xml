@@ -10,6 +10,7 @@
     <string name="scoreTextView">SCORE</string>
     <string name="scoreText">Score</string>
     <string name="myScoreText">My Scores</string>
+    <string name="ownText">Own</string>
     <string name="contentDescriptionForCards">card</string>
     <string name="newGameBtn">New Game</string>
     <string name="backToMenuBtn">Menu</string>

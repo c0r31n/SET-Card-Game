@@ -42,7 +42,7 @@ public class RecycleViewScoreAdapter extends RecyclerView.Adapter<RecycleViewSco
 
         String myScoreContent = "";
         if(list.get(position).isMyScore()){
-            myScoreContent = String.format("(%s)", context.getString(R.string.myScoreText));
+            myScoreContent = String.format("(%s)", context.getString(R.string.ownText));
         }
 
         holder.setData(placementContent, pointsContent, timeContent, myScoreContent);
