@@ -24,6 +24,7 @@ public class MultiplayerEndScreenActivity extends AppCompatActivity {
         String opponentScore = mpes.getStringExtra("opponentScore");
         String ownScore = mpes.getStringExtra("ownScore");
         String winner = mpes.getStringExtra("winner");
+        String opponent = mpes.getStringExtra("opponent");
         TextView score = findViewById(R.id.scoreForMultiTextView);
         TextView ownScoreTV = findViewById(R.id.ownScoreTextView);
         TextView opponentScoreTV = findViewById(R.id.opponentScoreTextView);
@@ -34,10 +35,14 @@ public class MultiplayerEndScreenActivity extends AppCompatActivity {
             score.setText(R.string.won);
             score.setTextColor(Color.parseColor("#008000"));
             ownScoreTV.setTextColor(Color.parseColor("#008000"));
-        } else {
+        } else if(winner.equals(opponent)){
             score.setText(R.string.lost);
             score.setTextColor(Color.parseColor("#C50202"));
             ownScoreTV.setTextColor(Color.parseColor("#C50202"));
+        }
+        else {
+            score.setText(R.string.draw);
+            score.setTextColor(Color.parseColor("#115EA1"));
         }
     }
 

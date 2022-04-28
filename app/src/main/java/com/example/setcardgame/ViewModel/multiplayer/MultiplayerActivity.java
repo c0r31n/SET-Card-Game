@@ -403,6 +403,13 @@ public class MultiplayerActivity extends AppCompatActivity {
         mpes.putExtra("opponentScore", opponentPointTextView.getText());
         mpes.putExtra("ownScore", ownPointTextView.getText());
         mpes.putExtra("winner", game.getWinner().toString());
+        if(game.getPlayer1().toString().equals(username)){
+            mpes.putExtra("opponent", game.getPlayer2().toString());
+        }
+        else {
+            mpes.putExtra("opponent", game.getPlayer1().toString());
+        }
+
         startActivity(mpes);
     }
 

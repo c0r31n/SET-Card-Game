@@ -39,6 +39,7 @@
     <string name="backBtn">Vissza</string>
     <string name="won">NYERT</string>
     <string name="lost">VESZTETT</string>
+    <string name="draw">DÖNTETLEN</string>
     <string name="meText">Saját:</string>
     <string name="opponentText">Ellenfél:</string>
     <string name="difficulty">Nehézség</string>

@@ -19,7 +19,7 @@
         android:shadowRadius="2"
         android:text="@string/howToTitle"
         android:textColor="@color/blue"
-        android:textSize="52sp"
+        android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="@+id/scrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

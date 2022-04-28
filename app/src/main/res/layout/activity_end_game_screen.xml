@@ -20,34 +20,39 @@
         android:text="@string/scoreTextView"
         android:textColor="@color/blue"
         android:textSize="52sp"
-        app:layout_constraintBottom_toTopOf="@+id/view"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.426" />
+        app:layout_constraintVertical_bias="0.072" />
 
     <View
         android:id="@+id/view"
-        android:layout_width="270dp"
-        android:layout_height="246dp"
-        android:background="@drawable/radius"
-        app:layout_constraintBottom_toTopOf="@+id/view2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.842" />
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="270dp"
-        android:layout_height="315dp"
+        android:layout_width="255dp"
+        android:layout_height="220dp"
         android:background="@drawable/radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.938" />
+        app:layout_constraintTop_toBottomOf="@+id/scoreTextView"
+        app:layout_constraintVertical_bias="0.097">
+
+
+    </View>
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="255dp"
+        android:layout_height="298dp"
+        android:background="@drawable/radius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view"
+        app:layout_constraintVertical_bias="0.625" />
 
     <TextView
         android:id="@+id/difficultyTextView"
@@ -57,11 +62,11 @@
         android:text="@string/difficultyTextView"
         android:textColor="@color/blue"
         android:textSize="35sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view"
-        app:layout_constraintVertical_bias="0.049" />
+        app:layout_constraintVertical_bias="0.13" />
 
     <TextView
         android:id="@+id/finalPointTextView"
@@ -71,11 +76,12 @@
         android:text="@string/pointTextView"
         android:textColor="@color/blue"
         android:textSize="35sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/finalTimeTextView"
-        app:layout_constraintVertical_bias="0.047" />
+        app:layout_constraintVertical_bias="0.431" />
 
     <TextView
         android:id="@+id/finalTimeTextView"
@@ -85,11 +91,11 @@
         android:text="@string/timerTextView"
         android:textColor="@color/blue"
         android:textSize="35sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/difficultyTextView"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.222" />
 
     <Button
         android:id="@+id/newGameBtn"
@@ -99,11 +105,12 @@
         android:gravity="center"
         android:onClick="newSingleplayerGame"
         android:text="@string/newGameBtn"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view2"
-        app:layout_constraintVertical_bias="0.122" />
+        app:layout_constraintVertical_bias="0.137" />
 
     <Button
         android:id="@+id/goToScoreBoardBtn"
@@ -125,10 +132,11 @@
         android:backgroundTint="@color/blue"
         android:onClick="backToMenu"
         android:text="@string/backToMenuBtn"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/newGameBtn"
-        app:layout_constraintVertical_bias="0.189" />
+        app:layout_constraintVertical_bias="0.225" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

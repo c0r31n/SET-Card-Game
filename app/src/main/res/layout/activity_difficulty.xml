@@ -29,8 +29,8 @@
 
     <View
         android:id="@+id/view"
-        android:layout_width="261dp"
-        android:layout_height="250dp"
+        android:layout_width="262dp"
+        android:layout_height="237dp"
         android:background="@drawable/radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,12 +46,12 @@
         android:gravity="center"
         android:onClick="switchToSingleplayer"
         android:text="@string/easy"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/view"
-        app:layout_constraintVertical_bias="0.099" />
+        app:layout_constraintVertical_bias="0.225" />
 
     <Button
         android:id="@+id/normalBtn"
@@ -66,6 +66,6 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/easyBtn"
-        app:layout_constraintVertical_bias="0.476" />
+        app:layout_constraintVertical_bias="0.506" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
