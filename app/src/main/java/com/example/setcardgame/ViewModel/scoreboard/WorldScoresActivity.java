@@ -38,7 +38,7 @@ public class WorldScoresActivity extends AppCompatActivity {
         scoreboardDataService.getPlayerScores(false, username, new ScoreboardDataService.ScoreboardResponseListener(){
             @Override
             public void onError(String message) {
-                Toast.makeText(WorldScoresActivity.this, "Can't get scores.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(WorldScoresActivity.this, getString(R.string.cantGetScores), Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -44,4 +44,6 @@
     <string name="difficulty">Difficulty</string>
     <string name="timeText">Time</string>
     <string name="pointsText">Points</string>
+    <string name="cantGetScores">Failed to retrieve results.</string>
+    <string name="serverUnavailable">The server is unavailable.</string>
 </resources>

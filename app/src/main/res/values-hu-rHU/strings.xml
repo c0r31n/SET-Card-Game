@@ -45,4 +45,6 @@
     <string name="difficulty">Nehézség</string>
     <string name="timeText">Idő</string>
     <string name="pointsText">Pontok</string>
+    <string name="cantGetScores">Nem sikerült lekérni az eredményeket.</string>
+    <string name="serverUnavailable">A szerver nem érhető el.</string>
 </resources>

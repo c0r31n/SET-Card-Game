@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
 
                 Log.d("check", "not available");
+                Toast.makeText(MainActivity.this, getString(R.string.serverUnavailable), Toast.LENGTH_SHORT).show();
             }
         });
 
