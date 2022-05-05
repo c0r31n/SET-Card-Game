@@ -46,8 +46,8 @@ public class MultiplayerEndScreenActivity extends AppCompatActivity {
         }
     }
 
-    public void switchToRandomGame(View v) {
-        Intent wfg = new Intent(this, WaitingForGameActivity.class);
+    public void switchToMultiplayerType(View v) {
+        Intent wfg = new Intent(this, SelectMultiplayerTypeActivity.class);
         startActivity(wfg);
     }
 

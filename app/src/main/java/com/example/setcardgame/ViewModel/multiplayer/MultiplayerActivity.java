@@ -77,14 +77,16 @@ public class MultiplayerActivity extends AppCompatActivity {
                             } else {
                                 //SET button press
                                 if (tempGame.getBlockedBy() != null && tempGame.getBlockedBy().toString().equals(username) && tempGame.getSelectedCardIndexes().isEmpty()) {
-//                                    Log.d(TAG, "my block");
+                                    Log.d(TAG, "my block");
                                     try {
                                         game.setBlockedByString(msg.getString("blockedBy"));
+                                        setBtn.setBackgroundTintList(ContextCompat.getColorStateList(MultiplayerActivity.this, R.color.green));
+                                        switchBoardClicks(true);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
                                 } else if (tempGame.getBlockedBy() != null && !tempGame.getBlockedBy().toString().equals(username) && tempGame.getSelectedCardIndexes().isEmpty()) {
-//                                    Log.d(TAG, "opponent's block");
+                                    Log.d(TAG, "opponent's block");
                                     try {
                                         game.setBlockedByString(msg.getString("blockedBy"));
                                     } catch (JSONException e) {
@@ -223,10 +225,7 @@ public class MultiplayerActivity extends AppCompatActivity {
         tableLayout.setVisibility(View.VISIBLE);
     }
 
-    public void onSETBtnClick(View view) {
-        setBtn.setEnabled(false);
-        setBtn.setBackgroundTintList(ContextCompat.getColorStateList(MultiplayerActivity.this, R.color.green));
-        switchBoardClicks(true);
+    public void onSETBtnClick(View view) {         //bibibibibibi
 
         JSONObject buttonPressJson = new JSONObject();
         try {
@@ -240,6 +239,7 @@ public class MultiplayerActivity extends AppCompatActivity {
 
         //start timer for 3 sec, if it the player does not select 3 cards reset everything and punish them
         selectTimeCountDown(buttonPressJson);
+        setBtn.setEnabled(false);
     }
 
     private void selectTimeCountDown(JSONObject buttonPressJson) {
