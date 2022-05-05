@@ -30,10 +30,10 @@
     <string name="waitingText">Játék Keresése</string>
     <string name="stopWaitingBtn">KERESÉS ABBAHAGYÁSA</string>
     <string name="deletePrivateGameBtn">JÁTÉK TÖRLÉSE</string>
-    <string name="joinGameBtn">Csatlakozás Játékhoz</string>
+    <string name="joinGameBtn">Csatlakozás a Játékhoz</string>
     <string name="createGameBtn">Játék létrehozása</string>
     <string name="joinWithCodeBtn">Csatlakozás</string>
-    <string name="joinGameText">Csatlakozás Játékhoz</string>
+    <string name="joinGameText">Csatlakozás a Játékhoz</string>
     <string name="enterConnectionCodeText">CSATLAKOZÁSI KÓD MEGADÁSA</string>
     <string name="worldScoresText">Világ Eredmények</string>
     <string name="backBtn">Vissza</string>
