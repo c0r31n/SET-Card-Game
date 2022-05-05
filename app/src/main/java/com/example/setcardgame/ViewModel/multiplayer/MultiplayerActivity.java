@@ -225,7 +225,7 @@ public class MultiplayerActivity extends AppCompatActivity {
         tableLayout.setVisibility(View.VISIBLE);
     }
 
-    public void onSETBtnClick(View view) {         //bibibibibibi
+    public void onSETBtnClick(View view) {
 
         JSONObject buttonPressJson = new JSONObject();
         try {
