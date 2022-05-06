@@ -49,12 +49,12 @@ public class PlayerScoresActivity extends AppCompatActivity {
                 ArrayList<Scoreboard> normalScoreList = new ArrayList<>();
 
                 for(Scoreboard score : scoreboardModels) {
-                    if(score.getDifficulty() == Difficulty.EASY){
+                    if(score.getDifficulty() == Difficulty.EASY && easyCounter<100){
                         easyCounter++;
                         score.setPlacement(easyCounter);
                         easyScoreList.add(score);
                     }
-                    if(score.getDifficulty() == Difficulty.NORMAL){
+                    if(score.getDifficulty() == Difficulty.NORMAL && normalCounter<100){
                         normalCounter++;
                         score.setPlacement(normalCounter);
                         normalScoreList.add(score);
