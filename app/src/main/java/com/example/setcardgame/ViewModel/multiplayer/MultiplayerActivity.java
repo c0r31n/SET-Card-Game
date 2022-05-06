@@ -123,13 +123,14 @@ public class MultiplayerActivity extends AppCompatActivity {
                                         if (game.getBlockedBy().toString().equals(username)) {
                                             resetButtonAndCardClicksOnError();
                                             punishPlayerError();
-                                            Log.d(TAG, "you didn't find the set");
+                                            Log.d(TAG, "set not found");
                                         } else {
                                             resetButtonAndCardClicks();
                                         }
                                         game.setBlockedBy(null);
                                     } else {
                                         //right combo, board changed
+                                        Log.d(TAG, "set found");
                                         correctSelectedCards(tempGame.getSelectedCardIndexes());
                                         game.setPoints(tempGame.getPoints());
                                         updatePointTextViews();
@@ -186,7 +187,7 @@ public class MultiplayerActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }, throwable -> {
-            Log.d(TAG, "ez meg error");
+            Log.d(TAG, "cannot create websocket");
         });
         WebsocketClient.compositeDisposable.add(topic);
         WebsocketClient.mStompClient.send("/app/start", jsonGameId.toString()).subscribe();

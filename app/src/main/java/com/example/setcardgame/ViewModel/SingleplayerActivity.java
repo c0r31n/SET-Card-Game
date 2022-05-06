@@ -42,7 +42,7 @@ public class SingleplayerActivity extends AppCompatActivity {
     private TimerTask timerTask;
     private Double time = 0.0;
     private boolean stopUserInteractions = false;
-    private SingleplayerGame game = new SingleplayerGame();
+    private final SingleplayerGame game = new SingleplayerGame();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
