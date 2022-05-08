@@ -58,7 +58,7 @@ public class RecycleViewScoreAdapter extends RecyclerView.Adapter<RecycleViewSco
         private TextView placement;
         private TextView points;
         private TextView time;
-        private TextView myScore;
+        private TextView myScoreText;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,14 +66,14 @@ public class RecycleViewScoreAdapter extends RecyclerView.Adapter<RecycleViewSco
             placement = itemView.findViewById(R.id.placement);
             points = itemView.findViewById(R.id.pointsView);
             time = itemView.findViewById(R.id.timeView);
-            myScore = itemView.findViewById(R.id.myScoreView);
+            myScoreText = itemView.findViewById(R.id.myScoreView);
         }
 
         public void setData(String placementContent, String pointsContent, String timeContent, String myScoreContent) {
             placement.setText(placementContent);
             points.setText(pointsContent);
             time.setText(timeContent);
-            myScore.setText(myScoreContent);
+            myScoreText.setText(myScoreContent);
         }
     }
 }

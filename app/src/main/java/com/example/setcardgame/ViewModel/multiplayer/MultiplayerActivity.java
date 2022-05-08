@@ -13,10 +13,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.setcardgame.Config.WebSocketClient;
 import com.example.setcardgame.Model.MultiplayerGame;
 import com.example.setcardgame.Model.Username;
-import com.example.setcardgame.Config.WebsocketClient;
-import com.example.setcardgame.Model.card.Card;
 import com.example.setcardgame.R;
 
 import org.json.JSONException;
@@ -32,12 +31,10 @@ public class MultiplayerActivity extends AppCompatActivity {
 
     private final String TAG = "multi";
     private final ArrayList<ImageView> boardIV = new ArrayList<>();
-    private final ArrayList<Card> selectedCards = new ArrayList<>();
     private final ArrayList<Integer> selectedCardIds = new ArrayList<>();
     private TextView opponentPointTextView;
     private TextView ownPointTextView;
     private Button setBtn;
-    private TableLayout tableLayout;
     private final String username = Username.getUsername();
     private int gameId;
     private MultiplayerGame game;
@@ -62,7 +59,7 @@ public class MultiplayerActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Disposable topic = WebsocketClient.mStompClient.topic("/topic/game-progress/" + gameId).subscribe(topicMessage -> {
+        Disposable topic = WebSocketClient.mStompClient.topic("/topic/game-progress/" + gameId).subscribe(topicMessage -> {
             try {
                 JSONObject msg = new JSONObject(topicMessage.getPayload());
                 MultiplayerGame tempGame = new MultiplayerGame(msg);
@@ -104,9 +101,6 @@ public class MultiplayerActivity extends AppCompatActivity {
 
                                 //3 cards have been selected
                                 if (tempGame.getSelectedCardIndexes().size() == 3 && tempGame.getBlockedBy() == null) {
-                                    if (game.getBlockedBy().toString().equals(username)) {
-                                    }
-
                                     game.setSelectedCardIndexes(tempGame.getSelectedCardIndexes());
                                     setSelectedCardsBackgroundForOpponent(game.getSelectedCardIndexes());
 
@@ -116,7 +110,6 @@ public class MultiplayerActivity extends AppCompatActivity {
 
                                         game.clearSelectedCardIndexes();
                                         selectedCardIds.clear();
-                                        selectedCards.clear();
                                         resetCardBackgrounds();
                                         resetButtonAndCardClicks();
 
@@ -158,7 +151,6 @@ public class MultiplayerActivity extends AppCompatActivity {
                                         game.setBlockedBy(null);
                                         game.clearSelectedCardIndexes();
                                         selectedCardIds.clear();
-                                        selectedCards.clear();
                                         resetCardBackgrounds();
                                     }
                                 }
@@ -166,7 +158,6 @@ public class MultiplayerActivity extends AppCompatActivity {
                                     Log.d(TAG, "entered");
                                     game.clearSelectedCardIndexes();
                                     selectedCardIds.clear();
-                                    selectedCards.clear();
                                     resetCardBackgrounds();
                                     if (game.getBlockedBy().toString().equals(username)) {
                                         resetButtonAndCardClicksOnError();
@@ -189,13 +180,12 @@ public class MultiplayerActivity extends AppCompatActivity {
         }, throwable -> {
             Log.d(TAG, "cannot create websocket");
         });
-        WebsocketClient.compositeDisposable.add(topic);
-        WebsocketClient.mStompClient.send("/app/start", jsonGameId.toString()).subscribe();
+        WebSocketClient.compositeDisposable.add(topic);
+        WebSocketClient.mStompClient.send("/app/start", jsonGameId.toString()).subscribe();
     }
 
     private void startGame() {
         boardIV.clear();
-        selectedCards.clear();
         selectedCardIds.clear();
 
         boardIV.add((ImageView) findViewById(R.id.card0));
@@ -222,7 +212,7 @@ public class MultiplayerActivity extends AppCompatActivity {
         ownPointTextView.setText("0");
         setBtn = findViewById(R.id.callSETBtn);
 
-        tableLayout = (TableLayout) findViewById(R.id.gameTableLayout);
+        TableLayout tableLayout = (TableLayout) findViewById(R.id.gameTableLayout);
         tableLayout.setVisibility(View.VISIBLE);
     }
 
@@ -236,7 +226,7 @@ public class MultiplayerActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        WebsocketClient.mStompClient.send("/app/gameplay/button", buttonPressJson.toString()).subscribe();
+        WebSocketClient.mStompClient.send("/app/gameplay/button", buttonPressJson.toString()).subscribe();
 
         //start timer for 3 sec, if it the player does not select 3 cards reset everything and punish them
         selectTimeCountDown(buttonPressJson);
@@ -248,7 +238,7 @@ public class MultiplayerActivity extends AppCompatActivity {
         resetTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                WebsocketClient.mStompClient.send("/app/gameplay/button", buttonPressJson.toString()).subscribe();
+                WebSocketClient.mStompClient.send("/app/gameplay/button", buttonPressJson.toString()).subscribe();
             }
         }, 3000);
     }
@@ -307,7 +297,6 @@ public class MultiplayerActivity extends AppCompatActivity {
                         found = true;
                         view.setBackgroundResource(R.drawable.card_background_selected);
                         selectedCardIds.add(view.getId());
-                        selectedCards.add(game.getBoard().get(counter));
 
                         JSONObject gameplayJson = new JSONObject();
                         try {
@@ -319,7 +308,7 @@ public class MultiplayerActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        WebsocketClient.mStompClient.send("/app/gameplay", gameplayJson.toString()).subscribe();
+                        WebSocketClient.mStompClient.send("/app/gameplay", gameplayJson.toString()).subscribe();
                     }
                     counter++;
                 }
@@ -339,10 +328,9 @@ public class MultiplayerActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
-                        WebsocketClient.mStompClient.send("/app/gameplay", gameplayJson.toString()).subscribe();
+                        WebSocketClient.mStompClient.send("/app/gameplay", gameplayJson.toString()).subscribe();
                     }
                 }
-                selectedCards.remove(selectedCardIds.indexOf(view.getId()));
                 selectedCardIds.remove((Integer) view.getId());
             }
         }
@@ -369,7 +357,6 @@ public class MultiplayerActivity extends AppCompatActivity {
         for (int i = 0; indexes.size() > i; i++) {
             boardIV.get(indexes.get(i)).setBackgroundResource(R.drawable.card_background_selected);
             selectedCardIds.add(boardIV.get(indexes.get(i)).getId());
-            selectedCards.add(game.getBoard().get(indexes.get(i)));
         }
     }
 
@@ -417,6 +404,6 @@ public class MultiplayerActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        WebsocketClient.disconnectWebsocket();
+        WebSocketClient.disconnectWebSocket();
     }
 }

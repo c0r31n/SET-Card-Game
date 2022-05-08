@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.setcardgame.Model.MultiplayerGame;
 import com.example.setcardgame.Model.Username;
-import com.example.setcardgame.Config.WebsocketClient;
+import com.example.setcardgame.Config.WebSocketClient;
 import com.example.setcardgame.R;
 
 import org.json.JSONException;
@@ -31,8 +31,8 @@ public class JoinGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_join_game);
         connectionCodeET = findViewById(R.id.connectionCodeET);
 
-        WebsocketClient.createWebsocket(WebsocketClient.URL + "multiconnect");
-        Disposable topic = WebsocketClient.mStompClient.topic("/topic/waiting").subscribe(topicMessage -> {
+        WebSocketClient.createWebSocket(WebSocketClient.URL + "multiconnect");
+        Disposable topic = WebSocketClient.mStompClient.topic("/topic/waiting").subscribe(topicMessage -> {
             try {
                 JSONObject msg = new JSONObject(topicMessage.getPayload());
                 if (username.equals(msg.getString("player2")) && !msg.getString("player1").equals("null")) {
@@ -45,7 +45,7 @@ public class JoinGameActivity extends AppCompatActivity {
         }, throwable -> {
             Log.d(TAG, "error");
         });
-        WebsocketClient.compositeDisposable.add(topic);
+        WebSocketClient.compositeDisposable.add(topic);
     }
 
     public void joinGame(View view) {
@@ -57,7 +57,7 @@ public class JoinGameActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            WebsocketClient.mStompClient.send("/app/connect", jsonConnect.toString()).subscribe();
+            WebSocketClient.mStompClient.send("/app/connect", jsonConnect.toString()).subscribe();
         }
     }
 

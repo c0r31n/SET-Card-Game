@@ -67,11 +67,6 @@ public class MainActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
 
-    public void switchToScoreboard(View v) {
-        Intent sb = new Intent(this, ScoreboardActivity.class);
-        startActivity(sb);
-    }
-
     public void switchToDifficulty(View v) {
         Intent d = new Intent(this, DifficultyActivity.class);
         startActivity(d);
@@ -80,6 +75,11 @@ public class MainActivity extends AppCompatActivity {
     public void switchToMultiplayer(View v) {
         Intent mp = new Intent(this, SelectMultiplayerTypeActivity.class);
         startActivity(mp);
+    }
+
+    public void switchToScoreboard(View v) {
+        Intent sb = new Intent(this, ScoreboardActivity.class);
+        startActivity(sb);
     }
 
     public void switchToHowToPage(View v) {

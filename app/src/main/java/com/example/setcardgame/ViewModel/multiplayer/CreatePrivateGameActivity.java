@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.setcardgame.Model.MultiplayerGame;
 import com.example.setcardgame.Model.Username;
-import com.example.setcardgame.Config.WebsocketClient;
+import com.example.setcardgame.Config.WebSocketClient;
 import com.example.setcardgame.R;
 
 import org.json.JSONException;
@@ -20,7 +20,7 @@ import io.reactivex.disposables.Disposable;
 
 public class CreatePrivateGameActivity extends AppCompatActivity {
 
-    private String username = Username.getUsername();
+    private final String username = Username.getUsername();
     private MultiplayerGame game;
     private TextView connectionCodeTV;
 
@@ -32,8 +32,8 @@ public class CreatePrivateGameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_private_game);
         connectionCodeTV = findViewById(R.id.connectionCodeTV);
 
-        WebsocketClient.createWebsocket(WebsocketClient.URL+"multiconnect");
-        Disposable topic = WebsocketClient.mStompClient.topic("/topic/waiting").subscribe(topicMessage -> {
+        WebSocketClient.createWebSocket(WebSocketClient.URL+"multiconnect");
+        Disposable topic = WebSocketClient.mStompClient.topic("/topic/waiting").subscribe(topicMessage -> {
             try{
                 JSONObject msg = new JSONObject(topicMessage.getPayload());
                 if(username.equals(msg.getString("player1"))){
@@ -57,7 +57,7 @@ public class CreatePrivateGameActivity extends AppCompatActivity {
         }, throwable -> {
             Log.d(TAG, "error");
         });
-        WebsocketClient.compositeDisposable.add(topic);
+        WebSocketClient.compositeDisposable.add(topic);
 
         JSONObject jsonPlayer = new JSONObject();
         try {
@@ -66,7 +66,7 @@ public class CreatePrivateGameActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        WebsocketClient.mStompClient.send("/app/create", jsonPlayer.toString()).subscribe();
+        WebSocketClient.mStompClient.send("/app/create", jsonPlayer.toString()).subscribe();
     }
 
     public void switchToMultiplayer(){
@@ -84,12 +84,12 @@ public class CreatePrivateGameActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            WebsocketClient.mStompClient.send("/app/game/destroy", destroyGame.toString()).subscribe();
+            WebSocketClient.mStompClient.send("/app/game/destroy", destroyGame.toString()).subscribe();
 
             Log.d(TAG, "Game destroyed");
 
         }
-        WebsocketClient.disconnectWebsocket();
+        WebSocketClient.disconnectWebSocket();
         game = null;
 
         Intent pg = new Intent(this, PrivateGameActivity.class);
@@ -107,12 +107,12 @@ public class CreatePrivateGameActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            WebsocketClient.mStompClient.send("/app/game/destroy", destroyGame.toString()).subscribe();
+            WebSocketClient.mStompClient.send("/app/game/destroy", destroyGame.toString()).subscribe();
 
             Log.d(TAG, "Game destroyed");
 
         }
-        WebsocketClient.disconnectWebsocket();
+        WebSocketClient.disconnectWebSocket();
         game = null;
     }
 }

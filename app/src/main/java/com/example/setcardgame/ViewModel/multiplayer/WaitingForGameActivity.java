@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.setcardgame.Model.MultiplayerGame;
 import com.example.setcardgame.Model.Username;
-import com.example.setcardgame.Config.WebsocketClient;
+import com.example.setcardgame.Config.WebSocketClient;
 import com.example.setcardgame.R;
 
 import org.json.JSONException;
@@ -28,8 +28,8 @@ public class WaitingForGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiting_for_game);
 
-        WebsocketClient.createWebsocket(WebsocketClient.URL + "multiconnect");
-        Disposable topic = WebsocketClient.mStompClient.topic("/topic/waiting").subscribe(topicMessage -> {
+        WebSocketClient.createWebSocket(WebSocketClient.URL + "multiconnect");
+        Disposable topic = WebSocketClient.mStompClient.topic("/topic/waiting").subscribe(topicMessage -> {
             try {
                 JSONObject msg = new JSONObject(topicMessage.getPayload());
                 if (username.equals(msg.getString("player1"))) {
@@ -49,7 +49,7 @@ public class WaitingForGameActivity extends AppCompatActivity {
         }, throwable -> {
             Log.d(TAG, "error");
         });
-        WebsocketClient.compositeDisposable.add(topic);
+        WebSocketClient.compositeDisposable.add(topic);
 
         JSONObject jsonPlayer = new JSONObject();
         try {
@@ -58,7 +58,7 @@ public class WaitingForGameActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        WebsocketClient.mStompClient.send("/app/connect/random", jsonPlayer.toString()).subscribe();
+        WebSocketClient.mStompClient.send("/app/connect/random", jsonPlayer.toString()).subscribe();
     }
 
     public void switchToMultiplayer() {
@@ -76,12 +76,12 @@ public class WaitingForGameActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            WebsocketClient.mStompClient.send("/app/game/destroy", destroyGame.toString()).subscribe();
+            WebSocketClient.mStompClient.send("/app/game/destroy", destroyGame.toString()).subscribe();
 
             Log.d(TAG, "Game destroyed");
 
         }
-        WebsocketClient.disconnectWebsocket();
+        WebSocketClient.disconnectWebSocket();
         game = null;
 
         Intent mp = new Intent(this, SelectMultiplayerTypeActivity.class);

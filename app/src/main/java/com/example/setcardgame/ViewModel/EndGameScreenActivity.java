@@ -2,6 +2,7 @@ package com.example.setcardgame.ViewModel;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,18 +10,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.setcardgame.Model.Difficulty;
-import com.example.setcardgame.Service.ScoreboardDataService;
-import com.example.setcardgame.Model.scoreboard.Scoreboard;
 import com.example.setcardgame.Model.Username;
+import com.example.setcardgame.Model.scoreboard.Scoreboard;
 import com.example.setcardgame.R;
+import com.example.setcardgame.Service.ScoreboardDataService;
 import com.example.setcardgame.ViewModel.scoreboard.ScoreboardActivity;
 
 import org.json.JSONObject;
 
 public class EndGameScreenActivity extends AppCompatActivity {
     private int finalTime;
-    private int minutes;
-    private int seconds;
     private String finalScore;
     private String finalDifficulty;
     private final String username = Username.getUsername();
@@ -35,8 +34,8 @@ public class EndGameScreenActivity extends AppCompatActivity {
         finalTime = Integer.parseInt(egs.getStringExtra("time"));
         finalScore = egs.getStringExtra("score");
         finalDifficulty = egs.getStringExtra("diff");
-        seconds = finalTime % 60;
-        minutes = finalTime / 60;
+        int seconds = finalTime % 60;
+        int minutes = finalTime / 60;
         TextView finalTimeTextView = (TextView) findViewById(R.id.finalTimeTextView);
         TextView finalScoreTextView = (TextView) findViewById(R.id.finalPointTextView);
         TextView finalDifficultyTextView = (TextView) findViewById(R.id.difficultyTextView);
@@ -65,7 +64,7 @@ public class EndGameScreenActivity extends AppCompatActivity {
         startActivity(m);
     }
 
-    public void goToScoreBoard(View v) {
+    public void switchToScoreboard(View v) {
         Intent sb = new Intent(this, ScoreboardActivity.class);
         startActivity(sb);
     }
@@ -80,7 +79,7 @@ public class EndGameScreenActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(JSONObject scoreboardModel) {
-//                Log.d("score", scoreboardModel.toString());
+                Log.d("score", scoreboardModel.toString());
             }
         });
     }

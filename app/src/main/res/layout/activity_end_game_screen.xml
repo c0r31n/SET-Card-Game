@@ -117,7 +117,7 @@
         android:layout_width="170dp"
         android:layout_height="60dp"
         android:backgroundTint="@color/blue"
-        android:onClick="goToScoreBoard"
+        android:onClick="switchToScoreboard"
         android:text="@string/scoreboardText"
         app:layout_constraintBottom_toBottomOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"
