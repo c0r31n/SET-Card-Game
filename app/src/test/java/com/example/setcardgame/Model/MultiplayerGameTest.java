@@ -29,14 +29,14 @@ public class MultiplayerGameTest {
 
     @Test
     public void setSelectedCardIndexesStringWithEmptyArrayStringReturnsEmpty() {
-        game.setNullCardIndexesString("[]");
-        assertThat(game.getNullCardIndexes()).isEmpty();
+        game.setSelectedCardIndexesString("[]");
+        assertThat(game.getSelectedCardIndexes()).isEmpty();
     }
 
     @Test
     public void setSelectedCardIndexesStringWithArrayStringReturnsNotEmpty() {
-        game.setNullCardIndexesString("[1]");
-        assertThat(game.getNullCardIndexes()).isNotEmpty();
+        game.setSelectedCardIndexesString("[1]");
+        assertThat(game.getSelectedCardIndexes()).isNotEmpty();
     }
 
     @Test

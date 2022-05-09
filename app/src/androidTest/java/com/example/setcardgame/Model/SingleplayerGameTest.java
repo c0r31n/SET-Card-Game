@@ -25,7 +25,7 @@ public class SingleplayerGameTest {
     SingleplayerGame game = new SingleplayerGame();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         cards.clear();
         board.clear();
 
