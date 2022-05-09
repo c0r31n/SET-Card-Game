@@ -20,7 +20,7 @@ import io.reactivex.disposables.Disposable;
 
 public class JoinGameActivity extends AppCompatActivity {
 
-    private final String TAG = "alma";
+    private final String TAG = "joinGame";
     private final String username = Username.getUsername();
     private EditText connectionCodeET;
     private MultiplayerGame game;
@@ -43,7 +43,7 @@ public class JoinGameActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }, throwable -> {
-            Log.d(TAG, "error");
+            Log.d(TAG, "error at subscribing");
         });
         WebSocketClient.compositeDisposable.add(topic);
     }

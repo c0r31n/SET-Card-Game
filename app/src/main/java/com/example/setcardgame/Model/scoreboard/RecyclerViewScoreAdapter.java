@@ -13,25 +13,25 @@ import com.example.setcardgame.R;
 
 import java.util.List;
 
-public class RecycleViewScoreAdapter extends RecyclerView.Adapter<RecycleViewScoreAdapter.ViewHolder> {
+public class RecyclerViewScoreAdapter extends RecyclerView.Adapter<RecyclerViewScoreAdapter.ViewHolder> {
 
     Context context;
     List<Scoreboard> list;
 
-    public RecycleViewScoreAdapter(Context context, List<Scoreboard> list) {
+    public RecyclerViewScoreAdapter(Context context, List<Scoreboard> list) {
         this.context = context;
         this.list = list;
     }
 
     @NonNull
     @Override
-    public RecycleViewScoreAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewScoreAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_score, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecycleViewScoreAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewScoreAdapter.ViewHolder holder, int position) {
         String placementContent = list.get(position).getPlacement() + ".";
         String pointsContent = String.format("%s: %d", context.getString(R.string.pointsText),list.get(position).getScore());
 

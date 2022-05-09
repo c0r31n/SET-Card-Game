@@ -47,7 +47,7 @@ public class WaitingForGameActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }, throwable -> {
-            Log.d(TAG, "error");
+            Log.d(TAG, "error at subscribing");
         });
         WebSocketClient.compositeDisposable.add(topic);
 
@@ -86,5 +86,24 @@ public class WaitingForGameActivity extends AppCompatActivity {
 
         Intent mp = new Intent(this, SelectMultiplayerTypeActivity.class);
         startActivity(mp);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (game != null){
+            JSONObject destroyGame = new JSONObject();
+            try {
+                destroyGame.put("gameId", game.getGameId());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            WebSocketClient.mStompClient.send("/app/game/destroy", destroyGame.toString()).subscribe();
+
+            Log.d(TAG, "Game destroyed");
+        }
+        WebSocketClient.disconnectWebSocket();
+        game = null;
     }
 }

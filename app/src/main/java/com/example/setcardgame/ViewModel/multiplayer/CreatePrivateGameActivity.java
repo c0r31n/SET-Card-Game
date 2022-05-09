@@ -42,7 +42,6 @@ public class CreatePrivateGameActivity extends AppCompatActivity {
 
                     runOnUiThread (new Thread(new Runnable() {
                         public void run() {
-
                             connectionCodeTV.setText(Integer.toString(game.getGameId()));
                         }
                     }));
@@ -55,7 +54,7 @@ public class CreatePrivateGameActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }, throwable -> {
-            Log.d(TAG, "error");
+            Log.d(TAG, "error at subscribing");
         });
         WebSocketClient.compositeDisposable.add(topic);
 
@@ -110,7 +109,6 @@ public class CreatePrivateGameActivity extends AppCompatActivity {
             WebSocketClient.mStompClient.send("/app/game/destroy", destroyGame.toString()).subscribe();
 
             Log.d(TAG, "Game destroyed");
-
         }
         WebSocketClient.disconnectWebSocket();
         game = null;

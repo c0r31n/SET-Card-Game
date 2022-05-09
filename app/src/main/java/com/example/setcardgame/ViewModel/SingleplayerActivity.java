@@ -100,9 +100,9 @@ public class SingleplayerActivity extends AppCompatActivity {
         board.add((ImageView) findViewById(R.id.card7));
         board.add((ImageView) findViewById(R.id.card8));
 
-        TableLayout tableLayout = (TableLayout) findViewById(R.id.gameTableLayout);
 
         if (difficulty == Difficulty.NORMAL) {
+            TableLayout tableLayout = (TableLayout) findViewById(R.id.gameTableLayout);
             TableRow lastTableRow = (TableRow) findViewById(R.id.tableRow3);
             tableLayout.removeView(lastTableRow);
         }
@@ -112,7 +112,7 @@ public class SingleplayerActivity extends AppCompatActivity {
             board.add((ImageView) findViewById(R.id.card10));
             board.add((ImageView) findViewById(R.id.card11));
 
-            if (getScreeSizeInInches() < 5.3) {
+            if (getScreenSizeInInches() < 5.3) {
                 ImageView card = (ImageView) findViewById(R.id.card8);
                 ViewGroup.LayoutParams params = card.getLayoutParams();
                 params.height *= 0.8;
@@ -223,6 +223,7 @@ public class SingleplayerActivity extends AppCompatActivity {
         }, 300);
     }
 
+    @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (stopUserInteractions) {
             return true;
@@ -258,7 +259,7 @@ public class SingleplayerActivity extends AppCompatActivity {
         startActivity(egs);
     }
 
-    private double getScreeSizeInInches() {
+    private double getScreenSizeInInches() {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         double mWidthPixels = dm.widthPixels;

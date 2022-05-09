@@ -1,6 +1,7 @@
 package com.example.setcardgame.ViewModel.scoreboard;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +40,7 @@ public class PlayerScoresActivity extends AppCompatActivity {
             @Override
             public void onError(String message) {
                 Toast.makeText(PlayerScoresActivity.this, getString(R.string.cantGetScores), Toast.LENGTH_SHORT).show();
+                Log.d("score", getString(R.string.cantGetScores));
             }
 
             @Override

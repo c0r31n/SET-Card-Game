@@ -1,9 +1,7 @@
 package com.example.setcardgame.Service;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -80,7 +78,7 @@ public class ScoreboardDataService {
             e.printStackTrace();
         }
 
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, postObj,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, postObj,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
@@ -90,18 +88,17 @@ public class ScoreboardDataService {
             @Override
             public void onErrorResponse(VolleyError error) {
                 scoreAddedResponseListener.onError(error.getMessage());
-                Log.d("idk", error.getMessage());
             }
         }) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put("Content-Type", "application/json; charset=utf-8");
                 return params;
             }
         };
 
-        RequestQueueSingleton.getInstance(context).addToRequestQueue(stringRequest);
+        RequestQueueSingleton.getInstance(context).addToRequestQueue(request);
     }
 
     public interface ScoreboardResponseListener {

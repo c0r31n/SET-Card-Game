@@ -71,6 +71,7 @@ public class MultiplayerActivity extends AppCompatActivity {
                             if (game == null) {
                                 game = new MultiplayerGame(msg);
                                 startGame();
+                                Log.d(TAG, "start game");
                             } else {
                                 //SET button press
                                 if (tempGame.getBlockedBy() != null && tempGame.getBlockedBy().toString().equals(username) && tempGame.getSelectedCardIndexes().isEmpty()) {
@@ -154,8 +155,8 @@ public class MultiplayerActivity extends AppCompatActivity {
                                         resetCardBackgrounds();
                                     }
                                 }
-                                if (game.getBlockedBy() != null && tempGame.getSelectedCardIndexes().size() != 3 && tempGame.getBlockedBy() == null) {    //time ran out. button has been reset
-                                    Log.d(TAG, "entered");
+                                //time ran out. button has been reset
+                                if (game.getBlockedBy() != null && tempGame.getSelectedCardIndexes().size() != 3 && tempGame.getBlockedBy() == null) {
                                     game.clearSelectedCardIndexes();
                                     selectedCardIds.clear();
                                     resetCardBackgrounds();

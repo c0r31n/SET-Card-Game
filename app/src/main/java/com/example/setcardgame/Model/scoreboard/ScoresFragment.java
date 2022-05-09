@@ -29,8 +29,8 @@ public class ScoresFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_score, container, false);
-        recyclerView = view.findViewById(R.id.recycleView);
-        RecycleViewScoreAdapter adapter = new RecycleViewScoreAdapter(getContext(), scoreList);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        RecyclerViewScoreAdapter adapter = new RecyclerViewScoreAdapter(getContext(), scoreList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         return view;

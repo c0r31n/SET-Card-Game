@@ -49,7 +49,6 @@ public class EndGameScreenActivity extends AppCompatActivity {
             finalDifficultyTextView.setText(String.format("%s", getString(R.string.normal)));
         }
 
-
         addScoreToDB();
     }
 
@@ -74,7 +73,8 @@ public class EndGameScreenActivity extends AppCompatActivity {
         scoreboardDataService.addScore(scoreboardModel, new ScoreboardDataService.ScoreAddedResponseListener() {
             @Override
             public void onError(String message) {
-                Toast.makeText(EndGameScreenActivity.this, message, Toast.LENGTH_LONG).show();
+                Toast.makeText(EndGameScreenActivity.this, message, Toast.LENGTH_SHORT).show();
+                Log.d("score", message);
             }
 
             @Override
