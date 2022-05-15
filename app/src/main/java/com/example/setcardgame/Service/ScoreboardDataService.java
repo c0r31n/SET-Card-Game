@@ -65,8 +65,6 @@ public class ScoreboardDataService {
     }
 
     public void addScore(Scoreboard scoreboardModel, ScoreAddedResponseListener scoreAddedResponseListener) {
-        String url = SCOREBOARD_URL + "add";
-
         JSONObject postObj = new JSONObject();
         try {
             postObj.put("playerId", scoreboardModel.getPlayerId());
@@ -78,7 +76,7 @@ public class ScoreboardDataService {
             e.printStackTrace();
         }
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, postObj,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, SCOREBOARD_URL, postObj,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

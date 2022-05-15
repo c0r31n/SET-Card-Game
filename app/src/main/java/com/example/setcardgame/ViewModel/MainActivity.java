@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkServer() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://test-set-card-game.herokuapp.com/check/";
+        String url = "https://test-set-card-game.herokuapp.com/available/";
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
